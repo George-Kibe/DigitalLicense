@@ -1,26 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {NavigationContainer} from '@react-navigation/native';
+import MainNavigator from './src/navigation';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>App</Text>
-      <FontAwesome name="rocket" size={30} color="#FFFFFF" />
-    </View>
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#FFFFFF',
-  },
-});
