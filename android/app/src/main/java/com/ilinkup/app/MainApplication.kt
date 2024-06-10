@@ -1,4 +1,4 @@
-package com.ilinkup
+package com.iLinkup.app
 
 import android.app.Application
 import com.facebook.react.PackageList

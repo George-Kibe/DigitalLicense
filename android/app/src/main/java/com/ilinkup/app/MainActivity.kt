@@ -1,4 +1,4 @@
-package com.ilinkup
+package com.iLinkup.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
