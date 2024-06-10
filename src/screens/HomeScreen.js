@@ -11,9 +11,9 @@ import {signInWithRedirect, signIn} from 'aws-amplify/auth';
 const HomeScreen = () => {
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect({provider: 'Google'});
+      await signInWithRedirect({provider: 'signInWithApple'});
     } catch (error) {
-      console.log('Error signing in with Google: ', error);
+      console.log('Error signing in with Apple: ', error);
     }
   };
 
