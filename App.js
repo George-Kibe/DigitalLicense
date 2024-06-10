@@ -1,6 +1,6 @@
 import React from 'react';
 import outputs from './amplify_outputs.json';
-import {Button, View, StyleSheet, SafeAreaView} from 'react-native';
+import {Button, View, StyleSheet} from 'react-native';
 import {Amplify} from 'aws-amplify';
 import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react-native';
 
@@ -21,16 +21,17 @@ const SignOutButton = () => {
 
 const App = () => {
   return (
-    <Authenticator.Provider>
-      <Authenticator>
-        <SafeAreaView>
-          {/* <SignOutButton /> */}
-          <NavigationContainer>
-            <MainNavigator />
-          </NavigationContainer>
-        </SafeAreaView>
-      </Authenticator>
-    </Authenticator.Provider>
+    // <Authenticator.Provider>
+    //   <Authenticator>
+    //     <NavigationContainer>
+    //       <SignOutButton />
+    //       <MainNavigator />
+    //     </NavigationContainer>
+    //   </Authenticator>
+    // </Authenticator.Provider>
+    <NavigationContainer>
+      <MainNavigator />
+  </NavigationContainer>
   );
 };
 

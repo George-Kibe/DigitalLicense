@@ -1,12 +1,30 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
+import {signInWithRedirect, signIn} from 'aws-amplify/auth';
 
 const HomeScreen = () => {
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithRedirect({provider: 'Google'});
+    } catch (error) {
+      console.log('Error signing in with Google: ', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Text style={styles.text}>HomeScreen</Text>
       </View>
+      <TouchableOpacity onPress={signInWithGoogle}>
+        <Text style={styles.text}>Sign In</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
