@@ -27,9 +27,6 @@ const SignOutButton = () => {
 
 const App = () => {
   return (
-    //   <NavigationContainer>
-    //     <MainNavigator />
-    // </NavigationContainer>
     <GestureHandlerRootView>
       <ReduxProvider store={store}>
         <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>

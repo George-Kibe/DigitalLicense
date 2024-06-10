@@ -23,6 +23,7 @@ DerivedData
 **/.xcode.env.local
 
 credentials.jsx
+AuthKey_iLinkup-9HU38G2KV8.p8
 # Android/IntelliJ
 #
 build/
