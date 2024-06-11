@@ -60,7 +60,7 @@ const SignUpScreen = () => {
       return;
     }
     setLoading(true);
-    const body = {email, password};
+    const body = {email: email.toLowerCase(), password};
     try {
       const response = await axios.post(
         'https://myicebreaker.vercel.app/api/users',
@@ -73,11 +73,11 @@ const SignUpScreen = () => {
 
         // console.log(username, password, email, id);
         await signUp({
-          username: email,
+          username: email.toLowerCase(),
           password,
           options: {
             userAttributes: {
-              email,
+              email: email.toLowerCase(),
               name: username,
               given_name: username,
               'custom:mongoID': id,

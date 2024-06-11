@@ -16,9 +16,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch} from 'react-redux';
 import {authSlice} from '../../store/AuthSlice';
 import axios from 'axios';
+import {useAuthProvider} from '../../providers/AuthProvider';
 
 const SignInEmailScreen = ({navigation}) => {
   const dispatch = useDispatch();
+  const {setSession} = useAuthProvider();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -43,8 +45,13 @@ const SignInEmailScreen = ({navigation}) => {
     // validate user
     setLoading(true);
     try {
-      const response = await Auth.signIn({username: email, password});
+      const response = await Auth.signIn({
+        username: email.toLowerCase(),
+        password,
+      });
       console.log('Login response: ', response);
+      const session = await Auth.fetchAuthSession();
+      setSession(session);
       const mongoResponse = await axios.get(
         `https://myicebreaker.vercel.app/api/users/${email.toLowerCase()}`,
       );
@@ -52,12 +59,17 @@ const SignInEmailScreen = ({navigation}) => {
         // navigation.replace('Home', {Screen: 'Home'});
         dispatch(
           authSlice.actions.addLoggedInUser({
-            user: {email: email, data: response},
+            user: {email: email.toLowerCase(), data: response},
             mongoUser: mongoResponse.data,
           }),
         );
-        console.log('user is signed in');
+        // console.log('user is signed in');
       }
+      Toast.show({
+        type: 'success',
+        text1: 'Welcome aboard',
+        text2: 'Login was successful',
+      });
     } catch (error) {
       console.log(error);
       Toast.show({

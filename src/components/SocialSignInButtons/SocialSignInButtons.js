@@ -36,6 +36,12 @@ const SocialSignInButtons = () => {
       // console.log('auth session: ', authSession);
       setSession(authSession);
     } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Some Error occured. try Again',
+        text2: 'Some Error occured. try Again',
+        visibilityTime: 5000,
+      });
       console.log('error signing in with google: ', error);
     }
   };
@@ -51,6 +57,12 @@ const SocialSignInButtons = () => {
       setSession(authSession);
     } catch (error) {
       console.log('error signing in with Apple: ', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Some Error occured. try Again',
+        text2: 'Some Error occured. try Again',
+        visibilityTime: 5000,
+      });
     }
   };
 
