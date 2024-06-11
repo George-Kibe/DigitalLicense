@@ -2,14 +2,17 @@ import React from 'react';
 import CustomButton from '../CustomButton';
 import Toast from 'react-native-toast-message';
 import {signInWithRedirect} from 'aws-amplify/auth';
+import {fetchAuthSession} from 'aws-amplify/auth';
 import AppleLogo from '../../assets/logos/apple-logo-.png';
 import EmailLogo from '../../assets/logos/email-icon.png';
 import GoogleLogo from '../../assets/logos/google-logo.png';
 import FaceBookLogo from '../../assets/logos/facebook.png';
 import {useNavigation} from '@react-navigation/native';
+import {useAuthProvider} from '../../providers/AuthProvider';
 
 const SocialSignInButtons = () => {
   const navigation = useNavigation();
+  const {setSession} = useAuthProvider();
   const onSignInFacebook = () => {
     // signInWithRedirect({provider: 'Facebook'});
     Toast.show({
@@ -22,8 +25,16 @@ const SocialSignInButtons = () => {
 
   const onSignInGoogle = async () => {
     try {
-      const response = await signInWithRedirect({provider: 'google'});
-      console.log('Google Login Response: ', response);
+      await signInWithRedirect({provider: 'google'});
+      const authSession = await fetchAuthSession();
+      Toast.show({
+        type: 'success',
+        text1: 'Successfully Logged In',
+        text2: 'Welcome, you have successfully Logged In',
+        visibilityTime: 5000,
+      });
+      // console.log('auth session: ', authSession);
+      setSession(authSession);
     } catch (error) {
       console.log('error signing in with google: ', error);
     }
@@ -32,8 +43,15 @@ const SocialSignInButtons = () => {
     navigation.navigate('SignIn Email');
   };
 
-  const onSignInApple = () => {
-    signInWithRedirect({provider: 'signInWithApple'});
+  const onSignInApple = async () => {
+    try {
+      await signInWithRedirect({provider: 'signInWithApple'});
+      const authSession = await fetchAuthSession();
+      console.log('auth session: ', authSession);
+      setSession(authSession);
+    } catch (error) {
+      console.log('error signing in with Apple: ', error);
+    }
   };
 
   return (
