@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Dimensions, Pressable, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AvatarScreen from './AvatarScreen';
 
@@ -24,6 +24,7 @@ const checkInSteps = [
   {name: 'Location Screen'},
   {name: 'Greeting Screen'},
 ];
+const {height} = Dimensions.get('window');
 
 const Stack = createStackNavigator();
 
@@ -96,31 +97,33 @@ const LocationCheckIn = () => {
             {data.name === 'Greeting Screen' && <GreetingScreen />}
           </Animated.View>
 
-          <AvaLocGreeting
-            activeScreen={data.name}
-            setScreenIndex={setScreenIndex}
-          />
           <View style={styles.footer}>
-            <Pressable
-              onPress={() => setScreenIndex(0)}
-              style={screenIndex === 0 ? styles.activeDot : ''}>
-              <View style={styles.dot} />
-            </Pressable>
-            <Pressable
-              onPress={() => setScreenIndex(1)}
-              style={screenIndex === 1 ? styles.activeDot : ''}>
-              <View style={styles.dot} />
-            </Pressable>
-            <Pressable
-              onPress={() => setScreenIndex(2)}
-              style={screenIndex === 2 ? styles.activeDot : ''}>
-              <View style={styles.dot} />
-            </Pressable>
-            <Pressable
-              onPress={() => setScreenIndex(3)}
-              style={screenIndex === 3 ? styles.activeDot : ''}>
-              <View style={styles.dot} />
-            </Pressable>
+            <AvaLocGreeting
+              activeScreen={data.name}
+              setScreenIndex={setScreenIndex}
+            />
+            <View style={styles.dotsView}>
+              <Pressable
+                onPress={() => setScreenIndex(0)}
+                style={screenIndex === 0 ? styles.activeDot : ''}>
+                <View style={styles.dot} />
+              </Pressable>
+              <Pressable
+                onPress={() => setScreenIndex(1)}
+                style={screenIndex === 1 ? styles.activeDot : ''}>
+                <View style={styles.dot} />
+              </Pressable>
+              <Pressable
+                onPress={() => setScreenIndex(2)}
+                style={screenIndex === 2 ? styles.activeDot : ''}>
+                <View style={styles.dot} />
+              </Pressable>
+              <Pressable
+                onPress={() => setScreenIndex(3)}
+                style={screenIndex === 3 ? styles.activeDot : ''}>
+                <View style={styles.dot} />
+              </Pressable>
+            </View>
           </View>
         </View>
       </GestureDetector>
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
   },
   pageContent: {
-    flex: 1,
+    minHeight: height,
   },
   image: {
     alignSelf: 'center',
@@ -160,14 +163,22 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   footer: {
-    marginTop: 'auto',
     gap: 10,
-    marginBottom: 20,
+    marginTop: 'auto',
+    marginBottom: 10,
     width: '100%',
     display: 'flex',
-    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  dotsView: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   dot: {
     backgroundColor: 'white',

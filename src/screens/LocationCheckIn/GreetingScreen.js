@@ -16,11 +16,14 @@ import axios from 'axios';
 import {authSlice} from '../../store/AuthSlice';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
+import {Picker} from '@react-native-picker/picker';
+
 const {height} = Dimensions.get('window');
 
 const GreetingScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [selectedLanguage, setSelectedLanguage] = useState();
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
 
   const lookingForData = [
@@ -116,6 +119,7 @@ const GreetingScreen = () => {
       <View style={styles.mainContainer}>
         <Text style={styles.topText}>Create your greeting message</Text>
         <Text style={styles.topText}>Visible to your matches.</Text>
+
         <View style={styles.profileView}>
           <View style={styles.profileData}>
             <View style={styles.profileRow}>

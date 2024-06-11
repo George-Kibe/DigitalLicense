@@ -59,11 +59,11 @@ export default AvaLocGreeting;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    marginTop: 20,
+    marginTop: 10,
   },
   readyButton: {
     display: 'flex',
-    padding: 15,
+    padding: 5,
     paddingHorizontal: 15,
     backgroundColor: '#323232',
     alignSelf: 'center',
@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 4,
     flexDirection: 'row',
-    gap: 20,
+    gap: 10,
   },
   iconView: {
     backgroundColor: 'silver',
