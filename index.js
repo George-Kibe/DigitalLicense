@@ -1,6 +1,7 @@
 /**
  * @format
  */
+
 import 'react-native-gesture-handler';
 import {Amplify} from 'aws-amplify';
 import outputs from './amplify_outputs.json';

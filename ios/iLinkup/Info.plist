@@ -33,7 +33,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>We need your location to enhance your dating experience by showing you people and places around you. Finding matches and suggesting nearby locations relies on your location information to provide accurate and relevant results. Rest assured, we prioritize your privacy and will only use your location data for these purposes.</string>
 	<key>UIAppFonts</key>
 		<array>
 		<string>AntDesign.ttf</string>
