@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
-  ActivityIndicator,
+  Dimensions,
   Image,
   ImageBackground,
   StyleSheet,
@@ -11,16 +11,14 @@ import {
 import React from 'react';
 import BackgroundImage from '../../assets/photos/party5.png';
 import Feather from 'react-native-vector-icons/Feather';
-import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import NavBarGeneral from '../../components/NavBarGeneral';
 
-const PrimaryScreen = ({setScreenIndex}) => {
+const {height} = Dimensions.get('window');
+
+const PrimaryScreen = ({setScreenIndex, mongoUser}) => {
+  console.log('Mongo User: ', mongoUser);
   const navigation = useNavigation();
-  const {mongoUser, user} = useSelector(state => state.user.loggedUser);
-  if (!mongoUser) {
-    return <ActivityIndicator />;
-  }
   const {
     name,
     age,
@@ -31,10 +29,10 @@ const PrimaryScreen = ({setScreenIndex}) => {
     lookingFor,
     interestedIn,
     myAvatars,
-    // lastLocation,
+    lastLocation,
   } = mongoUser;
   // const avatar = myAvatars?.length > 0 ? myAvatars[0] : null;
-  const lastLocation = 'jfvnjnvjdf';
+  console.log('Last location: ', lastLocation);
 
   const goToMyAvatars = () => {
     setScreenIndex(1);
@@ -111,7 +109,7 @@ const PrimaryScreen = ({setScreenIndex}) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={goToGreeting} style={styles.rightView}>
             <View style={styles.iconView}>
-              <Feather name="edit-2" size={20} color="black" />
+              <Feather name="edit-2" size={16} color="black" />
             </View>
             {!age && !gender && !status && !children && !lookingFor ? (
               <Text style={styles.text}>Make your {'\n'}Greeting</Text>
@@ -144,7 +142,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 20,
     letterSpacing: 2,
     textAlign: 'center',
   },
@@ -154,9 +152,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#3B3F47',
-    height: 200,
+    height: height * 0.2,
     alignItems: 'center',
     width: '100%',
+    justifyContent: 'center',
   },
   locationView: {
     display: 'flex',

@@ -1,5 +1,5 @@
 import {Dimensions, Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AvatarScreen from './AvatarScreen';
 
 import {
@@ -16,7 +16,11 @@ import LocationCheckInScreen from './Location';
 import PrimaryScreen from './PrimaryScreen';
 import GreetingScreen from './GreetingScreen';
 import Toast from 'react-native-toast-message';
-import {useSelector} from 'react-redux';
+import axios from 'axios';
+import {getCurrentUser} from 'aws-amplify/auth';
+import {useDispatch} from 'react-redux';
+import {authSlice} from '../../store/AuthSlice';
+import {ActivityIndicator} from 'react-native-paper';
 
 const checkInSteps = [
   {name: 'Primary Screen'},
@@ -25,16 +29,12 @@ const checkInSteps = [
   {name: 'Greeting Screen'},
 ];
 const {height} = Dimensions.get('window');
-
 const Stack = createStackNavigator();
 
 const LocationCheckIn = () => {
   const navigation = useNavigation();
-  const {mongoUser, user} = useSelector(state => state.user.loggedUser);
-  // console.log('user membership: ', mongoUser.membership);
-  // console.log('Mongo user: ', mongoUser);
-  const membershipType = mongoUser.membershipType;
-
+  const dispatch = useDispatch();
+  const [mongoUser, setMongoUser] = useState(null);
   const [checkIn, setCheckIn] = useState('');
 
   const [screenIndex, setScreenIndex] = useState(0);
@@ -42,6 +42,49 @@ const LocationCheckIn = () => {
   const data = checkInSteps[screenIndex];
   const isLastScreen = screenIndex === checkInSteps.length - 1;
 
+  const getOrCreateUser = async () => {
+    console.log('Getting or creating user');
+    const user = await getCurrentUser();
+    const {loginId: email} = user.signInDetails;
+    console.log('email: ', email);
+    try {
+      const response = await axios.get(
+        `https://www.myicebreaker.com.au/api/users/${email}`,
+      );
+      if (response.status === 404) {
+        // create user
+        const body = {email: email.toLowerCase(), password: 'password'};
+        const signUpResponse = await axios.post(
+          'https://www.myicebreaker.com.au/api/users',
+          body,
+        );
+        console.log('Sign up response: ', signUpResponse.data);
+        dispatch(
+          authSlice.actions.addLoggedInUser({
+            user: user,
+            mongoUser: signUpResponse.data,
+          }),
+        );
+      } else {
+        setMongoUser(response.data);
+        dispatch(
+          authSlice.actions.addLoggedInUser({
+            user: user,
+            mongoUser: response.data,
+          }),
+        );
+      }
+      console.log('Get response: ', response.data);
+    } catch (error) {
+      console.log('Error: ', error.message);
+    }
+  };
+
+  useEffect(() => {
+    getOrCreateUser();
+  }, []);
+
+  const membershipType = mongoUser?.membershipType;
   const onContinue = () => {
     if (isLastScreen) {
       console.log('Last Screen');
@@ -75,6 +118,9 @@ const LocationCheckIn = () => {
   if (!membershipType) {
     navigation.navigate('membership');
   }
+  if (!mongoUser) {
+    return <ActivityIndicator size={'large'} />;
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -85,7 +131,10 @@ const LocationCheckIn = () => {
         <View style={styles.pageContent} key={screenIndex}>
           <Animated.View entering={FadeIn} exiting={FadeOut}>
             {data.name === 'Primary Screen' && (
-              <PrimaryScreen setScreenIndex={setScreenIndex} />
+              <PrimaryScreen
+                mongoUser={mongoUser}
+                setScreenIndex={setScreenIndex}
+              />
             )}
             {data.name === 'Avatar Screen' && <AvatarScreen />}
             {data.name === 'Location Screen' && (

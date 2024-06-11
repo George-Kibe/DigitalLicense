@@ -151,7 +151,6 @@ const LocationCheckInScreen = () => {
       };
     }
     // console.log('Body: ', body);
-
     try {
       console.log('Working');
       const response = await axios.post(

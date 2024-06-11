@@ -1,7 +1,6 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
-import AvatarImage from '../../assets/photos/avatar.png';
 import CreateImage from '../../assets/photos/create.png';
 import NavBarGeneral from '../../components/NavBarGeneral';
 import {useSelector} from 'react-redux';
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   },
   topText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
     marginTop: 5,
     fontWeight: '700',
   },
@@ -90,6 +89,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   avatarsView: {
+    marginTop: 10,
     display: 'flex',
     gap: 5,
     flexDirection: 'row',

@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {Image} from 'react-native';
+import ProfileScreen from '../screens/ProfileScreen/Membership';
 // import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -17,7 +18,6 @@ import ProfileIconBlack from '../assets/home/ProfileBlack.png';
 import ILogo from '../assets/home/iLogo.png';
 import ILogoBlack from '../assets/home/iLogoBlack.png';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
