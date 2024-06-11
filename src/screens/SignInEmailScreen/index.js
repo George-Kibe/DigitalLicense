@@ -16,8 +16,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch} from 'react-redux';
 import {authSlice} from '../../store/AuthSlice';
 import axios from 'axios';
+import {useAuthProvider} from '../../providers/AuthProvider';
 
 const SignInEmailScreen = ({navigation}) => {
+  const {setSession} = useAuthProvider();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -56,7 +58,7 @@ const SignInEmailScreen = ({navigation}) => {
             mongoUser: mongoResponse.data,
           }),
         );
-        // console.log('user is signed in');
+        console.log('user is signed in');
       }
     } catch (error) {
       console.log(error);

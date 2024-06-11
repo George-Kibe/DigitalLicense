@@ -21,7 +21,7 @@ const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const SignUpScreen = () => {
-  const {control, handleSubmit, watch} = useForm();
+  const {control, handleSubmit} = useForm();
   const navigation = useNavigation();
   const [isChecked, setChecked] = useState(false);
 
@@ -31,6 +31,7 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState('');
 
   const onRegisterPressed = async () => {
+    console.log('Registering user');
     if (password !== password2) {
       Toast.show({
         type: 'error',
@@ -65,10 +66,11 @@ const SignUpScreen = () => {
         'https://myicebreaker.vercel.app/api/users',
         body,
       );
-      console.log('Response: ', response.data);
+      // console.log('Response: ', response.data);
       if (response.status === 201) {
         const id = response.data._id.toString();
         const username = response.data.username;
+
         // console.log(username, password, email, id);
         await signUp({
           username: email,
@@ -77,8 +79,8 @@ const SignUpScreen = () => {
             userAttributes: {
               email,
               name: username,
-              preferred_username: username,
-              // 'custom:mongoID': id,
+              given_name: username,
+              'custom:mongoID': id,
             },
           },
         });
@@ -98,7 +100,7 @@ const SignUpScreen = () => {
       Toast.show({
         type: 'error',
         text1: 'Sign Up Error!',
-        text2: 'Username or Email Already Exists!',
+        text2: 'Some error occured or Email Already Exists!',
       });
       setLoading(false);
     }
@@ -119,7 +121,6 @@ const SignUpScreen = () => {
       <NavBarGeneral
         leftButton={{display: true}}
         leftText="Back"
-        title={'SignUp to myIceBreaker'}
         rightButton={{display: true, action: goToLogin}}
         rightText="Login"
       />

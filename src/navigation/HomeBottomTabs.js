@@ -17,6 +17,7 @@ import ProfileIconBlack from '../assets/home/ProfileBlack.png';
 import ILogo from '../assets/home/iLogo.png';
 import ILogoBlack from '../assets/home/iLogoBlack.png';
 import HomeScreen from '../screens/HomeScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -107,7 +108,7 @@ function HomeBottomTabs() {
       />
       <Tab.Screen
         name="Profile"
-        component={HomeScreen}
+        component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size, focused}) => (

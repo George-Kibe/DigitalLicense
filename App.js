@@ -1,9 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 
-import {Button, View, StyleSheet} from 'react-native';
-
-import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react-native';
+import {StyleSheet} from 'react-native';
 import MainNavigator from './src/navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PermissionsAndroid, Platform, Text} from 'react-native';
@@ -14,30 +12,23 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {requestNotifications} from 'react-native-permissions';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
-
-const SignOutButton = () => {
-  const {signOut} = useAuthenticator();
-
-  return (
-    <View style={styles.signOutButton}>
-      <Button title="Sign Out" onPress={signOut} />
-    </View>
-  );
-};
+import {AuthProvider} from './src/providers/AuthProvider';
 
 const App = () => {
   return (
     <GestureHandlerRootView>
-      <ReduxProvider store={store}>
-        <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-          <NavigationContainer persistNavigationState={true}>
-            <SafeAreaProvider>
-              <MainNavigator />
-              <Toast />
-            </SafeAreaProvider>
-          </NavigationContainer>
-        </PersistGate>
-      </ReduxProvider>
+      <AuthProvider>
+        <ReduxProvider store={store}>
+          <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+            <NavigationContainer persistNavigationState={true}>
+              <SafeAreaProvider>
+                <MainNavigator />
+                <Toast />
+              </SafeAreaProvider>
+            </NavigationContainer>
+          </PersistGate>
+        </ReduxProvider>
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 };

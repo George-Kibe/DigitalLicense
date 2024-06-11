@@ -1,20 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import CustomButton from '../CustomButton';
 import Toast from 'react-native-toast-message';
-import {getCurrentUser, signInWithRedirect} from 'aws-amplify/auth';
+import {signInWithRedirect} from 'aws-amplify/auth';
 import AppleLogo from '../../assets/logos/apple-logo-.png';
 import EmailLogo from '../../assets/logos/email-icon.png';
 import GoogleLogo from '../../assets/logos/google-logo.png';
 import FaceBookLogo from '../../assets/logos/facebook.png';
 import {useNavigation} from '@react-navigation/native';
-import {authSlice} from '../../store/AuthSlice';
-import {useDispatch} from 'react-redux';
 
 const SocialSignInButtons = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const [error, setError] = useState(null);
-
   const onSignInFacebook = () => {
     // signInWithRedirect({provider: 'Facebook'});
     Toast.show({
@@ -26,7 +21,12 @@ const SocialSignInButtons = () => {
   };
 
   const onSignInGoogle = async () => {
-    signInWithRedirect({provider: 'Google'});
+    try {
+      const response = await signInWithRedirect({provider: 'google'});
+      console.log('Google Login Response: ', response);
+    } catch (error) {
+      console.log('error signing in with google: ', error);
+    }
   };
   const onSignInEmail = () => {
     navigation.navigate('SignIn Email');
