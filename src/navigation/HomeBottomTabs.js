@@ -19,14 +19,15 @@ import ILogo from '../assets/home/iLogo.png';
 import ILogoBlack from '../assets/home/iLogoBlack.png';
 import HomeScreen from '../screens/HomeScreen';
 import NotificationsScreen from '../screens/NotificationsScreen/Notifications';
-import IlinkupHome from '../screens/ILinkupHome';
+import Ilinkup from '../screens/ILinkup';
+import ILinkupHome from '../screens/ILinkupHome';
 
 const Tab = createBottomTabNavigator();
 
 function HomeBottomTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="iLinkup-home"
       screenOptions={{
         tabBarActiveTintColor: '#FF10F0',
         tabBarInactiveTintColor: '#FFFFFF',
@@ -40,8 +41,8 @@ function HomeBottomTabs() {
         },
       }}>
       <Tab.Screen
-        name="Home"
-        component={IlinkupHome}
+        name="iLinkup-home"
+        component={ILinkupHome}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size, focused}) => (
@@ -58,7 +59,7 @@ function HomeBottomTabs() {
       />
       <Tab.Screen
         name="iLinkup"
-        component={HomeScreen}
+        component={Ilinkup}
         options={{
           tabBarLabel: 'iLinkup',
           tabBarIcon: ({color, size, focused}) => (

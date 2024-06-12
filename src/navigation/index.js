@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import StackNavigator from './StackNavigator';
 
 import AccountsNavigation from './AccountsNavigation';
-import {useSelector} from 'react-redux';
 import {useAuthProvider} from '../providers/AuthProvider';
 
 export default function MainNavigator() {

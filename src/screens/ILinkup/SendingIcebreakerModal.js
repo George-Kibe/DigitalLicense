@@ -1,5 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
+  Alert,
+  Linking,
   Image,
   Modal,
   StyleSheet,
@@ -14,8 +16,10 @@ import AvatarImage from '../../assets/photos/lady-avatar.png';
 import FlowersImage from '../../assets/photos/flowers.png';
 import ChocolateImage from '../../assets/photos/chocolate.png';
 import KissesImage from '../../assets/photos/kiss.png';
+import {useNavigation} from '@react-navigation/native';
 
 const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
+  const navigation = useNavigation();
   const [callOrText, setCallOrText] = useState(false);
   const [otherOptions, setOtherOptions] = useState(false);
   const viewCallOrText = () => {
@@ -24,9 +28,35 @@ const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
   const showOtherOptions = () => {
     setOtherOptions(true);
   };
-  const decideLater = () => {
+  // make phone number dynamic in future
+  const phoneNumber = '+254704817466';
+
+  const handlePhoneCall = () => {
+    let phoneUrl = `tel://${phoneNumber}`;
+
+    Linking.canOpenURL(phoneUrl)
+      .then(supported => {
+        // return Linking.openURL(phoneUrl);
+        if (!supported) {
+          Alert.alert(
+            'Phone number is not available or is invalid. \n Alternatively, copy paste their number to your dial pad',
+          );
+        } else {
+          return Linking.openURL(phoneUrl);
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+  };
+  const chatUser = () => {
     setModalVisible(false);
-    setCallOrText(false);
+    //create a chat with a user
+
+    // navigate to the chat
+    navigation.navigate('Messages');
+  };
+  const videoCallUser = () => {
+    setModalVisible(false);
+    navigation.navigate('video-call');
   };
 
   return (
@@ -68,14 +98,27 @@ const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
               <View style={styles.singleView}>
                 <Text style={styles.text}>When:</Text>
                 <Text style={styles.textTwo}>2 Hours Ago</Text>
+                {/* <Text style={styles.textIcon}>2 Hours Ago</Text> */}
               </View>
               <View style={styles.singleView}>
-                <Text style={styles.text}>At:</Text>
-                <Text style={styles.textTwo}>Cloudiland</Text>
+                <Text style={styles.text}>When:</Text>
+                <Text style={styles.textTwo}>2 Hours Ago</Text>
+                {/* <Text style={styles.textIcon}>2 Hours Ago</Text> */}
               </View>
               <View style={styles.singleView}>
-                <Text style={styles.text}>Checkin:</Text>
-                <Text style={styles.textTwo}>Yes</Text>
+                <Text style={styles.text}>When:</Text>
+                <Text style={styles.textTwo}>2 Hours Ago</Text>
+                {/* <Text style={styles.textIcon}>2 Hours Ago</Text> */}
+              </View>
+              <View style={styles.singleView}>
+                <Text style={styles.text}>When:</Text>
+                <Text style={styles.textTwo}>2 Hours Ago</Text>
+                {/* <Text style={styles.textIcon}>2 Hours Ago</Text> */}
+              </View>
+              <View style={styles.singleView}>
+                <Text style={styles.text}>When:</Text>
+                <Text style={styles.textTwo}>2 Hours Ago</Text>
+                {/* <Text style={styles.textIcon}>2 Hours Ago</Text> */}
               </View>
             </View>
           </View>
@@ -93,6 +136,7 @@ const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
             DO YOU WANT TO CONNECT NOW?
           </Text>
           <TouchableOpacity
+            onPress={handlePhoneCall}
             style={[styles.itemView, {backgroundColor: '#3DA9D1'}]}>
             <Text style={styles.itemText}>AUDIO CALL</Text>
             <View style={styles.iconView}>
@@ -100,6 +144,7 @@ const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={videoCallUser}
             style={[styles.itemView, {backgroundColor: '#6E2F9F'}]}>
             <Text style={styles.itemText}>VIDEO CALL</Text>
             <View style={[styles.iconView, {backgroundColor: '#610294'}]}>
@@ -107,6 +152,7 @@ const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={chatUser}
             style={[styles.itemView, {backgroundColor: '#00AA54'}]}>
             <Text style={styles.itemText}>TEXT MESSAGE</Text>
             <View style={[styles.iconView, {backgroundColor: '#00D144'}]}>
@@ -125,7 +171,7 @@ const SendingIceBreakerModal = ({loading, modalVisible, setModalVisible}) => {
             <TouchableOpacity onPress={showOtherOptions}>
               <Text style={styles.text}>OTHER OPTIONS</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={decideLater}>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Text style={styles.text}>DECIDE LATER</Text>
             </TouchableOpacity>
           </View>
@@ -238,9 +284,8 @@ const styles = StyleSheet.create({
   detailsView: {
     display: 'flex',
     flex: 1,
-    alignItems: 'center',
     flexDirection: 'column',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
     height: 130,
   },
   singleView: {
