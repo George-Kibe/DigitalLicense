@@ -37,6 +37,7 @@ const LocationCheckInScreen = () => {
 
   const [firstIndex, setFirstIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(4);
+
   const loadMore = () => {
     if (searchResults.length <= lastIndex) {
       Toast.show({

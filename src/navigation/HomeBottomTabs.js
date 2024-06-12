@@ -18,6 +18,8 @@ import ProfileIconBlack from '../assets/home/ProfileBlack.png';
 import ILogo from '../assets/home/iLogo.png';
 import ILogoBlack from '../assets/home/iLogoBlack.png';
 import HomeScreen from '../screens/HomeScreen';
+import NotificationsScreen from '../screens/NotificationsScreen/Notifications';
+import IlinkupHome from '../screens/ILinkupHome';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +41,7 @@ function HomeBottomTabs() {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={IlinkupHome}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size, focused}) => (
@@ -91,7 +93,7 @@ function HomeBottomTabs() {
       />
       <Tab.Screen
         name="Notifications"
-        component={HomeScreen}
+        component={NotificationsScreen}
         options={{
           tabBarLabel: 'Notifications',
           tabBarIcon: ({color, size, focused}) => (

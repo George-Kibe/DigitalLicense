@@ -8,16 +8,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import BackgroundImage from '../../assets/photos/party5.png';
 import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 import NavBarGeneral from '../../components/NavBarGeneral';
+import axios from 'axios';
 
 const {height} = Dimensions.get('window');
 
 const PrimaryScreen = ({setScreenIndex, mongoUser}) => {
-  console.log('Mongo User: ', mongoUser);
+  const [lastLocation, setLastlocation] = useState();
+  const APIKEY = 'AIzaSyAZwwdSkH54eXB4s2fh7XOA6wBFjJo3GEg';
+  console.log('Mongo User:', mongoUser);
   const navigation = useNavigation();
   const {
     name,
@@ -29,10 +32,10 @@ const PrimaryScreen = ({setScreenIndex, mongoUser}) => {
     lookingFor,
     interestedIn,
     myAvatars,
-    lastLocation,
+    lastLocation: lastLocationId,
   } = mongoUser;
   // const avatar = myAvatars?.length > 0 ? myAvatars[0] : null;
-  console.log('Last location: ', lastLocation);
+  console.log('Last location: ', lastLocationId);
 
   const goToMyAvatars = () => {
     setScreenIndex(1);
@@ -45,6 +48,25 @@ const PrimaryScreen = ({setScreenIndex, mongoUser}) => {
     // navigation.navigate('MyProfile');
     setScreenIndex(3);
   };
+  const fetchLastLocation = async () => {
+    if (!mongoUser.lastLocation) {
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `https://www.myicebreaker.com.au/api/checkins/${mongoUser.lastLocation}`,
+      );
+      setLastlocation(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLastLocation();
+  }, [mongoUser?.lastLocation]);
+  console.log('Last Location: ', lastLocation);
+
   return (
     <ImageBackground
       source={BackgroundImage}
@@ -68,20 +90,27 @@ const PrimaryScreen = ({setScreenIndex, mongoUser}) => {
           {lastLocation ? (
             <View style={{paddingTop: 5}}>
               <Text style={{color: '#FFFFFF'}}>
-                You were last Seen on December 8 2023
+                You were last Seen on {lastLocation.checkIn.updatedAt}
               </Text>
               <Text style={{color: '#FFFFFF'}}>
-                at BlackBird in brisbane looking like this.
+                at {lastLocation.checkIn.name}.
               </Text>
               <View style={styles.locationView}>
-                <Image source={BackgroundImage} style={styles.avatar} />
+                <Image
+                  source={{
+                    uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${lastLocation.checkIn.photo_reference}&key=${APIKEY}`,
+                  }}
+                  style={styles.avatar}
+                />
                 <View
                   style={{
                     padding: 5,
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  <Text style={{color: '#FFFFFF'}}>Lockville Lounge</Text>
+                  <Text style={{color: '#FFFFFF'}} numberOfLines={1}>
+                    {lastLocation.checkIn.name.substring(0, 20)}
+                  </Text>
                   <Text style={{color: '#FFFFFF'}}>rated 4 of 5 Stars</Text>
                 </View>
               </View>
@@ -95,7 +124,7 @@ const PrimaryScreen = ({setScreenIndex, mongoUser}) => {
         <View style={styles.bottomView}>
           <TouchableOpacity onPress={goToMyAvatars} style={styles.leftView}>
             <View style={styles.iconView}>
-              <Feather name="edit-2" size={20} color="black" />
+              <Feather name="edit-2" size={16} color="black" />
             </View>
             {mongoUser.myAvatars?.length > 0 ? (
               <Image
@@ -152,7 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#3B3F47',
-    height: height * 0.2,
+    height: height * 0.3,
     alignItems: 'center',
     width: '100%',
     justifyContent: 'center',
@@ -165,6 +194,7 @@ const styles = StyleSheet.create({
     width: 160,
     height: 160,
     resizeMode: 'contain',
+    borderRadius: 30,
   },
   iconView: {
     backgroundColor: 'silver',
