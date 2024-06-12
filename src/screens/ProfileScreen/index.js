@@ -20,6 +20,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {signOut} from 'aws-amplify/auth';
 import axios from 'axios';
 import CloseAccountModal from './CloseAccountModal';
+import {useAuthProvider} from '../../providers/AuthProvider';
 
 const ProfileScreen = () => {
   const lookingForData = [
@@ -44,6 +45,7 @@ const ProfileScreen = () => {
   ];
 
   const dispatch = useDispatch();
+  const {setSession} = useAuthProvider();
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(mongoUser.name || '');
@@ -109,6 +111,7 @@ const ProfileScreen = () => {
   const logOutUser = async () => {
     try {
       await signOut();
+      setSession(null);
       dispatch(authSlice.actions.logOutUser());
       Toast.show({
         type: 'success',

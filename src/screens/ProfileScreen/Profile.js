@@ -22,9 +22,11 @@ import {authSlice} from '../../store/AuthSlice';
 import BasicUserMemberShip from './BasicUserMembership';
 import PremiumUserMembership from './PremiumUserMembership';
 import StandardUserMembership from './StandardUserMembership';
+import {useAuthProvider} from '../../providers/AuthProvider';
 
 const Profile = () => {
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
+  const {setSession} = useAuthProvider();
   //const membershipType = mongoUser?.membershipType;
   const membershipType = '';
   const [initialMembership, setInitialMembership] = useState('');
@@ -35,6 +37,7 @@ const Profile = () => {
   const logoutUser = async () => {
     try {
       await signOut();
+      setSession(null);
       dispatch(authSlice.actions.logOutUser());
       Toast.show({
         type: 'success',

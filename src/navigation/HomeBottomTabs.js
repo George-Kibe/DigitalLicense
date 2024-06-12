@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {Image} from 'react-native';
-import ProfileScreen from '../screens/ProfileScreen/Membership';
+import ProfileScreen from '../screens/ProfileScreen/Profile';
 // import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 

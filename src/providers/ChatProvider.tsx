@@ -3,11 +3,29 @@ import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {StreamChat} from 'stream-chat';
 import {Chat, OverlayProvider} from 'stream-chat-react-native';
-
+// import type {DeepPartial, Theme} from 'stream-chat-react-native';
 const client = StreamChat.getInstance('67crtw84yr65');
+
+const theme = {
+  colors: {black: 'black'},
+  channel: {
+    selectChannel: {color: 'red'},
+  },
+  messageSimple: {
+    file: {
+      container: {
+        backgroundColor: 'red',
+      },
+    },
+  },
+  channelListSkeleton: {
+    background: {backgroundColor: 'red'},
+  },
+};
 
 export default function ChatProvider({children}) {
   const [isReady, setIsReady] = useState(false);
+
   const loggedUser = useSelector(state => state?.user?.loggedUser) || null;
 
   useEffect(() => {
@@ -45,7 +63,7 @@ export default function ChatProvider({children}) {
   //   }
 
   return (
-    <OverlayProvider>
+    <OverlayProvider value={{style: theme}}>
       <Chat client={client}>{children}</Chat>
     </OverlayProvider>
   );

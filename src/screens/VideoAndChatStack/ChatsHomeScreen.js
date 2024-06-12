@@ -10,7 +10,6 @@ const ChatsHomeScreen = () => {
   const [showChats, setshowChats] = useState(true);
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
   const navigation = useNavigation();
-
   return (
     <>
       <NavBarGeneral

@@ -2,10 +2,11 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeBottomTabs from './HomeBottomTabs';
 import LocationCheckIn from '../screens/LocationCheckIn';
-import MembershipScreen from '../screens/ProfileScreen/Membership';
+import MembershipScreen from '../screens/ProfileScreen/Profile';
 import Tutorial from '../screens/Tutorial';
 import TermsOfUse from '../screens/TermsOfUse';
 import VideoAndChatStack from '../screens/VideoAndChatStack';
+import Profile from '../screens/ProfileScreen/Profile';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function StackNavigator() {
       <Stack.Screen name="tutorial" component={Tutorial} />
       <Stack.Screen name="terms-of-use" component={TermsOfUse} />
       <Stack.Screen name="video-and-chat" component={VideoAndChatStack} />
+      <Stack.Screen name="my-profile" component={Profile} />
     </Stack.Navigator>
   );
 }

@@ -16,7 +16,7 @@ const ProfileLinks = () => {
     navigation.navigate('Profile');
   };
   const goToSettings = () => {
-    navigation.navigate('MyProfile');
+    navigation.navigate('my-profile');
   };
   const goToUserDetails = () => {
     navigation.navigate('LocationCheckIn');
