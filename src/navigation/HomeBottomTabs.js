@@ -21,6 +21,7 @@ import HomeScreen from '../screens/HomeScreen';
 import NotificationsScreen from '../screens/NotificationsScreen/Notifications';
 import Ilinkup from '../screens/ILinkup';
 import ILinkupHome from '../screens/ILinkupHome';
+import VideoAndChatStack from '../screens/VideoAndChatStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +78,7 @@ function HomeBottomTabs() {
       />
       <Tab.Screen
         name="Messages"
-        component={HomeScreen}
+        component={VideoAndChatStack}
         options={{
           tabBarLabel: 'Messages',
           tabBarIcon: ({color, size, focused}) => (

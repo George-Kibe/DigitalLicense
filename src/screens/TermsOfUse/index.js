@@ -12,9 +12,9 @@ const TermsOfUse = ({navigation}) => {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <NavBarGeneral
         leftButton={{display: true}}
-        leftText="Back"
+        leftText="BACK"
         rightButton={{display: true, action: goBack}}
-        rightText="Done"
+        rightText="DONE"
       />
       <View style={styles.termsView}>
         <Text style={styles.title}>
@@ -24,9 +24,9 @@ const TermsOfUse = ({navigation}) => {
           Effective date : 1st January 2024
         </Text>
         <Text style={styles.normalText}>
-          These terms and conditions (hereinafter "terms") govrrn your use of
-          our application, "myIceBreaker" which is hereinafter referred to as
-          "the Product" and is available at: Google Play and Apple Store.
+          These terms and conditions (hereinafter "terms") govern your use of
+          our application, "iLinkup" which is hereinafter referred to as "the
+          Product" and is available at: Google Play and Apple Store.
         </Text>
         <Text style={styles.normalText}>
           The Product is owned and operated by: My IceBreaker Pty Limited.

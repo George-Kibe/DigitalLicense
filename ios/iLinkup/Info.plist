@@ -32,8 +32,23 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>telprompt</string>
+		<string>tel</string>
+	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to enhance your dating experience by showing you people and places around you. Finding matches and suggesting nearby locations relies on your location information to provide accurate and relevant results. Rest assured, we prioritize your privacy and will only use your location data for these purposes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>As a chat application, we need access to photo library to enable sharing of photos in the chat.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>As a chat application, we need access to photo library to enable sharing of photos in the chat.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access to the camera for capturing photos and videos plus video in video calls.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow access to the microphone for recording audio amd audio in calls.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to enhance your dating experience by showing you people and places around you. Finding matches and suggesting nearby locations relies on your location information to provide accurate and relevant results.</string>
 	<key>UIAppFonts</key>
 		<array>
 		<string>AntDesign.ttf</string>

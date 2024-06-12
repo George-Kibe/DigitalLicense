@@ -22,14 +22,16 @@ const ProfileLinks = () => {
     navigation.navigate('LocationCheckIn');
   };
   const goToTutorial = () => {
-    navigation.navigate('Tutorial');
+    navigation.navigate('tutorial');
   };
-  const goToAbout = () => {};
+  const goToAbout = () => {
+    // handle navigation to about screen
+  };
   const goToHelp = () => {
-    navigation.navigate('Tutorial');
+    navigation.navigate('tutorial');
   };
   const goToTermsAndConditions = () => {
-    navigation.navigate('Terms Of Use');
+    navigation.navigate('terms-of-use');
   };
 
   return (
