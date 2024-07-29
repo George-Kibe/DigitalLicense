@@ -17,7 +17,7 @@ import PrimaryScreen from './PrimaryScreen';
 import GreetingScreen from './GreetingScreen';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
-import {getCurrentUser} from 'aws-amplify/auth';
+import {fetchAuthSession, getCurrentUser} from 'aws-amplify/auth';
 import {useDispatch} from 'react-redux';
 import {authSlice} from '../../store/AuthSlice';
 import {ActivityIndicator} from 'react-native-paper';
@@ -45,14 +45,21 @@ const LocationCheckIn = () => {
   const getOrCreateUser = async () => {
     console.log('Getting or creating user');
     const user = await getCurrentUser();
+    // const session = await fetchAuthSession();
+    // console.log('session: ', session);
+    console.log('user: ', user);
     const {loginId: email} = user.signInDetails;
     console.log('email: ', email);
+    if (!email) {
+      return;
+    }
     try {
       const response = await axios.get(
         `https://www.myicebreaker.com.au/api/users/${email}`,
       );
       if (response.status === 404) {
         // create user
+        console.log('creating a new user');
         const body = {email: email.toLowerCase(), password: 'password'};
         const signUpResponse = await axios.post(
           'https://www.myicebreaker.com.au/api/users',

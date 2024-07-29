@@ -120,9 +120,9 @@ const SignUpScreen = () => {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <NavBarGeneral
         leftButton={{display: true}}
-        leftText="Back"
+        leftText="BACK"
         rightButton={{display: true, action: goToLogin}}
-        rightText="Login"
+        rightText="LOGIN"
       />
       <Text style={styles.topTitle}>MEET ANYBODY ANYWHERE</Text>
       <LinearGradient

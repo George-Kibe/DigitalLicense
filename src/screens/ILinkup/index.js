@@ -8,8 +8,8 @@ function StackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="ilinkup-home">
-      <Stack.Screen name="ilinkup-home" component={YourIceBreakers} />
+      initialRouteName="myIceBreaker-home">
+      <Stack.Screen name="myIceBreaker-home" component={YourIceBreakers} />
     </Stack.Navigator>
   );
 }

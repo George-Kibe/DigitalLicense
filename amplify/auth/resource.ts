@@ -23,8 +23,8 @@ export const auth = defineAuth({
       //   clientId: secret('FACEBOOK_CLIENT_ID'),
       //   clientSecret: secret('FACEBOOK_CLIENT_SECRET'),
       // },
-      callbackUrls: ['iLinkup://callback/'],
-      logoutUrls: ['iLinkup://signout/'],
+      callbackUrls: ['myIceBreaker://callback/'],
+      logoutUrls: ['myIceBreaker://signout/'],
     },
   },
 });

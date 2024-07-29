@@ -1,11 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import NavBarGeneral from '../../components/NavBarGeneral';
 import AvatarImage from '../../assets/photos/lady-avatar.png';
 import IceBreakerHomeButtons from '../../components/ILinkupHomeButtons';
 import {RadioButton} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
 import SendingIceBreakerModal from './SendingIceBreakerModal';
 import LoadingVideo from './LoadingVideo';
 

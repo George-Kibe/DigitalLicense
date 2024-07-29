@@ -12,7 +12,7 @@ import {
 import NavBarGeneral from '../../components/NavBarGeneral';
 import TopImage from '../../assets/photos/party5.png';
 import BackgroundImage from '../../assets/photos/party5.png';
-import MyIcebreakerImage from '../../assets/logos/iLogo.png';
+import IlogoHorizontal from '../../assets/logos/iLogoHorizontal.png';
 import CustomButton from '../../components/CustomButton';
 
 const {width} = Dimensions.get('window');
@@ -30,9 +30,9 @@ const AccountsGeneral = ({navigation}) => {
     <View style={styles.container}>
       <NavBarGeneral
         leftButton={{display: true}}
-        leftText="Back"
+        leftText="BACK"
         rightButton={{display: true, action: goToRegister}}
-        rightText="Register"
+        rightText="REGISTER"
       />
       <View style={styles.topView}>
         <Text style={styles.topText}>MEET ANYBODY ANYWHERE</Text>
@@ -46,7 +46,7 @@ const AccountsGeneral = ({navigation}) => {
         imageStyle={styles.BackgroundImage}>
         <View style={styles.bottomView}>
           <Text style={styles.topText}>WELCOME TO</Text>
-          <Image source={MyIcebreakerImage} style={styles.logo} />
+          <Image source={IlogoHorizontal} style={styles.logo} />
           <CustomButton
             text="Login"
             onPress={goToLogin}
@@ -99,8 +99,9 @@ const styles = StyleSheet.create({
     paddingBottom: 1000,
   },
   logo: {
-    width: '100%',
+    width: '50%',
     height: 60,
+    alignSelf: 'center',
     resizeMode: 'contain',
     marginVertical: 10,
   },

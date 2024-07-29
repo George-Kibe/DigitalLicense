@@ -29,7 +29,9 @@ const StandardUserMembership = () => {
           <Image source={PremiumLogo} style={styles.image} />
         </TouchableOpacity>
         <Text style={styles.yellowText}>Upgrade NOW to PREMIUM to access</Text>
-        <Text style={styles.yellowText}>iLinkup ultimate features</Text>
+        <Text style={styles.yellowText}>
+          myIceBreaker Dating ultimate features
+        </Text>
         <View style={{marginVertical: 20}}>
           <View style={styles.feature}>
             <AntDesign name="checksquare" size={24} color="white" />

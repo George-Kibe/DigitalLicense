@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
-import Logo1 from '../../assets/logos/iLogo.png';
+import iLogoHorizontal from '../../assets/logos/iLogoHorizontal.png';
 import Video from 'react-native-video';
 import videoTutorial from '../../assets/videos/revised_tutorial.mp4';
 import NavBarGeneral from '../../components/NavBarGeneral';
@@ -40,14 +40,14 @@ const WelcomeAndExplanation = () => {
       <NavBarGeneral
         leftButton={{display: true, action: toggleVideo}}
         leftText={showVideo ? 'SHOW TEXT' : 'VIEW VIDEO'}
-        title={'Welcome to iLinkup'}
+        title={'Welcome to myIceBreaker Dating'}
         rightButton={{display: true, action: goToLogin}}
         rightText="NEXT"
       />
       <View>
         <Image
           style={[styles.image, width > 600 && {width: 100, height: 100}]}
-          source={Logo1}
+          source={iLogoHorizontal}
         />
       </View>
       {showVideo ? (
@@ -65,11 +65,11 @@ const WelcomeAndExplanation = () => {
         </View>
       ) : (
         <ScrollView style={styles.textView}>
-          <Text style={styles.topText}>Welcome to iLinkup</Text>
+          <Text style={styles.topText}>Welcome to myIceBreaker Dating</Text>
           <Text style={styles.text}>
-            With iLinkup you will be able to connect discreetly with people
-            around you without the need of knowing their contact details or
-            approcahing them personally.
+            With myIceBreaker Dating, you will be able to connect discreetly
+            with people around you without the need of knowing their contact
+            details or approcahing them personally.
           </Text>
           <Text style={styles.text}>
             You will also know if they are interested in meeting you or not in
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: 'center',
     height: 50,
-    width: 50,
+    width: '50%',
     resizeMode: 'contain',
   },
   textView: {

@@ -63,11 +63,11 @@ const Tutorial = () => {
         </View>
       ) : (
         <View style={styles.textView}>
-          <Text style={styles.topText}>Welcome to iLinkup</Text>
+          <Text style={styles.topText}>Welcome to myIceBreaker Dating</Text>
           <Text style={styles.text}>
-            With iLinkup you will be able to connect discreetly with people
-            around you without the need of knowing their contact details or
-            approcahing them personally.
+            With myIceBreaker Dating you will be able to connect discreetly with
+            people around you without the need of knowing their contact details
+            or approcahing them personally.
           </Text>
           <Text style={styles.text}>
             You will also know if they are interested in meeting you or not in

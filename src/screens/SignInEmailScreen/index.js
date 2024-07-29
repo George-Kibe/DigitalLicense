@@ -94,10 +94,10 @@ const SignInEmailScreen = ({navigation}) => {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <NavBarGeneral
         leftButton={{display: true}}
-        leftText="Back"
+        leftText="BACK"
         title={'Login to myIceBreaker'}
         rightButton={{display: true, action: goToRegister}}
-        rightText="Register"
+        rightText="REGISTER"
       />
       <Text style={styles.topText}>MEET ANYBODY ANYWHERE</Text>
       <LinearGradient
