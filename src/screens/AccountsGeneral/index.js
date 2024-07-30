@@ -12,7 +12,7 @@ import {
 import NavBarGeneral from '../../components/NavBarGeneral';
 import TopImage from '../../assets/photos/party5.png';
 import BackgroundImage from '../../assets/photos/party5.png';
-import IlogoHorizontal from '../../assets/logos/iLogoHorizontal.png';
+import myIceBreakerLogoH from '../../assets/logos/myicebreaker.png';
 import CustomButton from '../../components/CustomButton';
 
 const {width} = Dimensions.get('window');
@@ -46,7 +46,7 @@ const AccountsGeneral = ({navigation}) => {
         imageStyle={styles.BackgroundImage}>
         <View style={styles.bottomView}>
           <Text style={styles.topText}>WELCOME TO</Text>
-          <Image source={IlogoHorizontal} style={styles.logo} />
+          <Image source={myIceBreakerLogoH} style={styles.logo} />
           <CustomButton
             text="Login"
             onPress={goToLogin}

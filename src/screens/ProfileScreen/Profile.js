@@ -27,8 +27,8 @@ import {useAuthProvider} from '../../providers/AuthProvider';
 const Profile = () => {
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
   const {setSession} = useAuthProvider();
-  //const membershipType = mongoUser?.membershipType;
-  const membershipType = '';
+  const membershipType = mongoUser?.membershipType;
+  // const membershipType = '';
   const [initialMembership, setInitialMembership] = useState('');
   // const [userMembership, setUserMembership] = useState('');
 
@@ -71,6 +71,14 @@ const Profile = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setInitialMembership('Basic')}>
             <Image source={BasicImage} style={styles.image} />
+          </TouchableOpacity>
+        </View>
+      )}
+      {membershipType && !initialMembership && membershipType !== 'Premium' && (
+        <View style={styles.membershipView}>
+          <Text style={styles.topText}>UPGRADE YOUR MEMBERSHIP TO</Text>
+          <TouchableOpacity onPress={() => setInitialMembership('Premium')}>
+            <Image source={PremiumImage} style={styles.image} />
           </TouchableOpacity>
         </View>
       )}

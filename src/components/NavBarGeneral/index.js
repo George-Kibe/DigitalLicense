@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const {width} = Dimensions.get('window');
 
@@ -57,41 +57,16 @@ export default function NavBarGeneral({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    backgroundColor: '#282828',
-    //paddingTop: 5,
-    width: '100%',
-  },
-  topText: {
-    color: '#FCFCFC',
-    fontSize: 18,
-    fontWeight: '400',
-    marginVertical: 2,
-  },
-  topView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  textView: {
-    backgroundColor: '#333333',
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    flex: 1,
-    marginHorizontal: 10,
   },
   bottomView: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    paddingHorizontal: 5,
-    backgroundColor: 'black',
+    padding: 5,
   },
   leftButton: {
     paddingHorizontal: 10,
-    paddingVertical: 8,
     borderRadius: 5,
   },
   leftText: {
@@ -102,7 +77,6 @@ const styles = StyleSheet.create({
   },
   rightButton: {
     paddingHorizontal: 10,
-    paddingVertical: 8,
     borderRadius: 5,
   },
   rightText: {

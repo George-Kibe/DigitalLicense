@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
-import iLogoHorizontal from '../../assets/logos/iLogoHorizontal.png';
+import myicebreakerH from '../../assets/logos/myicebreaker.png';
 import Video from 'react-native-video';
 import videoTutorial from '../../assets/videos/revised_tutorial.mp4';
 import NavBarGeneral from '../../components/NavBarGeneral';
@@ -47,7 +47,7 @@ const WelcomeAndExplanation = () => {
       <View>
         <Image
           style={[styles.image, width > 600 && {width: 100, height: 100}]}
-          source={iLogoHorizontal}
+          source={myicebreakerH}
         />
       </View>
       {showVideo ? (

@@ -19,7 +19,7 @@ const ProfileLinks = () => {
     navigation.navigate('my-profile');
   };
   const goToUserDetails = () => {
-    navigation.navigate('LocationCheckIn');
+    navigation.navigate('location-checkin');
   };
   const goToTutorial = () => {
     navigation.navigate('tutorial');

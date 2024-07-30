@@ -15,8 +15,8 @@ import NotificationIcon from '../assets/home/Notification.png';
 import NotificationIconBlack from '../assets/home/NotificationBlack.png';
 import ProfileIcon from '../assets/home/Profile.png';
 import ProfileIconBlack from '../assets/home/ProfileBlack.png';
-import ILogo from '../assets/home/iLogo.png';
-import ILogoBlack from '../assets/home/iLogoBlack.png';
+import ILogo from '../assets/home/half-logo.png';
+import IceLogo from '../assets/home/ice-logo.png';
 import NotificationsScreen from '../screens/NotificationsScreen/Notifications';
 import Ilinkup from '../screens/ILinkup';
 import ILinkupHome from '../screens/ILinkupHome';
@@ -36,12 +36,12 @@ function HomeBottomTabs() {
         tabBarStyle: {
           backgroundColor: '#000000',
           paddingBottom: 0,
-          height: 40,
+          height: 50,
           borderTopWidth: 0,
         },
       }}>
       <Tab.Screen
-        name="myIceBreaker"
+        name="myIceBreaker-Home"
         component={ILinkupHome}
         options={{
           tabBarLabel: 'Home',
@@ -64,11 +64,11 @@ function HomeBottomTabs() {
           tabBarLabel: 'myIceBreaker',
           tabBarIcon: ({color, size, focused}) => (
             <Image
-              source={focused ? ILogo : ILogoBlack}
+              source={focused ? ILogo : IceLogo}
               color={color}
               style={{
-                width: 40,
-                height: 40,
+                width: 35,
+                height: 30,
                 marginBottom: 6,
               }}
             />

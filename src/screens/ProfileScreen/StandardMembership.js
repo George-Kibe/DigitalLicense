@@ -47,7 +47,7 @@ const StandardMembership = () => {
         text1: 'User Details have been updated successfully',
         text2: response.status,
       });
-      navigation.navigate('LocationCheckIn');
+      navigation.navigate('location-checkin');
       setLoading(false);
     } catch (error) {
       console.log(error);
