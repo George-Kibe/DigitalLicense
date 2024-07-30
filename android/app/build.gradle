@@ -78,9 +78,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_11
     }
-    namespace "com.iLinkup.app"
+    namespace "com.myicbreaker.datingapp"
     defaultConfig {
-        applicationId "com.iLinkup.app"
+        applicationId "com.myicbreaker.datingapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
