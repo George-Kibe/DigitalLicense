@@ -15,11 +15,8 @@ const ProfileLinks = () => {
   const goToMemberShip = () => {
     navigation.navigate('Profile');
   };
-  const goToSettings = () => {
+  const goToMyAccount = () => {
     navigation.navigate('my-profile');
-  };
-  const goToUserDetails = () => {
-    navigation.navigate('location-checkin');
   };
   const goToTutorial = () => {
     navigation.navigate('tutorial');
@@ -40,18 +37,18 @@ const ProfileLinks = () => {
         <Text style={styles.text}>MEMBERSHIP</Text>
         <AntDesign name="right" size={16} color="white" />
       </TouchableOpacity>
-      <TouchableOpacity onPress={goToSettings} style={styles.button}>
-        <Text style={styles.text}>SETTINGS</Text>
+      <TouchableOpacity onPress={goToMyAccount} style={styles.button}>
+        <Text style={styles.text}>MY ACCOUNT</Text>
         <AntDesign name="right" size={16} color="white" />
       </TouchableOpacity>
       <TouchableOpacity onPress={goToTutorial} style={styles.button}>
         <Text style={styles.text}>TUTORIAL</Text>
         <AntDesign name="right" size={16} color="white" />
       </TouchableOpacity>
-      <TouchableOpacity onPress={goToUserDetails} style={styles.button}>
+      {/* <TouchableOpacity onPress={goToUserDetails} style={styles.button}>
         <Text style={styles.text}>USER DETAILS </Text>
         <AntDesign name="right" size={16} color="white" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity onPress={goToAbout} style={styles.button}>
         <Text style={styles.text}>ABOUT</Text>
         <AntDesign name="right" size={16} color="white" />

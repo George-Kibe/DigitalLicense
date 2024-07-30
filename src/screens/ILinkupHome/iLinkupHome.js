@@ -37,10 +37,10 @@ const ILinkupHome = ({}) => {
       imageStyle={{opacity: 0.3}}
       style={styles.container}>
       <NavBarGeneral
-        leftButton={{display: true, action: () => {}}}
+        leftButton={{display: true, action: createAvatar}}
         leftText="EDIT"
         title={'Create or Edit Your Avatar'}
-        rightButton={{display: true, action: () => {}}}
+        rightButton={{display: true, action: createAvatar}}
         rightText={'CREATE'}
       />
       <View style={{padding: 20}}>

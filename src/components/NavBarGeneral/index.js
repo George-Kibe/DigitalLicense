@@ -57,6 +57,7 @@ export default function NavBarGeneral({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    backgroundColor: 'black',
   },
   bottomView: {
     flexDirection: 'row',

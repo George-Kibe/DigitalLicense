@@ -6,8 +6,8 @@ const GenerateAvatar = () => {
   return (
     <View style={styles.container}>
       <NavBarGeneral
-        leftButton={{display: true, action: () => {}}}
-        leftText="EDIT"
+        leftButton={{display: true, action: ''}}
+        leftText="BACK"
         title={'Create or Edit Your Avatar'}
         rightButton={{display: true, action: () => {}}}
         rightText={'CREATE'}

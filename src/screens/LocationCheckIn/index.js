@@ -21,6 +21,7 @@ import {fetchAuthSession, getCurrentUser} from 'aws-amplify/auth';
 import {useDispatch} from 'react-redux';
 import {authSlice} from '../../store/AuthSlice';
 import {ActivityIndicator} from 'react-native-paper';
+import GifLoading from '../../components/Loading';
 
 const checkInSteps = [
   {name: 'Primary Screen'},
@@ -126,7 +127,7 @@ const LocationCheckIn = () => {
     navigation.navigate('membership');
   }
   if (!mongoUser) {
-    return <ActivityIndicator size={'large'} />;
+    return <GifLoading />;
   }
 
   return (

@@ -75,9 +75,8 @@ const styles = StyleSheet.create({
   feature: {
     display: 'flex',
     gap: 10,
-    marginVertical: 2,
+    marginVertical: 0,
     alignItems: 'center',
-    alignSelf: 'center',
     flexDirection: 'row',
   },
   topText: {

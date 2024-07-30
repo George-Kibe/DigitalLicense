@@ -6,7 +6,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import {StyleSheet, Text, View, TextInput, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {SelectList} from 'react-native-dropdown-select-list';
@@ -47,8 +47,9 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
   const {setSession} = useAuthProvider();
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
+  console.log('Current Mongo User: ', mongoUser);
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState(mongoUser.name || '');
+  const [name, setName] = useState(mongoUser.username || '');
   const [age, setAge] = useState(mongoUser.age?.toString() || '');
   const [gender, setGender] = useState(mongoUser.gender || '');
   const [status, setStatus] = useState(mongoUser.status || '');

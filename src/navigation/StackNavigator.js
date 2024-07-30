@@ -6,7 +6,7 @@ import MembershipScreen from '../screens/ProfileScreen/Profile';
 import Tutorial from '../screens/Tutorial';
 import TermsOfUse from '../screens/TermsOfUse';
 import VideoAndChatStack from '../screens/VideoAndChatStack';
-import Profile from '../screens/ProfileScreen/Profile';
+import Profile from '../screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 

@@ -74,14 +74,6 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
       )}
-      {membershipType && !initialMembership && membershipType !== 'Premium' && (
-        <View style={styles.membershipView}>
-          <Text style={styles.topText}>UPGRADE YOUR MEMBERSHIP TO</Text>
-          <TouchableOpacity onPress={() => setInitialMembership('Premium')}>
-            <Image source={PremiumImage} style={styles.image} />
-          </TouchableOpacity>
-        </View>
-      )}
       {initialMembership === 'Premium' && <PremiumMembership />}
       {initialMembership === 'Standard' && <StandardMemberShip />}
       {initialMembership === 'Basic' && <BasicMemberShip />}

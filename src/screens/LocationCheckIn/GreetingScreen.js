@@ -16,16 +16,14 @@ import axios from 'axios';
 import {authSlice} from '../../store/AuthSlice';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
-import {Picker} from '@react-native-picker/picker';
 
 const {height} = Dimensions.get('window');
 
 const GreetingScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [selectedLanguage, setSelectedLanguage] = useState();
   const {mongoUser, user} = useSelector(state => state.user.loggedUser);
-
+  console.log('Current Mongo User: ', mongoUser);
   const lookingForData = [
     {key: '1', value: 'Relationship'},
     {key: '2', value: 'Friends With benefit'},
@@ -48,7 +46,7 @@ const GreetingScreen = () => {
   ];
 
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState(mongoUser.name || '');
+  const [name, setName] = useState(mongoUser.username || '');
   const [age, setAge] = useState(mongoUser.age?.toString() || '');
   const [gender, setGender] = useState(mongoUser.gender || '');
   const [status, setStatus] = useState(mongoUser.status || '');
@@ -93,6 +91,7 @@ const GreetingScreen = () => {
         text1: 'User Details have been updated successfully',
         text2: response,
       });
+      navigation.replace('home-stack');
       setLoading(false);
     } catch (error) {
       Toast.show({
@@ -109,10 +108,9 @@ const GreetingScreen = () => {
       <NavBarGeneral
         leftButton={{display: true, action: editMyDetails}}
         leftText={loading ? 'LOADING...' : 'CHANGE'}
-        title={'My Greeting'}
         rightButton={{
           display: true,
-          action: () => navigation.replace('home-stack'),
+          action: editMyDetails,
         }}
         rightText={loading ? 'LOADING...' : 'CONFIRM'}
       />

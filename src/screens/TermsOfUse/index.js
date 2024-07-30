@@ -18,7 +18,7 @@ const TermsOfUse = ({navigation}) => {
       />
       <View style={styles.termsView}>
         <Text style={styles.title}>
-          MOBILE APPLICATION TERMS AND CONDITIONS
+          myiceBreaker Dating TERMS AND CONDITIONS
         </Text>
         <Text style={[styles.normalText, {marginVertical: 20}]}>
           Effective date : 1st January 2024

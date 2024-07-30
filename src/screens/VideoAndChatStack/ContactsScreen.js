@@ -12,8 +12,8 @@ const ContactsScreen = () => {
   const navigation = useNavigation();
   const {mongoUser} = useSelector(state => state.user.loggedUser);
   const [profiles, setProfiles] = useState([
-    {id: '66683f7a352df660f4988757', name: 'George Kibe'},
-    {id: 'TestUser', name: 'Test User'},
+    {id: '66a892ad4a33979cde953d07', name: 'George Kibe'},
+    {id: '66a7983831888fc76b44c26f', name: 'George Test'},
   ]);
   const client = useStreamVideoClient();
   const {client: chatClient} = useChatContext();

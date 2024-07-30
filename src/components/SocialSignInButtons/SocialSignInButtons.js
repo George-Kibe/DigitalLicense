@@ -70,21 +70,21 @@ const SocialSignInButtons = () => {
     <>
       <CustomButton
         text="Apple"
-        onPress={onSignInApple}
+        onPress={onSignInFacebook}
         bgColor="#e3e3e3"
         fgColor="#363636"
         image={AppleLogo}
       />
-      <CustomButton
+      {/* <CustomButton
         text="Email"
         onPress={onSignInEmail}
         bgColor="#E7EAF4"
         fgColor="#4765A9"
         image={EmailLogo}
-      />
+      /> */}
       <CustomButton
         text="Google"
-        onPress={onSignInGoogle}
+        onPress={onSignInFacebook}
         bgColor="#FAE9EA"
         fgColor="#DD4D44"
         image={GoogleLogo}
