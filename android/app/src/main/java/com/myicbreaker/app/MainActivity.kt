@@ -1,4 +1,4 @@
-package com.myicbreaker.datingapp
+package com.myicbreaker.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

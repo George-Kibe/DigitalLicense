@@ -1,4 +1,4 @@
-package com.myicbreaker.datingapp
+package com.myicbreaker.app
 
 import android.app.Application
 import com.facebook.react.PackageList
