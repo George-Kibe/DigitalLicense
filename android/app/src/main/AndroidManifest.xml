@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.myicbreaker.app">
+    package="com.myicebreaker.app">
 
     <!-- Hardware features -->
     <uses-feature android:name="android.hardware.camera" />

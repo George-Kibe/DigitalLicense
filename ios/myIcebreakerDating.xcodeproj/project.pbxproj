@@ -448,7 +448,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.myicbreaker.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.myicebreaker.app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/myIcebreakerDating.app/myIcebreakerDating";
 			};
@@ -472,7 +472,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.myicbreaker.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.myicebreaker.app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/myIcebreakerDating.app/myIcebreakerDating";
 			};
@@ -499,7 +499,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.myicbreaker.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.myicebreaker.app";
 				PRODUCT_NAME = "myIcebreakerDating";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -527,7 +527,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.myicbreaker.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.myicebreaker.app";
 				PRODUCT_NAME = "myIcebreakerDating";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

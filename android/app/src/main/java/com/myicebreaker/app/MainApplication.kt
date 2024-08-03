@@ -1,4 +1,4 @@
-package com.myicbreaker.app
+package com.myicebreaker.app
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -1,4 +1,4 @@
-package com.myicbreaker.app
+package com.myicebreaker.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

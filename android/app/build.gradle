@@ -78,9 +78,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_11
     }
-    namespace "com.myicbreaker.app"
+    namespace "com.myicebreaker.app"
     defaultConfig {
-        applicationId "com.myicbreaker.app"
+        applicationId "com.myicebreaker.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
