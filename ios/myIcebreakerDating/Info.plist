@@ -23,13 +23,13 @@
 	<key>CFBundleVersion</key>
 	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true />
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false />
+		<false/>
 		<key>NSAllowsLocalNetworking</key>
-		<true />
+		<true/>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -83,6 +83,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false />
+	<false/>
 </dict>
 </plist>
