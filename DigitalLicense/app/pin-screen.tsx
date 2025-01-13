@@ -84,7 +84,7 @@ const PinScreen = () => {
           disabledPinCodeContainerStyle: styles.disabledPinCodeContainer,
         }}
       />
-       <CodeField
+       {/* <CodeField
         ref={ref}
         {...props}
         // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
@@ -105,7 +105,7 @@ const PinScreen = () => {
         //   </Text>
         // )}
         renderCell={renderCell}
-      />
+      /> */}
       <View style={styles.bottomView}>
         <Text style={styles.bottomText}>
           Forgot your PIN?

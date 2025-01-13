@@ -19,7 +19,6 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topView}>
-
       </View>
       <View style={styles.bottomView}>
         {
@@ -44,6 +43,7 @@ export default function HomeScreen() {
                 <Image style={styles.passport} source={images.GeorgePassport}/>
                 <Text style={styles.nameText}> FRANCESCO ANTONIO CORTESE</Text>
               </View>
+              
               <View style={styles.credentialsView}>
                 <Text>Credentials</Text>
                 <View style={styles.updatingView}>
@@ -51,6 +51,7 @@ export default function HomeScreen() {
                   <Text>Updating</Text>
                 </View>
               </View>
+
               <View>
                 <TouchableOpacity onPress={() => router.push("/license-details")} style={styles.optionButton}>
                   {/* <Image /> */}
