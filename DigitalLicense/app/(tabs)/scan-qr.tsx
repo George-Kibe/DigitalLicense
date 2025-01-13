@@ -3,7 +3,7 @@ import React from 'react'
 
 const ScanQRScreen = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>ScanQRScreen</Text>
     </View>
   )
@@ -11,4 +11,11 @@ const ScanQRScreen = () => {
 
 export default ScanQRScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "whitesmoke",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
