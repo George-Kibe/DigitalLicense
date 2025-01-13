@@ -1,9 +1,9 @@
 import { images } from "@/constants/images";
 import { router } from "expo-router";
 import { useEffect } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, TouchableOpacity, Text } from "react-native";
 
-export default function Index() {
+export default function Homescreen() {
   useEffect(() => {
     // Set a timeout to call the function after 2 seconds
     const timer = setTimeout(() => {
@@ -13,8 +13,13 @@ export default function Index() {
     // Cleanup the timeout when the component unmounts
     return () => clearTimeout(timer);
   }, []); 
+
   return (
-    <ImageBackground source={images.HomeLoader} resizeMode="cover" style={styles.image}>
+    <ImageBackground 
+      source={images.HomeLoader} 
+      resizeMode="cover" 
+      style={styles.image}
+    >
     </ImageBackground>
   );
 }
