@@ -9,12 +9,21 @@ import { router } from 'expo-router';
 
 export default function HomeScreen() {
   const [showActivity, setShowActivity] = useState(true);
-   useEffect(() => {
-      const timer = setTimeout(() => {
-        setShowActivity(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }, []); 
+  const [updating, setUpdating] = useState<Boolean>(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowActivity(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []); 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUpdating(false);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []); 
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -43,26 +52,29 @@ export default function HomeScreen() {
                 <Image style={styles.passport} source={images.GeorgePassport}/>
                 <Text style={styles.nameText}> FRANCESCO ANTONIO CORTESE</Text>
               </View>
-              
               <View style={styles.credentialsView}>
                 <Text>Credentials</Text>
-                <View style={styles.updatingView}>
-                  <ActivityIndicator />
-                  <Text>Updating</Text>
-                </View>
-              </View>
+                {
+                  updating && (
+                    <View style={styles.updatingView}>
+                      <ActivityIndicator />
+                      <Text>Updating</Text>
+                    </View>
+                  )
+                }
+              </View>         
 
               <View>
                 <TouchableOpacity onPress={() => router.push("/license-details")} style={styles.optionButton}>
                   {/* <Image /> */}
                   <FontAwesome5 name="car-side" size={24} color="black" />
-                  <Text>Driver License</Text>
+                  <Text>Driver Licence</Text>
                   <Feather style={styles.rightIcon} name="chevron-right" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.optionButton}>
                   {/* <Image /> */}
                   <FontAwesome5 name="car-side" size={24} color="black" />
-                  <Text>Marine License</Text>
+                  <Text>Marine Licence</Text>
                   <Feather style={styles.rightIcon} name="chevron-right" size={24} color="black" />
                 </TouchableOpacity>
               </View>

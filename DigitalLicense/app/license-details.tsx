@@ -8,6 +8,7 @@ const { height, width } = Dimensions.get("screen");
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import moment from "moment";
+import {LinearGradient} from 'expo-linear-gradient';
 
 const LicenseDetails = () => {
   const [date, setDate] = useState<Date>();
@@ -15,13 +16,26 @@ const LicenseDetails = () => {
   
   useEffect(() => {
     const newDate = new Date();
-    console.log("Date: ", date)
     setDate(newDate)
   }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUpdating(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []); 
   
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.topView}>
+      <SafeAreaView style={[styles.topView, styles.splitView]}>
+      <View style={[styles.triangle, styles.bottomRight]} />
+      <LinearGradient 
+        start = {{x:0, y: 0}}
+        end = {{x:1, y: 0}}
+        colors={['#F2A553', '#FBCD7A',]}
+        style={[styles.triangle, styles.topLeft]}
+         />
         <View style={styles.topViews} >
           <TouchableOpacity onPress={() => router.back()} style={styles.backView}>
             <Ionicons name="chevron-back-outline" size={24} color="black" />
@@ -30,14 +44,11 @@ const LicenseDetails = () => {
           <View style={styles.rightView}>
             <Image style={styles.qLogo} source={images.QLDWatermark} />
               <View style={styles.queenTextView}>
-                <Text style={styles.qtext}>Queensland</Text>
-                <Text style={styles.qtext}>Government</Text>
+                <Text style={styles.q1text}>Queensland</Text>
+                <Text style={styles.q2text}>Government</Text>
               </View>
           </View>
         </View>
-       <View style={styles.licenseTextView}>
-        <Text style={styles.licenseText}>Driver Licence</Text>
-       </View>
       </SafeAreaView>
 
         <Animatable.Image
@@ -49,29 +60,52 @@ const LicenseDetails = () => {
           resizeMode="cover"
         />
         
-        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <ScrollView bounces={false} style={styles.scrollView} showsVerticalScrollIndicator={false}>
+          <LinearGradient 
+            start = {{x:0, y: 0}}
+            end = {{x:1, y: 0}}
+            colors={['#F2A553', '#FBCD7A',]} 
+            style={styles.licenseTextView}
+          >
+            <Text style={styles.licenseText}>Driver Licence</Text>
+          </LinearGradient>
           <View style={styles.userDetailsView}>
             <Image style={styles.passport} source={images.GeorgePassport}/>
             <View style={styles.rightDetails}>
               <Text style={styles.nameText}>FRANCESCO ANTONIO CORTESE</Text>
-              <Text style={styles.dobText}>DoB</Text>
-              <Text>05 Oct 1967</Text>
-              <Text style={styles.dobText}>License No.</Text>
-              <Text>123456789</Text>
+              <View>
+                <Text style={styles.dobText}>DoB</Text>
+                <Text style={styles.detailText}>05 Oct 1967</Text>
+              </View>
+              <View>
+                <Text style={styles.dobText}>Licence No.</Text>
+                <Text style={styles.detailText}>0893656178</Text>
+              </View>
             </View>
           </View>
 
-          <View>
-            <Text style={styles.text}>This information was refreshed online</Text>
+          {/* <View style={styles.splitView}>
+            <View style={[styles.triangle, styles.topLeft]} />
+            <View style={[styles.triangle, styles.bottomRight]} />
+          </View> */}
+
+          <View style={styles.infoView}>
+            <Text style={styles.text}>Information was refreshed online:</Text>
             <Text style={styles.dateTimeText}>{moment(date).format("DD MMM YYYY hh:mm a")}</Text>
           </View>
-           <View style={styles.credentialsView}>
-            <View style={styles.updatingView}>
-              <ActivityIndicator />
-              <Text>Updating</Text>
-            </View>
-            <View style={styles.line} />
-          </View>
+          <View style={styles.line} />
+
+          {
+            updating && (
+              <View style={styles.credentialsView}>
+                <View style={styles.updatingView}>
+                  <ActivityIndicator />
+                  <Text>Updating</Text>
+                </View>
+                <View style={styles.line} />
+              </View>
+            )
+          }
           
           <View style={styles.singleDetailView}>
             <View style={styles.leftDetailView}>
@@ -89,7 +123,7 @@ const LicenseDetails = () => {
               <Text style={styles.text}>Age</Text>
             </View>
             <View style={styles.ageDetailView}>
-              <Ionicons name="checkmark-circle" size={24} color="#0D6C4D" />
+              <Ionicons name="checkmark-circle" size={30} color="#0D6C4D" />
               <Text style={styles.greenText}>
                 Over 18
               </Text>
@@ -102,7 +136,7 @@ const LicenseDetails = () => {
               <Text style={styles.text}>Class</Text>
             </View>
             <View style={styles.ageDetailView}>
-              <Text style={styles.text}>
+              <Text style={styles.backText}>
                 (C) Car
               </Text>
               <FontAwesome6 name="car-side" size={24} color="black" />
@@ -114,7 +148,7 @@ const LicenseDetails = () => {
               <Text style={styles.text}>Type</Text>
             </View>
             <View style={styles.ageDetailView}>
-              <Text style={styles.text}>
+              <Text style={styles.blackText}>
                 (O) Open
               </Text>
             </View>
@@ -125,7 +159,7 @@ const LicenseDetails = () => {
               <Text style={styles.text}>Expiry</Text>
             </View>
             <View style={styles.ageDetailView}>
-              <Text style={styles.text}>
+              <Text style={styles.blackText}>
                 31 Oct 2029
               </Text>
             </View>
@@ -152,10 +186,10 @@ const LicenseDetails = () => {
               </View>
             </View>
             <View style={styles.addressDetailView}>
-              <Text style={styles.text}>
+              <Text style={styles.blackText}>
                 19 CARBEEN STREET BULIMBA
               </Text>
-              <Text style={styles.text}>
+              <Text style={styles.blackText}>
                 QLD 4171 AU
               </Text>
             </View>
@@ -176,7 +210,7 @@ const LicenseDetails = () => {
             <View style={styles.leftDetailView}>
               <Text style={styles.text}>Card Number</Text>
             </View>
-            <Text style={styles.text}>
+            <Text style={styles.blackText}>
               C3D6A34DA6
             </Text>
           </View>
@@ -186,7 +220,7 @@ const LicenseDetails = () => {
             <View style={styles.leftDetailView}>
               <Text style={styles.text}>Issuing Country</Text>
             </View>
-            <Text style={styles.text}>
+            <Text style={styles.blackText}>
               AU
             </Text>
           </View>
@@ -197,10 +231,10 @@ const LicenseDetails = () => {
               <Text style={styles.text}>Issuing Authority</Text>
             </View>
             <View>
-            <Text style={styles.text}>
+            <Text style={styles.blackText}>
               Queensland Government,
             </Text>
-            <Text style={styles.text}>
+            <Text style={styles.blackText}>
               Department of Transport
             </Text>
             </View>
@@ -226,18 +260,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#F2A553",
   },
   topView: {
-    backgroundColor: "#F2A553",
     width,
   },
   topViews: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    padding: 20,
   },
   backView: {
     flexDirection: "row",
@@ -246,23 +277,25 @@ const styles = StyleSheet.create({
   },
   backText: {
     color: "black",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "700",
   },
   line: {
     height: 2,
     backgroundColor: "lightgray",
-    marginVertical: 6,
-    width: width * 0.9
+    marginVertical: 8,
+    width: width * 0.9,
+    alignSelf: "center"
   },
   rightView: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 0,
   },
   qLogo: {
-    height: 40,
-    width: 40,
+    height: 50,
+    width: 50,
+    resizeMode: "contain",
   },
   queenTextView: {
     // flexDirection: "column",
@@ -270,49 +303,69 @@ const styles = StyleSheet.create({
   },
    userDetailsView: {
     flexDirection: "row",
+    marginTop: -20,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
     gap: 16,
-    marginBottom: 20,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: "whitesmoke",
   },
   rightDetails: {
     justifyContent: 'space-between'
+  },
+  infoView: {
+    paddingHorizontal: 20,
   },
   nameText: {
     color: "black",
     fontSize: 20,
     flexWrap: 'wrap',
     width: 250,
-    fontWeight: "800",
+    fontWeight: "700",
+  },
+  detailText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: 0.2,
   },
   dobText: {
-    color: "black",
+    color: "#000",
     fontSize: 12,
     fontWeight: "800",
-    marginTop: 2,
   },
   passport: {
     height: 140,
     width: 120,
     borderRadius: 2,
+    marginBottom: 10
   },
-  qtext: {
+  q1text: {
     color: "black",
-    fontSize: 12,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "800",
+  },
+  q2text: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "500",
   },
   licenseTextView: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    backgroundColor:'#F2A553',
+    width
   },
   licenseText: {
     color: "black",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "800",
   },
   scrollView: {
-    padding: 20,
     width: width ,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
-    backgroundColor: 'whitesmoke'
+    backgroundColor: "whitesmoke",
   },
   background: {
     flex: 1,
@@ -331,32 +384,45 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    color: 'black',
+    color: "#807E81",
     fontWeight: "600"
+  },
+  blackText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "700"
+  },
+  darkText: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "700"
   },
   dateTimeText: {
     fontSize: 14,
     color: 'black',
-    fontWeight: "800",
+    fontWeight: "700",
     marginTop: 4,
   },
   credentialsView: {
     flexDirection: "column",
     marginTop: 10,
+    paddingHorizontal: 20,
   },
   updatingView: {
     flexDirection: "row",
     gap: 10,
   },
   singleDetailView: {
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 12,
+    paddingVertical: 12,
+    backgroundColor: "whitesmoke",
   },
   leftDetailView: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 4,
     width: width * 0.4
   },
   currentView: {
@@ -373,7 +439,8 @@ const styles = StyleSheet.create({
   },
   greenText: {
     color: "#0D6C4D",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 18
   },
   whiteText: {
     color: "white",
@@ -385,7 +452,7 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 12,
-    color: "black",
+    color: "#807E81",
     fontWeight: "bold",
   },
   bottomView: {
@@ -406,7 +473,32 @@ const styles = StyleSheet.create({
   shareDLText: {
     color: "black",
     fontSize: 16,
-    fontWeight: "800",
+    fontWeight: "700",
   },
-
+  splitView: {
+    width: width, // Adjust width to your preference
+    height: 130, // Adjust height to your preference
+    position: "relative",
+    overflow: "hidden",
+  },
+  triangle: {
+    width: 0,
+    height: 0,
+    position: "absolute",
+    borderStyle: "solid",
+  },
+  topLeft: {
+    borderTopWidth: 130, // Matches the container height
+    borderRightWidth: width, // Matches the container width
+    borderTopColor: "#F2A553",
+    borderRightColor: "transparent",
+  },
+  bottomRight: {
+    top: 0,
+    right: 0,
+    borderBottomWidth: 130, // Matches the container height
+    borderLeftWidth: width, // Matches the container width
+    borderBottomColor: "#FBCD7A",
+    borderLeftColor: "transparent",
+  },
 })
