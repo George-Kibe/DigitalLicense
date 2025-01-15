@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import CalendarPicker from "react-native-calendar-picker";
 import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
+import { RootState } from '@/store';
+import moment from "moment";
 
 import {
   View,
@@ -17,17 +19,23 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import userSlice from '@/store/userSlice';
 
 const ProfileEditScreen = () => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [dob, setDob] = useState('');
-  const [licenceNumber, setLicenceNumber] = useState('')
-  const [classType, setClassType] = useState('');
-  const [cardNumber,  setCardNumber] = useState('');
-  const [type, setType] = useState('');
-  const [expiry, setExpiry] = useState('');
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.currentUser.user) as User | null;
+  console.log("CurrentUser: ", currentUser)
+  const [profileImage, setProfileImage] = useState(currentUser?.passportImage || '');
+  const [signatureImage, setSignatureImage] = useState(currentUser?.signatureImage || '');
+  const [name, setName] = useState(currentUser?.fullName || '');
+  const [address, setAddress] = useState(currentUser?.address || '');
+  const [dob, setDob] = useState(currentUser?.dateOfBirth);
+  const [licenceNumber, setLicenceNumber] = useState(currentUser?.licenceNumber || '')
+  const [classType, setClassType] = useState(currentUser?.class || '');
+  const [cardNumber,  setCardNumber] = useState(currentUser?.cardNumber || '');
+  const [type, setType] = useState(currentUser?.type || '');
+  const [expiryDate, setExpiryDate] = useState(currentUser?.expiryDate);
 
   const handleImageUpload = async () => {
     // No permissions request is necessary for launching the image library
@@ -45,16 +53,6 @@ const ProfileEditScreen = () => {
     }
   };
 
-  console.log(
-    "Name: ", name,
-    "Address: ", address,
-    "DOB: ", dob,
-    "Licence Number: ", licenceNumber,
-    "Class Type: ", classType,
-    "Type: ", type,
-    "Expiry: ", expiry
-  )
-
   const typeOptions = [
     {"key":"(O)", "value": "Open"},
     {"key":"(P)", "value": "P-Red"},
@@ -68,8 +66,24 @@ const ProfileEditScreen = () => {
   ]
 
   const handleSave = () => {
-    // Handle saving data
     alert('Profile Updated');
+    dispatch(userSlice.actions.addCurrentUser({
+      user: {
+        firstName: name.split(" ")[0],
+        middleName: name.split(" ")[1],
+        lastName: name.split(" ")[2],
+        passportImage: profileImage,
+        signatureImage: signatureImage || "",
+        fullName: name,
+        dateOfBirth: dob || new Date(),
+        address: address,
+        licenceNumber: licenceNumber,
+        cardNumber: cardNumber,
+        class: classType,
+        type: type,
+        expiryDate: expiryDate || new Date(new Date().setFullYear(new Date().getFullYear() + 3)),
+      }
+    }))
   };
 
   return (
@@ -163,9 +177,12 @@ const ProfileEditScreen = () => {
 
         {/* Expiry: Calendar */}
         <Text style={styles.label}>Expiry</Text>
-        <CalendarPicker onDateChange={setExpiry} />
+        <CalendarPicker onDateChange={setExpiryDate} />
         <Text style={styles.label}>Sign</Text>
-        <SignPad />
+        <SignPad
+          signatureImage={currentUser?.signatureImage || ""}
+          setSignatureImage={setSignatureImage}
+        />
 
         {/* Save Button */}
         <Button title="Save Profile" onPress={handleSave} />

@@ -4,16 +4,21 @@ import React, { useEffect, useState } from 'react';
 import { images } from '@/constants/images';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-const { height, width } = Dimensions.get("screen");
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import moment from "moment";
 import {LinearGradient} from 'expo-linear-gradient';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+
+const { height, width } = Dimensions.get("screen");
 
 const LicenseDetails = () => {
   const [date, setDate] = useState<Date>();
+  const currentUser = useSelector((state: RootState) => state.currentUser.user) as User | null;
   const [updating, setUpdating] = useState<Boolean>(true);
-  
+  const age = moment().diff(currentUser?.dateOfBirth, 'years')
+  console.log("Age: ", age)
   useEffect(() => {
     const newDate = new Date();
     setDate(newDate)
@@ -70,16 +75,18 @@ const LicenseDetails = () => {
             <Text style={styles.licenseText}>Driver Licence</Text>
           </LinearGradient>
           <View style={styles.userDetailsView}>
-            <Image style={styles.passport} source={images.GeorgePassport}/>
+            <Image style={styles.passport} source={{uri: currentUser?.passportImage}}/>
             <View style={styles.rightDetails}>
-              <Text style={styles.nameText}>FRANCESCO ANTONIO CORTESE</Text>
+              <Text style={styles.nameText}>{currentUser?.fullName}</Text>
               <View>
                 <Text style={styles.dobText}>DoB</Text>
-                <Text style={styles.detailText}>05 Oct 1967</Text>
+                <Text style={styles.detailText}>
+                  {moment(currentUser?.dateOfBirth).format("DD MMM YYYY")}
+                </Text>
               </View>
               <View>
                 <Text style={styles.dobText}>Licence No.</Text>
-                <Text style={styles.detailText}>0893656178</Text>
+                <Text style={styles.detailText}>{currentUser?.licenceNumber}</Text>
               </View>
             </View>
           </View>
@@ -137,7 +144,7 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.ageDetailView}>
               <Text style={styles.backText}>
-                (C) Car
+                {currentUser?.class}
               </Text>
               <FontAwesome6 name="car-side" size={24} color="black" />
             </View>
@@ -149,7 +156,7 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.ageDetailView}>
               <Text style={styles.blackText}>
-                (O) Open
+                {currentUser?.type}
               </Text>
             </View>
           </View>
@@ -160,7 +167,7 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.ageDetailView}>
               <Text style={styles.blackText}>
-                31 Oct 2029
+                {moment(currentUser?.expiryDate).format("DD MMM YYYY")}
               </Text>
             </View>
           </View>
@@ -186,10 +193,10 @@ const LicenseDetails = () => {
               </View>
             </View>
             <View style={styles.addressDetailView}>
-              <Text style={styles.blackText}>
-                19 CARBEEN STREET BULIMBA
+              <Text style={styles.blackTextUpper}>
+                {currentUser?.address}
               </Text>
-              <Text style={styles.blackText}>
+              <Text style={styles.blackTextUpper}>
                 QLD 4171 AU
               </Text>
             </View>
@@ -201,7 +208,11 @@ const LicenseDetails = () => {
               <Text style={styles.text}>Signature</Text>
             </View>
             <View style={styles.ageDetailView}>
-              {/* <Image style={styles.signature} source={images.signature} /> */}
+              <Image
+                      source={{ uri: currentUser?.signatureImage }}
+                      style={styles.signature}
+                      resizeMode="contain"
+                    />
             </View>
           </View>
           <View style={styles.line} />
@@ -210,8 +221,8 @@ const LicenseDetails = () => {
             <View style={styles.leftDetailView}>
               <Text style={styles.text}>Card Number</Text>
             </View>
-            <Text style={styles.blackText}>
-              C3D6A34DA6
+            <Text style={styles.blackTextUpper}>
+              {currentUser?.cardNumber}
             </Text>
           </View>
           <View style={styles.line} />
@@ -301,7 +312,12 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     // alignItems: "center",
   },
-   userDetailsView: {
+  signature: {
+    width: 200, // Adjust as needed
+    height: 40, // Adjust as needed
+    resizeMode: "cover"
+  },
+  userDetailsView: {
     flexDirection: "row",
     marginTop: -20,
     borderTopRightRadius: 16,
@@ -310,7 +326,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 20,
     paddingBottom: 20,
-    backgroundColor: "whitesmoke",
+    backgroundColor: "white",
   },
   rightDetails: {
     justifyContent: 'space-between'
@@ -324,6 +340,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: 250,
     fontWeight: "700",
+    textTransform: 'uppercase'
   },
   detailText: {
     color: "black",
@@ -365,7 +382,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: width ,
-    backgroundColor: "whitesmoke",
+    backgroundColor: "white",
   },
   background: {
     flex: 1,
@@ -392,10 +409,17 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "700"
   },
+  blackTextUpper: {
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "700",
+    textTransform: 'uppercase',
+    width: 250
+  },
   darkText: {
     fontSize: 16,
     color: "#000",
-    fontWeight: "700"
+    fontWeight: "700",
   },
   dateTimeText: {
     fontSize: 14,
@@ -417,7 +441,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 12,
-    backgroundColor: "whitesmoke",
   },
   leftDetailView: {
     flexDirection: "row",
