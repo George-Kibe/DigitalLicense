@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Dimensions, Image, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import React, { useEffect, useState } from 'react';
 import { images } from '@/constants/images';
@@ -33,14 +33,17 @@ const LicenseDetails = () => {
   
   return (
     <View style={styles.container}>
-      <SafeAreaView style={[styles.topView, styles.splitView]}>
+      <View style={[styles.topView, styles.splitView]}>
       <View style={[styles.triangle, styles.bottomRight]} />
+      <SafeAreaView
+        style={Platform.OS === 'android'? {paddingTop: 50} : {}}
+      >
       <LinearGradient 
         start = {{x:0, y: 0}}
         end = {{x:1, y: 0}}
         colors={['#F2A553', '#FBCD7A',]}
         style={[styles.triangle, styles.topLeft]}
-         />
+      />
         <View style={styles.topViews} >
           <TouchableOpacity onPress={() => router.back()} style={styles.backView}>
             <Ionicons name="chevron-back-outline" size={24} color="black" />
@@ -56,16 +59,18 @@ const LicenseDetails = () => {
         </View>
       </SafeAreaView>
 
-        <Animatable.Image
-          animation="pulse" // Replace with desired animation
-          iterationCount="infinite"
-          duration={1500}
-          source={images.QLDWatermark}
-          style={styles.bouncingImage}
-          resizeMode="cover"
-        />
+      </View>
+
+      <Animatable.Image
+        animation="pulse" // Replace with desired animation
+        iterationCount="infinite"
+        duration={1500}
+        source={images.QLDWatermark}
+        style={styles.bouncingImage}
+        resizeMode="contain"
+      />
         
-        <ScrollView bounces={false} style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView bounces={false} style={styles.scrollView} showsVerticalScrollIndicator={false}>
           <LinearGradient 
             start = {{x:0, y: 0}}
             end = {{x:1, y: 0}}
@@ -209,10 +214,10 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.ageDetailView}>
               <Image
-                      source={{ uri: currentUser?.signatureImage }}
-                      style={styles.signature}
-                      resizeMode="contain"
-                    />
+                source={{ uri: currentUser?.signatureImage }}
+                style={styles.signature}
+                resizeMode="contain"
+              />
             </View>
           </View>
           <View style={styles.line} />
@@ -289,7 +294,7 @@ const styles = StyleSheet.create({
   backText: {
     color: "black",
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "500",
   },
   line: {
     height: 2,
@@ -339,19 +344,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     flexWrap: 'wrap',
     width: 250,
-    fontWeight: "700",
+    fontWeight: "500",
     textTransform: 'uppercase'
   },
   detailText: {
     color: "black",
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "500",
     letterSpacing: 0.2,
   },
   dobText: {
     color: "#000",
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   passport: {
     height: 140,
@@ -378,7 +383,7 @@ const styles = StyleSheet.create({
   licenseText: {
     color: "black",
     fontSize: 18,
-    fontWeight: "800",
+    fontWeight: "700",
   },
   scrollView: {
     width: width ,
@@ -390,41 +395,41 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bouncingImage: {
-    width: 160,
-    height: 160,
+    width: 180,
+    height: 180,
     resizeMode: "contain",
     position: "absolute",
-    opacity: 0.1,
+    opacity: 0.2,
     alignSelf: 'center',
-    top: height * 0.36,
+    top: height * 0.32,
     zIndex: 2
   },
   text: {
     fontSize: 14,
     color: "#807E81",
-    fontWeight: "600"
+    fontWeight: "500"
   },
   blackText: {
     fontSize: 16,
     color: "#000",
-    fontWeight: "700"
+    fontWeight: "500"
   },
   blackTextUpper: {
     fontSize: 16,
     color: "#000",
-    fontWeight: "700",
+    fontWeight: "500",
     textTransform: 'uppercase',
     width: 250
   },
   darkText: {
     fontSize: 16,
     color: "#000",
-    fontWeight: "700",
+    fontWeight: "500",
   },
   dateTimeText: {
     fontSize: 14,
     color: 'black',
-    fontWeight: "700",
+    fontWeight: "400",
     marginTop: 4,
   },
   credentialsView: {
@@ -484,6 +489,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "whitesmoke",
+    marginBottom: 10,
   },
   shareButton: {
     backgroundColor: "#F2A553",

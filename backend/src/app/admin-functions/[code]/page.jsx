@@ -1,16 +1,50 @@
 "use client"
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 import { Button } from '@/components/ui/button'
 import generateUserCode from '@/lib/generateUserCode'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import moment from "moment"
+import { useParams } from "next/navigation"
+import { set } from "mongoose"
 
-const AdminFunctionsPage = ({params}) => {
-  console.log("Params: ", params)
+const AdminFunctionsPage = () => {
+  const params = useParams();
+  const code = params.code
   const [userCode, setUserCode] = useState('');
   const [allCodes, setAllCodes] = useState([]);
   const [currentCodes, setCurrentCodes] = useState([]);
-  const [activeBar, setActiveBar] = useState('All')
+  const [activeBar, setActiveBar] = useState('All');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const getAdminStatus = async(codeText) => {
+    setLoading(true)
+    try {
+      const response = await axios.get(`/api/codes/${codeText}`);
+      console.log("Response: ", response.data)
+      if (response.data.isAdmin && !response.data.isExpired) {
+        setIsAdmin(true)
+      }
+    } catch (error) {
+      console.error('Invalid or Expired Code:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    code && getAdminStatus(code)
+  }, [code])
+  
 
   const fetchAllCodes = async () => {
     const response = await axios.get('/api/codes')
@@ -58,6 +92,29 @@ const AdminFunctionsPage = ({params}) => {
     setActiveBar('Admins')
   }
 
+  if (!isAdmin) {
+    return (
+      <div className='min-h-screen flex flex-col items-center justify-center'>
+        <h1 className="text-2xl mb-4">You are not an admin</h1>
+      </div>
+    )
+  }
+  if (loading) {
+    return (
+      <div className='min-h-screen flex flex-col items-center justify-center'>
+        <div class="text-center">
+          <div
+            class="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-yellow-500 mx-auto"
+          ></div>
+          <h2 class="text-zinc-900 dark:text-white mt-4">Loading...</h2>
+          <p class="text-zinc-600 dark:text-zinc-400">
+            Your adventure is about to begin
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className='min-h-screen flex flex-col items-center pt-8'>
       <div className="flex flex-row mb-8 gap-4 justify-between">
@@ -70,17 +127,39 @@ const AdminFunctionsPage = ({params}) => {
           <Button onClick={getUserCodes} className={`font-bold text-2xl ${activeBar ==="Users"? "bg-green-600 hover:bg-green-800": ""}`}>All User Codes</Button>
           <Button onClick={getAdminCodes} className={`font-bold text-2xl ${activeBar ==="Admins"? "bg-green-600 hover:bg-green-800": ""}`}>All Admin Codes</Button>
         </div>
-        <div className="flex flex-col gap-4">
-          {currentCodes.map((code, index) => (
-            <div className="flex flex-row gap-4" key={index}>
-              <p className="text-xl">{code.codeText}</p>
-              <p className="text-xl">{code.isUser ? "User" : "Admin"}</p>
-              <p className="text-xl">{code.isExpired ? "Expired" : "Valid"}</p>
-              <p className="text-xl">{moment(code.createdAt).format("DD MMM YYYY")}</p>
-              <Button onClick={() => deleteCode(code._id)}>Delete</Button>
-            </div>
-          ))}
-        </div>
+        <Table>
+          <TableCaption>A list of your recent codes.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Code</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Creation Date</TableHead>
+              <TableHead>Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {currentCodes.map((code, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium">
+                  <p className="">{code.codeText}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="">{code.isUser ? "User" : "Admin"}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="">{code.isExpired ? "Expired" : "Valid"}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="">{moment(code.createdAt).format("DD MMM YYYY")}</p>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => deleteCode(code._id)}>Delete</Button>
+                </TableCell>                
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   )
