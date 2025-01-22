@@ -17,3 +17,5 @@
 ### Copying files from my computer to a remote computer
 ```rsync -avz -e "ssh -i QDDLKali.pem" . kali@3.107.207.215:/home/kali/project```
 ```rsync -avz -e "ssh -i QDDLKali.pem" ./ kali@3.107.207.215:/home/kali/project```
+
+
