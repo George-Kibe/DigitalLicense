@@ -184,7 +184,7 @@ const UserFunctionsPage = () => {
   return (
     <div className='min-h-screen w-full flex-col flex items-center justify-center my-8'>
       <h1 className="text-4xl mb-4">Enter Your Details</h1>
-      <div className="w-full md: w-[60%] items-center">
+      <div className=" md: w-[60%] items-center">
         <div className="items-center justify-center">
           {
             isUploading && <div className="h-48 w-48 flex border-2 border-blue-900 items-center justify-center rounded-lg"><FadeLoader /></div>

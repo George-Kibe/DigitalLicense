@@ -19,11 +19,13 @@ xcuserdata
 DerivedData
 *.hmap
 *.ipa
+
 *.xcuserstate
 **/.xcode.env.local
 
 *.apk
 *.ipa
+*.pem
 *.env*
 
 credentials.jsx
