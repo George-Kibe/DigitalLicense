@@ -7,12 +7,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-<<<<<<< HEAD
 } from "@/components/ui/table";
 import { toast } from "sonner";
-=======
-} from "@/components/ui/table"
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
 
 import { Button } from '@/components/ui/button'
 import generateUserCode from '@/lib/generateUserCode'
@@ -20,11 +16,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import moment from "moment"
 import { useParams } from "next/navigation"
-<<<<<<< HEAD
 import { Copy } from "lucide-react"
-=======
-import { set } from "mongoose"
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
 
 const AdminFunctionsPage = () => {
   const params = useParams();
@@ -100,24 +92,17 @@ const AdminFunctionsPage = () => {
     setCurrentCodes(allAdmins)
     setActiveBar('Admins')
   }
-<<<<<<< HEAD
   const copyToClipBoard = async(text) => {
     await window.navigator.clipboard.writeText(text);
     toast.info("Code Copied!");
   }
-=======
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
 
   if (!isAdmin) {
     return (
       <div className='min-h-screen flex flex-col items-center justify-center'>
-<<<<<<< HEAD
         <h1 className="text-2xl mb-4">
           You do not have the necessary priveleges to view this page!
         </h1>
-=======
-        <h1 className="text-2xl mb-4">You are not an admin</h1>
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
       </div>
     )
   }
@@ -145,46 +130,26 @@ const AdminFunctionsPage = () => {
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex w-full flex-row gap-8">
-<<<<<<< HEAD
           <Button onClick={getUserCodes} className={`font-bold text-xl ${activeBar ==="Users"? "bg-green-600 hover:bg-green-800": ""}`}>All User Codes</Button>
           <Button onClick={getAdminCodes} className={`font-bold text-xl ${activeBar ==="Admins"? "bg-green-600 hover:bg-green-800": ""}`}>All Admin Codes</Button>
-=======
-          <Button onClick={fetchAllCodes} className={`font-bold text-2xl ${activeBar ==="All"? "bg-green-600 hover:bg-green-800": ""}`}>All Codes</Button>
-          <Button onClick={getUserCodes} className={`font-bold text-2xl ${activeBar ==="Users"? "bg-green-600 hover:bg-green-800": ""}`}>All User Codes</Button>
-          <Button onClick={getAdminCodes} className={`font-bold text-2xl ${activeBar ==="Admins"? "bg-green-600 hover:bg-green-800": ""}`}>All Admin Codes</Button>
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
         </div>
         <Table>
           <TableCaption>A list of your recent codes.</TableCaption>
           <TableHeader>
-<<<<<<< HEAD
             <TableRow className=''>
               <TableHead className="w-[100px]">Code</TableHead>
               <TableHead>Role</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className=''>Creation Date</TableHead>
               <TableHead className=''>Action</TableHead>
-=======
-            <TableRow>
-              <TableHead className="w-[100px]">Code</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Creation Date</TableHead>
-              <TableHead>Action</TableHead>
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
             </TableRow>
           </TableHeader>
           <TableBody>
             {currentCodes.map((code, index) => (
               <TableRow key={index}>
-<<<<<<< HEAD
                 <TableCell className="font-medium flex flex-row gap-2">
                   <p className="">{code.codeText}</p>
                   <Copy onClick={() => copyToClipBoard(code.codeText)} />
-=======
-                <TableCell className="font-medium">
-                  <p className="">{code.codeText}</p>
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
                 </TableCell>
                 <TableCell>
                   <p className="">{code.isUser ? "User" : "Admin"}</p>
