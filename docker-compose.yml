@@ -12,7 +12,6 @@ services:
       AWS_S3_REGION:  ${AWS_S3_REGION}
       S3_BUCKET_NAME: ${S3_BUCKET_NAME}
       NODE_ENV: ${NODE_ENV}
-
     volumes:
       - ./backend:/usr/src/app
     depends_on:
