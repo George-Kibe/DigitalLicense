@@ -14,3 +14,28 @@ export default function generateUserCode(length = 12) {
   
     return userCode;
   }
+
+  export function generateLicenceNumber(length = 9) {
+    const numbers = "0123456789";  
+    let lNumber = "";
+  
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * numbers.length);
+        lNumber += numbers[randomIndex];
+    }
+    return lNumber;
+  }
+
+  export function generateCardNumber(length = 10) {
+    const numbers = "0123456789";
+    const upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+    let cardNumber = "";
+
+    const allChars = numbers + upperCaseChars
+  
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * allChars.length);
+        cardNumber += allChars[randomIndex];
+    }
+    return cardNumber;
+  }

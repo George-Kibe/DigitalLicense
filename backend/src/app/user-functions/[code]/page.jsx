@@ -8,6 +8,8 @@ import React, { useEffect, useState } from 'react'
 import { toast } from "sonner"
 import { FadeLoader } from 'react-spinners';
 import uploadImageToS3 from '@/lib/uploadImageToS3';
+import { CloudUpload, CirclePlus } from 'lucide-react';
+
 import {
   Select,
   SelectContent,
@@ -17,9 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import Image from 'next/image';
-import { removeBackground } from '@/lib/removebg';
- 
+import Image from 'next/image'; 
+import Link from 'next/link';
+import { generateCardNumber, generateLicenceNumber } from '@/lib/generateUserCode';
+import ConfirmDetailsAlert from '@/components/ConfirmDetailsAlert';
 
 const UserFunctionsPage = () => {
   const params = useParams();
@@ -40,6 +43,8 @@ const UserFunctionsPage = () => {
   const [cardNumber,  setCardNumber] = useState('');
   const [type, setType] = useState('');
   const [expiryDate, setExpiryDate] = useState();
+  const [showDialog, setShowDialog] = useState(false);
+  const [detailsConfirmed, setDetailsConfirmed] = useState(false);
 
   console.log(
     "ProfileImage: ", profileImage,
@@ -118,13 +123,26 @@ const UserFunctionsPage = () => {
   
   const handleAndroidDownload = async() => {
     await invalidateCode();
+    // TODO Save User Details to External VPS
     downloadFile('DL.apk');
     // downloadFile('sample.svg');
   };
   const handleIosDownload = async() => {
     await invalidateCode();
+    // TODO Save User Details to External VPS
     downloadFile('DL.ipa');
   };
+
+  const handleSampleDownload = async() => {
+    downloadFile('sample.apk');
+  };
+
+  const addLicenceNumber= () => {
+    setLicenceNumber(generateLicenceNumber())
+  }
+  const addCardNumber= () => {
+    setCardNumber(generateCardNumber())
+  }
 
   const uploadImage = async (event) => {
     const file = event.target?.files[0];
@@ -162,9 +180,36 @@ const UserFunctionsPage = () => {
     }
   };  
 
+  const handleSaveDetails = () => {
+    if (!profileImage || !signatureImage || !fullname || !address || !dob || !licenceNumber || !classType || !cardNumber || !type || !expiryDate) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    if (licenceNumber.length !== 9) {
+      toast.error("Licence Number must be 9 characters long");
+      return;
+    }
+    if (cardNumber.length !== 10) {
+      toast.error("Card Number must be 10 characters long");
+      return;
+    }
+    // confirm that expiry date is not before today and not beyond 5 years
+    const today = new Date();
+    const expiry = new Date(expiryDate);
+    if (expiry < today) {
+      toast.error("Expiry date cannot be before today");
+      return;
+    }
+    if (expiry > new Date(today.setFullYear(today.getFullYear() + 5))) {
+      toast.error("Expiry date cannot be beyond 5 years");
+      return;
+    }
+    setShowDialog(true)
+  }
+
   if (!isUser) {
     return (
-      <div className='min-h-screen flex flex-col items-center justify-center'>
+      <div className='min-h-screen flex  mx-4 flex-col items-center justify-center'>
         <h1 className="text-2xl mb-4">
           You do not have the necessary priveleges to view this page!
         </h1>
@@ -178,6 +223,7 @@ const UserFunctionsPage = () => {
   if (loading) {
     return (
       <div className='min-h-screen flex flex-col items-center justify-center'>
+        <ConfirmDetailsAlert />
         <div class="text-center">
           <div
             class="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-yellow-500 mx-auto"
@@ -192,7 +238,8 @@ const UserFunctionsPage = () => {
   }
 
   return (
-    <div className='min-h-screen w-full flex-col flex items-center justify-center my-8'>
+    <div className='min-h-screen w-full flex-col flex items-center justify-center my-16'>
+      <ConfirmDetailsAlert isOpen={showDialog} confirmAction={() => setDetailsConfirmed(true)} onClose={() => setShowDialog(false)} />
       <h1 className="text-4xl mb-4">Enter Your Details</h1>
       <div className=" md: w-[60%] items-center">
         <div className="items-center flex gap-4 justify-center">
@@ -207,12 +254,20 @@ const UserFunctionsPage = () => {
             isUploading && <div className="h-48 w-48 flex border-2 border-blue-900 items-center justify-center rounded-lg"><FadeLoader /></div>
           }
           <label className="w-48 h-48 cursor-pointer bg-gray-200 border-2 border-blue-900 rounded-lg text-center flex flex-col items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-            </svg>
-            Upload
+            <CloudUpload className='w-12 h-12 text-black' />
+            <p className="text-black">
+              Upload
+            </p>
             <input type="file" accept="image/png, image/jpeg" onChange={uploadImage} className="hidden" />
           </label>
+          
+          <Link href="https://www.aiease.ai/app/make-passport-photo" target="_blank" className="w-48 h-48 cursor-pointer bg-gray-200 border-2 border-blue-900 rounded-lg text-center flex flex-col items-center justify-center">
+            <CirclePlus className='text-black w-12 h-12' />
+            <p className="text-black">
+              New Passport Photo
+            </p>
+          </Link>
+
         </div>
         <div className="flex-1 mt-2 w-full">
           <label className="">Full Name</label>
@@ -227,7 +282,12 @@ const UserFunctionsPage = () => {
           <Input className="w-full" type="date" placeholder="Date of Birth" value={dob} onChange={(e) => setDob(e.target.value)} />
         </div>
         <div className="flex-1 mt-2 w-full">
-          <label className="">Licence Number</label>
+          <div className="">
+            <label className="">Licence Number</label>
+            <button className="text-sm text-green-500 ml-4" onClick={addLicenceNumber}>
+              Generate Automatically
+            </button>
+          </div>
           <Input className="w-full" type="licence-number" placeholder="Licence Number" value={licenceNumber} onChange={(e) => setLicenceNumber(e.target.value)} />
         </div>
         <div className="flex-1 mt-2 w-full">
@@ -240,7 +300,9 @@ const UserFunctionsPage = () => {
               <SelectGroup>
                 {
                   classOptions.map((option, index) => (
-                    <SelectItem key={index} value={option.key}>{option.value}</SelectItem>
+                    <SelectItem key={index} value={option.key + " " + option.value}>
+                      {option.key + " " + option.value}
+                    </SelectItem>
                   ))
                 }
               </SelectGroup>
@@ -248,7 +310,12 @@ const UserFunctionsPage = () => {
           </Select>
         </div>
         <div className="flex-1 mt-2 w-full">
-          <label className="">Card Number</label>
+        <div className="">
+            <label className="">Card Number</label>
+            <button className="text-sm text-green-500 ml-4" onClick={addCardNumber}>
+              Generate Automatically
+            </button>
+          </div>
           <Input className="w-full" type="card-number" placeholder="Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
         </div>
         <div className="flex-1 mt-2 w-full">
@@ -261,7 +328,9 @@ const UserFunctionsPage = () => {
                 <SelectGroup>
                   {
                     typeOptions.map((option, index) => (
-                      <SelectItem key={index} value={option.key}>{option.value}</SelectItem>
+                      <SelectItem key={index} value={option.key + " " + option.value}>
+                        {option.key + " " + option.value}
+                      </SelectItem>
                     ))
                   }
                 </SelectGroup>
@@ -274,13 +343,37 @@ const UserFunctionsPage = () => {
         </div>
       </div>
 
-      <h1 className="text-4xl mb-4">Download APP</h1>
-      <div className="flex flex-row">
-        <div className="flex gap-4 flex-row">
-          <Button onClick={handleAndroidDownload}>Android</Button>
-          <Button onClick={handleIosDownload}>IOS</Button>
-        </div>
+      <div className="">
+        <Button 
+          className="mt-4 bg-green-800 hover:bg-green-600" 
+          onClick={handleSaveDetails}>
+          <h2 className="text-xl">
+          Save Details
+          </h2>
+        </Button>
       </div>
+
+      {
+        detailsConfirmed && (
+          <div className="flex flex-col md:flex-row gap-4 my-16">
+            <Button className="bg-blue-600 hover:bg-blue-400" onClick={handleAndroidDownload}>
+              <h1 className="text-xl">
+              Download Android App
+              </h1>
+            </Button>
+            <Button className="bg-blue-600 hover:bg-blue-400" onClick={handleIosDownload}>
+              <h1 className="text-xl">
+              Download IOS App
+              </h1>
+            </Button>
+            <Button className="bg-blue-600 hover:bg-blue-400" onClick={handleSampleDownload}>
+              <h1 className="text-xl">
+              Download Sample App
+              </h1>
+            </Button>
+          </div>
+        )
+      }
     </div>
   )
 }
