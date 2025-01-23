@@ -128,7 +128,6 @@ const UserFunctionsPage = () => {
 
   const uploadImage = async (event) => {
     const file = event.target?.files[0];
-    const newFile = removeBackground(file);
     if (!file) {
       toast.error("You have no image selected");
       return;
@@ -147,7 +146,7 @@ const UserFunctionsPage = () => {
       }
   
       // Upload to S3
-      const uploadUrl = await uploadImageToS3(newFile, ext);
+      const uploadUrl = await uploadImageToS3(file, ext);
       if (!uploadUrl) {
         toast.error("Image upload failed. Please try again.");
         return;
