@@ -17,6 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import Image from 'next/image';
+import { removeBackground } from '@/lib/removebg';
  
 
 const UserFunctionsPage = () => {
@@ -124,33 +126,42 @@ const UserFunctionsPage = () => {
     downloadFile('DL.ipa');
   };
 
-  const uploadImage = async(event) => {
+  const uploadImage = async (event) => {
     const file = event.target?.files[0];
-    if(!file){
-      toast.error("You have no image selected")
-      return
+    const newFile = removeBackground(file);
+    if (!file) {
+      toast.error("You have no image selected");
+      return;
     }
-    setIsUploading(true)
-    toast.info("Uploading your Image")
+  
+    setIsUploading(true);
+    toast.info("Uploading your Image");
+  
     try {
-      const parts = file.name.split(".")
-      const ext = parts[parts.length-1];
-      if(ext !=="png" && ext!=="jpg" && ext !=="jpeg"){
-        toast.error(`Error Uploading ${ext} Image format. Not recognized.`)
-      } else {
-        const uploadUrl = await uploadImageToS3(file, ext);
-        !uploadUrl && toast.error("Image(s) not Uploaded. Try Again!")
-        uploadUrl && uploadedFiles.push(uploadUrl)
-        setProfileImage(uploadUrl)
-        toast.success("Image uploaded successfully")
-      }     
+      // Validate file extension
+      const parts = file.name.split(".");
+      const ext = parts[parts.length - 1].toLowerCase();
+      if (!["png", "jpg", "jpeg"].includes(ext)) {
+        toast.error(`Unsupported image format: ${ext}`);
+        return;
+      }
+  
+      // Upload to S3
+      const uploadUrl = await uploadImageToS3(newFile, ext);
+      if (!uploadUrl) {
+        toast.error("Image upload failed. Please try again.");
+        return;
+      }
+      // Add the uploaded image URL to your state
+      setProfileImage(uploadUrl);
+      toast.success("Image uploaded successfully");
     } catch (error) {
-      console.log("Error: ", error)
-      toast.error("Error Uploading your Image. File size may be too big")
+      console.error("Error uploading image:", error);
+      toast.error("Error uploading your image. The file size may be too large.");
     } finally {
       setIsUploading(false);
     }
-  }
+  };  
 
   if (!isUser) {
     return (
@@ -185,7 +196,14 @@ const UserFunctionsPage = () => {
     <div className='min-h-screen w-full flex-col flex items-center justify-center my-8'>
       <h1 className="text-4xl mb-4">Enter Your Details</h1>
       <div className=" md: w-[60%] items-center">
-        <div className="items-center justify-center">
+        <div className="items-center flex gap-4 justify-center">
+          {
+            profileImage && (
+              <div className="w-48 h-48 border border-blue-900 rounded-lg relative">
+                <Image src={profileImage} fill alt={'Profile Image'} className='rounded-md object-cover' />
+                </div>
+            )
+          }
           {
             isUploading && <div className="h-48 w-48 flex border-2 border-blue-900 items-center justify-center rounded-lg"><FadeLoader /></div>
           }
@@ -194,7 +212,7 @@ const UserFunctionsPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
             </svg>
             Upload
-            <input type="file" multiple onChange={uploadImage} className='hidden' />
+            <input type="file" accept="image/png, image/jpeg" onChange={uploadImage} className="hidden" />
           </label>
         </div>
         <div className="flex-1 mt-2 w-full">
@@ -222,8 +240,8 @@ const UserFunctionsPage = () => {
             <SelectContent>
               <SelectGroup>
                 {
-                  classOptions.map((option) => (
-                    <SelectItem value={option.key}>{option.value}</SelectItem>
+                  classOptions.map((option, index) => (
+                    <SelectItem key={index} value={option.key}>{option.value}</SelectItem>
                   ))
                 }
               </SelectGroup>
@@ -243,8 +261,8 @@ const UserFunctionsPage = () => {
               <SelectContent>
                 <SelectGroup>
                   {
-                    typeOptions.map((option) => (
-                      <SelectItem value={option.key}>{option.value}</SelectItem>
+                    typeOptions.map((option, index) => (
+                      <SelectItem key={index} value={option.key}>{option.value}</SelectItem>
                     ))
                   }
                 </SelectGroup>
