@@ -18,4 +18,8 @@
 ```rsync -avz -e "ssh -i QDDLKali.pem" . kali@3.107.207.215:/home/kali/project```
 ```rsync -avz -e "ssh -i QDDLKali.pem" ./ kali@3.107.207.215:/home/kali/project```
 
-
+### Recreating admin in the backend database
+```curl -X POST http://127.0.0.1:3000/api/codes \
+-H "Content-Type: application/json" \
+-d '{"codeText": "uCMDMOpjfUyrdPAeiEtV", "isAdmin": true}
+```
