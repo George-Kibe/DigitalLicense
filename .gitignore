@@ -20,7 +20,7 @@ DerivedData
 *.hmap
 *.ipa
 *.env
-
+.env*
 *.xcuserstate
 **/.xcode.env.local
 

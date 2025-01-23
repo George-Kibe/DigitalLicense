@@ -7,9 +7,12 @@ services:
       - "127.0.0.1:3000:3000"
     environment:
       MONGODB_URI: ${MONGODB_URI}
-      NODE_ENV: production
-    env_file:
-      - .env
+      NEXT_PUBLIC_AWS_ACCESS_KEY_ID: ${NEXT_PUBLIC_AWS_ACCESS_KEY_ID}
+      NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: ${NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY}
+      NEXT_PUBLIC_AWS_S3_REGION:  ${NEXT_PUBLIC_AWS_S3_REGION}
+      NEXT_PUBLIC_S3_BUCKET_NAME: ${NEXT_PUBLIC_S3_BUCKET_NAME}
+      NODE_ENV: ${NODE_ENV}
+
     volumes:
       - ./backend:/usr/src/app
     depends_on:
