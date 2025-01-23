@@ -1,10 +1,10 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 
-const AWS_ACCESS_KEY_ID = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
-const AWS_SECRET_ACCESS_KEY = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY;
-const AWS_S3_REGION = process.env.NEXT_PUBLIC_AWS_S3_REGION;
-const S3_BUCKET_NAME = process.env.NEXT_PUBLIC_S3_BUCKET_NAME;
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+const AWS_S3_REGION = process.env.AWS_S3_REGION;
+const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
 
 async function uploadImageToS3(file, ext) {
   console.log(
