@@ -7,6 +7,12 @@ const AWS_S3_REGION = process.env.NEXT_PUBLIC_AWS_S3_REGION;
 const S3_BUCKET_NAME = process.env.NEXT_PUBLIC_S3_BUCKET_NAME;
 
 async function uploadImageToS3(file, ext) {
+  console.log(
+    "AWS_ACCESS_KEY_ID: ", AWS_ACCESS_KEY_ID,
+    "AWS_SECRET_ACCESS_KEY: ", AWS_SECRET_ACCESS_KEY,
+    "AWS_S3_REGION: ", AWS_S3_REGION,
+    "S3_BUCKET_NAME: ", S3_BUCKET_NAME
+  )
   const s3Client = new S3Client({
     region: AWS_S3_REGION,
     credentials: {

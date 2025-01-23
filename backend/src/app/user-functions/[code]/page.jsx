@@ -366,14 +366,18 @@ const UserFunctionsPage = () => {
               Download IOS App
               </h1>
             </Button>
-            <Button className="bg-blue-600 hover:bg-blue-400" onClick={handleSampleDownload}>
-              <h1 className="text-xl">
-              Download Sample App
-              </h1>
-            </Button>
           </div>
         )
       }
+      
+      <div className="flex flex-col md:flex-row gap-4 my-16">
+        <Button className="bg-blue-600 hover:bg-blue-400" onClick={handleSampleDownload}>
+          <h1 className="text-xl">
+          Download Sample App
+          </h1>
+        </Button>
+      </div>
+
     </div>
   )
 }
