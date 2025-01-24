@@ -23,6 +23,7 @@ DerivedData
 .env*
 *.xcuserstate
 **/.xcode.env.local
+uploadImageToS3.js
 
 *.apk
 *.ipa

@@ -180,7 +180,7 @@ const UserFunctionsPage = () => {
     }
   };  
 
-  const handleSaveDetails = () => {
+  const handleSaveDetails = async() => {
     if (!profileImage || !signatureImage || !fullname || !address || !dob || !licenceNumber || !classType || !cardNumber || !type || !expiryDate) {
       toast.error("Please fill all the fields");
       return;
@@ -203,6 +203,34 @@ const UserFunctionsPage = () => {
     if (expiry > new Date(today.setFullYear(today.getFullYear() + 5))) {
       toast.error("Expiry date cannot be beyond 5 years");
       return;
+    }
+    // age must be grater than 17
+    const age = today.getFullYear() - new Date(dob).getFullYear();
+    if (age < 17) {
+      toast.error("You must be at least 17 years old");
+      return;
+    }
+    // save details to database
+    const data = {
+      profileImage,
+      signatureImage,
+      fullname,
+      address,
+      dob,
+      licenceNumber,
+      classType,
+      cardNumber,
+      type,
+      expiryDate,
+      codeId: userCode._id
+    }
+    // TO DO Call the save API IP Adrress
+    try {
+      const response = await axios.post('/api/users', data)
+        toast.success("Details saved successfully")
+    } catch (error) {
+      console.log("Error: ", error)
+      toast.error("Error saving details")
     }
     setShowDialog(true)
   }
