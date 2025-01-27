@@ -49,7 +49,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-<<<<<<< HEAD
     },
     "extra": {
       "router": {
@@ -60,8 +59,5 @@
       }
     },
     "owner": "georgekibe"
-=======
-    }
->>>>>>> 62e815ae730ad8849a2219beb2cca0294b34c789
   }
 }

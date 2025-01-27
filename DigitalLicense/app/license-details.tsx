@@ -52,8 +52,8 @@ const LicenseDetails = () => {
           <View style={styles.rightView}>
             <Image style={styles.qLogo} source={images.QLDWatermark} />
               <View style={styles.queenTextView}>
-                <Text style={styles.q1text}>Queensland</Text>
-                <Text style={styles.q2text}>Government</Text>
+                <Text style={styles.queenText}>Queensland</Text>
+                <Text style={styles.govText}>Government</Text>
               </View>
           </View>
         </View>
@@ -259,7 +259,7 @@ const LicenseDetails = () => {
 
         </ScrollView>
       <SafeAreaView style={styles.bottomView}>
-        <TouchableOpacity style={styles.shareButton}>
+        <TouchableOpacity onPress={() => router.push('/share-alert')} style={styles.shareButton}>
           <Text style={styles.shareDLText}>
             SHARE DRIVER LICENCE
           </Text>
@@ -317,6 +317,16 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     // alignItems: "center",
   },
+  queenText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "800",
+  },
+  govText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "500",
+  },
   signature: {
     width: 200, // Adjust as needed
     height: 40, // Adjust as needed
@@ -363,16 +373,6 @@ const styles = StyleSheet.create({
     width: 120,
     borderRadius: 2,
     marginBottom: 10
-  },
-  q1text: {
-    color: "black",
-    fontSize: 16,
-    fontWeight: "800",
-  },
-  q2text: {
-    color: "black",
-    fontSize: 16,
-    fontWeight: "500",
   },
   licenseTextView: {
     paddingHorizontal: 20,

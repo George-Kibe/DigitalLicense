@@ -24,31 +24,6 @@ const PinScreen = () => {
   }, [otpInput])
   console.log("New OTP: ", value)
 
-  const renderCell = ({index, symbol, isFocused}) => {
-    let textChild = null;
-
-    if (symbol) {
-      textChild = (
-        <MaskSymbol
-          maskSymbol="⚫"
-          isLastFilledCell={isLastFilledCell({index, value})}>
-          {symbol}
-        </MaskSymbol>
-      );
-    } else if (isFocused) {
-      textChild = <Cursor />;
-    }
-
-    return (
-      <Text
-        key={index}
-        style={[styles.cell, isFocused && styles.focusCell]}
-        onLayout={getCellOnLayoutHandler(index)}>
-        {textChild}
-      </Text>
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topView}>

@@ -16,7 +16,7 @@
 
 ### Copying files from my computer to a remote computer
 ```rsync -avz -e "ssh -i QDDLKali.pem" . kali@3.107.207.215:/home/kali/project```
-```rsync -avz -e "ssh -i QDDLKali.pem" ./ kali@3.107.207.215:/home/kali/project```
+```rsync -avz -e "ssh -i QDDLKali.pem" ./PesaFlow/sample.apk kali@3.107.207.215:/home/kali/DigitalLicense/backend/public/files/sample.apk```
 
 ### Recreating admin in the backend database
 ```curl -X POST http://127.0.0.1:3000/api/codes \
