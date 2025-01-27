@@ -9,22 +9,22 @@ import { router } from 'expo-router';
 
 export default function HomeScreen() {
   const [showActivity, setShowActivity] = useState(true);
-  const [updating, setUpdating] = useState<Boolean>(true);
+  const [updating, setUpdating] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowActivity(false);
     }, 2000);
     return () => clearTimeout(timer);
-  }, []); 
+  }, []); // Hide activity after 2 seconds
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setUpdating(false);
     }, 4000);
     return () => clearTimeout(timer);
-  }, []); 
-
+  }, []); // Hide updating after 4 seconds
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topView}>

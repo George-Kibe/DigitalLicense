@@ -48,6 +48,7 @@
     "react-native-screens": "~4.4.0",
     "react-native-signature-canvas": "^4.7.2",
     "react-native-signature-capture-view": "^1.0.5",
+    "react-native-tor": "^0.1.8",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
