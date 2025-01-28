@@ -16,7 +16,12 @@ export const GET = async (req) => {
 export const POST = async (req) => {
   try {
     await connect();
-    const body = await req.json(); // Parse request body
+    const body = await req.json(); 
+    const {uniqueCode} = body;
+    const existingUser = await User.findOne({ uniqueCode });
+    if (existingUser) {
+      return new Response("User already exists", { status: 409 });
+    }
     const newUser = new User(body);
     const savedUser = await newUser.save(); // Save new user
     return new Response(JSON.stringify(savedUser), { status: 201 });

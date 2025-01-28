@@ -15,6 +15,12 @@ export const POST = async (req) => {
   try {
     await connect();
     const body = await req.json(); // Parse request body
+    const { codeText } = body;
+    const existingCode = await Code.findOne({ codeText });
+     // Check if code already exists
+    if (existingCode) {
+      return new Response("Code already exists", { status: 400 });
+    }
     const newCode = new Code(body);
     const savedCode = await newCode.save(); // Save new document
     return new Response(JSON.stringify(savedCode), { status: 201 });

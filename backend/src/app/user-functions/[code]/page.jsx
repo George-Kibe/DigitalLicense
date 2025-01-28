@@ -212,7 +212,7 @@ const UserFunctionsPage = () => {
       cardNumber,
       type,
       expiryDate,
-      uniqueCode: userCode._id
+      uniqueCode: userCode.codeText
     }
     console.log("Data: ", data)
     // TO DO Call the save API IP Adrress
