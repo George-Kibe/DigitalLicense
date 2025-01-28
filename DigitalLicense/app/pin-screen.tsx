@@ -1,28 +1,75 @@
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { OtpInput } from "react-native-otp-entry";
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { CodeField, Cursor, isLastFilledCell, MaskSymbol, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import axios from "axios";
+import userSlice from '@/store/userSlice';
 
+const BACKEND_URL ="http://54.153.152.154:3000"
 const CELL_COUNT = 6;
 
 const PinScreen = () => {
   const [otpInput, setOtpInput] = useState<string>('');
   const [value, setValue] = useState('');
-  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  });
+  const [loading, setLoading] = useState(false)
+  const [userCode, setUserCode] = useState('');
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.currentUser.user) as User | null;
+  const showCodeBox = useSelector((state: RootState) => state.currentUser.showCodeBox);
 
+  // console.log("Show Code Box: ", showCodeBox)
+  // console.log("Current User: ", currentUser)
   useEffect(() => {
     if (otpInput.length === 6) {
       router.push("/(tabs)")
     }
   }, [otpInput])
   console.log("New OTP: ", value)
+  
+  const verifyUserCode = async() => {
+    console.log("User Code: ", userCode)
+    setLoading(true);
+    const code = "678e035a7041a36efb35f59f"
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/users/${userCode}`);
+      console.log("Response: ", response.data)
+       dispatch(userSlice.actions.addCurrentUser({
+        user: response.data
+      }))
+    } catch (error) {
+      console.log("Error: ", error)
+    }
+    setLoading(false)
+  }
+
+  if(showCodeBox) {
+    return (
+      <SafeAreaView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.container}
+        >
+          <View style={styles.topView}>
+            <Text style={styles.topText}>Enter your Unique Code</Text>
+            <TextInput 
+              style={styles.codeInput}
+              value={userCode}
+              onChangeText={setUserCode}
+            />
+          </View>
+          <TouchableOpacity onPress={verifyUserCode} style={styles.button}>
+            <Text style={styles.buttonText}>
+              {loading ? "Verifying..." : "Verify Code"}
+            </Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -100,6 +147,25 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  codeInput: {
+    height: 40,
+    borderColor: "#7F082E",
+    borderWidth: 2,
+    borderRadius: 4,
+    paddingHorizontal: 10,
+    width: 200,
+  },
+  button: {
+    backgroundColor: "#7F082E",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   topView: {
     alignItems: "center",

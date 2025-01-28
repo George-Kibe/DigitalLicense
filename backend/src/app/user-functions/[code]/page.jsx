@@ -24,7 +24,8 @@ import Link from 'next/link';
 import { generateCardNumber, generateLicenceNumber } from '@/lib/generateUserCode';
 import ConfirmDetailsAlert from '@/components/ConfirmDetailsAlert';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+// const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+const BACKEND_URL = "http://54.153.152.154:3000"
 
 const UserFunctionsPage = () => {
   const params = useParams();

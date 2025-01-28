@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface CurrentUserState {
   user: User | null;
   isLoggedIn: boolean;
+  showCodeBox: boolean;
   accessToken: string | null;
   refreshToken: string | null;
   favorites: User[]
@@ -15,6 +16,7 @@ interface LoginPayload {
 const initialState: CurrentUserState = {
   user: null,
   isLoggedIn: false,
+  showCodeBox: true,
   accessToken: null,
   refreshToken: null,
   favorites: []
@@ -29,6 +31,7 @@ export const userSlice = createSlice({
     addCurrentUser: (state, action: PayloadAction<LoginPayload>) => {
       state.user = action.payload.user;
       state.isLoggedIn = true;
+      state.showCodeBox = false;
     },
     editCurrentUser: (state, action: PayloadAction<LoginPayload>) => {
       state.user = action.payload.user;
@@ -59,6 +62,7 @@ export const userSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.refreshToken = null;
+      state.showCodeBox = true;
       // state.favorites = [];
       state.isLoggedIn = false;
     },

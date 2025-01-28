@@ -6,10 +6,14 @@ import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { images } from '@/constants/images';
 import { router } from 'expo-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 export default function HomeScreen() {
+  const currentUser = useSelector((state: RootState) => state.currentUser.user) as User | null;
   const [showActivity, setShowActivity] = useState(true);
   const [updating, setUpdating] = useState(true);
+  console.log("Current User: ", currentUser)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -49,8 +53,8 @@ export default function HomeScreen() {
               </View>
 
               <View style={styles.userDetails}>
-                <Image style={styles.passport} source={images.GeorgePassport}/>
-                <Text style={styles.nameText}> FRANCESCO ANTONIO CORTESE</Text>
+                <Image style={styles.passport} source={{uri: currentUser?.passportImage}}/>
+                <Text style={styles.nameText}>{currentUser?.fullName}</Text>
               </View>
               <View style={styles.credentialsView}>
                 <Text>Credentials</Text>

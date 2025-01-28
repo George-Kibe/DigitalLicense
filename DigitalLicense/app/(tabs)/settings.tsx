@@ -21,6 +21,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import userSlice from '@/store/userSlice';
+import { router } from 'expo-router';
 
 const ProfileEditScreen = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,11 @@ const ProfileEditScreen = () => {
     }))
   };
 
+  const handleLogout = () => {
+    dispatch(userSlice.actions.removeCurrentUser());
+    router.push("/pin-screen")
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -93,7 +99,7 @@ const ProfileEditScreen = () => {
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Profile Image */}
-        <SafeAreaView>
+        {/* <SafeAreaView>
         <TouchableOpacity onPress={handleImageUpload} style={styles.imageContainer}>
           {profileImage ? (
             <Image source={{ uri: profileImage }} style={styles.image} />
@@ -103,40 +109,40 @@ const ProfileEditScreen = () => {
             </View>
           )}
         </TouchableOpacity>
-        </SafeAreaView>
+        </SafeAreaView> */}
 
         {/* Name */}
-        <Text style={styles.label}>Full Name</Text>
+        {/* <Text style={styles.label}>Full Name</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your name"
           value={name}
           onChangeText={setName}
-        />
+        /> */}
         {/* Date of Birth */}
-        <Text style={styles.label}>Date of Birth</Text>
-        <CalendarPicker onDateChange={setDob} />
+        {/* <Text style={styles.label}>Date of Birth</Text>
+        <CalendarPicker onDateChange={setDob} /> */}
 
         {/* Licence Number */}
-        <Text style={styles.label}>Licence Number</Text>
+        {/* <Text style={styles.label}>Licence Number</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your Licence Number"
           value={licenceNumber}
           onChangeText={setLicenceNumber}
-        />
+        /> */}
 
         {/* Card Number */}
-        <Text style={styles.label}>Card Number</Text>
+        {/* <Text style={styles.label}>Card Number</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your Card Number"
           value={cardNumber}
           onChangeText={setCardNumber}
-        />
+        /> */}
 
         {/* Class Dropdown */}
-        <Text style={styles.label}>Class</Text>
+        {/* <Text style={styles.label}>Class</Text>
         <Picker
           selectedValue={classType}
           onValueChange={(itemValue, itemIndex) =>
@@ -151,9 +157,9 @@ const ProfileEditScreen = () => {
                 />
               ))
             }
-        </Picker>
+        </Picker> */}
          {/* Type */}
-         <Text style={styles.label}>Type</Text>
+         {/* <Text style={styles.label}>Type</Text>
           <Picker    selectedValue={type} onValueChange={(itemValue, itemIndex) => setType(itemValue)}>
               {
                 typeOptions.map( (option, index) => (
@@ -164,28 +170,37 @@ const ProfileEditScreen = () => {
                   />
                 ))
               }
-          </Picker>
+          </Picker> */}
 
         {/* Address */}
-        <Text style={styles.label}>Address</Text>
+        {/* <Text style={styles.label}>Address</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your address"
           value={address}
           onChangeText={setAddress}
-        />
+        /> */}
 
         {/* Expiry: Calendar */}
-        <Text style={styles.label}>Expiry</Text>
-        <CalendarPicker onDateChange={setExpiryDate} />
-        <Text style={styles.label}>Sign</Text>
-        <SignPad
-          signatureImage={currentUser?.signatureImage || ""}
-          setSignatureImage={setSignatureImage}
-        />
+        {/* <Text style={styles.label}>Expiry</Text>
+        <CalendarPicker onDateChange={setExpiryDate} />  */}
+        <SafeAreaView>
+          <Text style={styles.label}>Sign</Text>
+          <SignPad
+            signatureImage={currentUser?.signatureImage || ""}
+            setSignatureImage={setSignatureImage}
+          />
 
-        {/* Save Button */}
-        <Button title="Save Profile" onPress={handleSave} />
+          {/* Save Button */}
+          <View style={styles.bottomButtons}>
+            <TouchableOpacity style={styles.button} onPress={handleSave}>
+              <Text style={styles.buttonText}>Save Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleLogout}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
+          </View>
+        </SafeAreaView>
         
       </ScrollView>
     </KeyboardAvoidingView>
@@ -223,6 +238,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
+    marginTop: 16,
     marginBottom: 4,
     fontWeight: '600',
     color: '#333',
@@ -234,6 +250,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,
+  },
+  bottomButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  button: {
+    backgroundColor: "#7F082E",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
