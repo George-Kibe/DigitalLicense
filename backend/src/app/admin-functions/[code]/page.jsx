@@ -57,7 +57,7 @@ const AdminFunctionsPage = () => {
   }, [])  
 
   const generateAndSaveCode = async () => {
-    const code = generateUserCode(20);
+    const code = generateUserCode(10);
     try {
       const response = await axios.post('/api/codes', {
         codeText: code,

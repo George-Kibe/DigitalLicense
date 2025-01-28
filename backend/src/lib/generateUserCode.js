@@ -1,10 +1,10 @@
-export default function generateUserCode(length = 12) {
+export default function generateUserCode(length = 10) {
     const upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
+    // const lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
     const numbers = "0123456789";
     // const symbols = "!@#$%^&*()_+[]{}|;:',.<>?";
   
-    const allChars = upperCaseChars + lowerCaseChars + numbers // + symbols;
+    const allChars = upperCaseChars + numbers // + symbols;
     let userCode = "";
   
     for (let i = 0; i < length; i++) {
