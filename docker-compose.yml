@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "127.0.0.1:3000:3000"
+      - "3000:3000"
     environment:
       MONGODB_URI: ${MONGODB_URI}
       NEXT_PUBLIC_AWS_ACCESS_KEY_ID: ${NEXT_PUBLIC_AWS_ACCESS_KEY_ID}
