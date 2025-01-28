@@ -4,10 +4,11 @@ import React from 'react';
 import { Button } from './ui/button';
 
 
-const ConfirmDetailsModal = ({ confirmAction, isOpen, onClose }) => {
+const ConfirmDetailsModal = ({ setDetailsConfirmed, confirmAction, isOpen, onClose }) => {
 
   const handleConfirm = () => {
     confirmAction();
+    setDetailsConfirmed(true);
     onClose();
   };
 

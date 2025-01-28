@@ -194,7 +194,7 @@ const ProfileEditScreen = () => {
           {/* Save Button */}
           <View style={styles.bottomButtons}>
             <TouchableOpacity style={styles.button} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save Profile</Text>
+              <Text style={styles.buttonText}>Save Signature</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleLogout}>
             <Text style={styles.buttonText}>Logout</Text>

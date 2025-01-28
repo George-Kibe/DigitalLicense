@@ -27,3 +27,9 @@
 ### Hosting on Tor Blog
 - https://medium.com/axon-technologies/hosting-anonymous-website-on-tor-network-3a82394d7a01
 
+### Create a private key
+```openssl genrsa -out selfsigned.key 2048```
+
+### Create a self-signed certificate
+```openssl req -new -x509 -key selfsigned.key -out selfsigned.crt -days 365 \
+  -subj "/C=US/ST=State/L=City/O=Organization/CN=<YOUR_IP>"```

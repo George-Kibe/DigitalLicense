@@ -29,6 +29,8 @@ uploadImageToS3.js
 *.ipa
 *.pem
 *.env*
+*.key
+*.crt
 
 credentials.jsx
 AuthKey_iLinkup-9HU38G2KV8.p8

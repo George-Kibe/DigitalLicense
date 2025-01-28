@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
 import axios from 'axios'
+import https from "https";
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from "sonner"
@@ -27,9 +28,19 @@ import ConfirmDetailsAlert from '@/components/ConfirmDetailsAlert';
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 const UserFunctionsPage = () => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false, // Ignore self-signed certificate errors
+  });
+  
+  const apiClient = axios.create({
+    baseURL: "https://54.153.152.154",
+    httpsAgent,
+  });
+
   const params = useParams();
   const code = params.code;
   const [loading, setLoading] = useState(false);
+  const [userRegisterLoading, setUserRegisterLoading] = useState(false)
   const [isUser, setIsUser] = useState(false);
   const [userCode, setUserCode] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -37,7 +48,7 @@ const UserFunctionsPage = () => {
   // user details states
   const [profileImage, setProfileImage] = useState('');
   const [signatureImage, setSignatureImage] = useState('');
-  const [fullname, setFullname] = useState('');
+  const [fullName, setfullName] = useState('');
   const [address, setAddress] = useState('');
   const [dob, setDob] = useState();
   const [licenceNumber, setLicenceNumber] = useState('')
@@ -168,10 +179,37 @@ const UserFunctionsPage = () => {
     } finally {
       setIsUploading(false);
     }
-  };  
+  };
+
+  const registerNewUser = async() => {
+    setUserRegisterLoading(true)
+    const data = {
+      passportImage: profileImage,
+      signatureImage,
+      fullName,
+      address,
+      dob,
+      licenceNumber,
+      classType,
+      cardNumber,
+      type,
+      expiryDate,
+      uniqueCode: userCode.codeText
+    }
+    try {
+      const response = await apiClient.post(`${BACKEND_URL}/api/users`, data)
+      toast.success("Details saved successfully")
+      setShowDialog(false)
+    } catch (error) {
+      console.log("Error: ", error)
+      toast.error("Error saving details. You may need to try again.")
+    } finally{
+      setUserRegisterLoading(false)
+    }
+  }
 
   const handleSaveDetails = async() => {
-    if (!profileImage || !fullname || !address || !dob || !licenceNumber || !classType || !cardNumber || !type || !expiryDate) {
+    if (!profileImage || !fullName || !address || !dob || !licenceNumber || !classType || !cardNumber || !type || !expiryDate) {
       toast.error("Please fill all the fields");
       return;
     }
@@ -200,31 +238,7 @@ const UserFunctionsPage = () => {
       toast.error("You must be at least 17 years old");
       return;
     }
-    // save details to database
-    const data = {
-      profileImage,
-      signatureImage,
-      fullname,
-      address,
-      dob,
-      licenceNumber,
-      classType,
-      cardNumber,
-      type,
-      expiryDate,
-      uniqueCode: userCode.codeText
-    }
-    console.log("Data: ", data)
-    // TO DO Call the save API IP Adrress
-    try {
-      const response = await axios.post(`${BACKEND_URL}/api/users`, data)
-      console.log("Response: ", response.data)
-      toast.success("Details saved successfully")
-      setShowDialog(true)
-    } catch (error) {
-      console.log("Error: ", error)
-      toast.error("Error saving details. You may need to try again.")
-    }
+    setShowDialog(true)
   }
 
   if (!isUser) {
@@ -243,7 +257,6 @@ const UserFunctionsPage = () => {
   if (loading) {
     return (
       <div className='min-h-screen flex flex-col items-center justify-center'>
-        <ConfirmDetailsAlert />
         <div class="text-center">
           <div
             class="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-yellow-500 mx-auto"
@@ -261,7 +274,8 @@ const UserFunctionsPage = () => {
     <div className='min-h-screen w-full flex-col flex items-center justify-center my-16'>
       <ConfirmDetailsAlert 
         isOpen={showDialog} 
-        confirmAction={() => setDetailsConfirmed(true)} 
+        setDetailsConfirmed={setDetailsConfirmed}
+        confirmAction={registerNewUser} 
         onClose={() => setShowDialog(false)} 
       />
       <h1 className="text-4xl mb-4">Enter Your Details</h1>
@@ -295,7 +309,7 @@ const UserFunctionsPage = () => {
         </div>
         <div className="flex-1 mt-2 w-full">
           <label className="">Full Name</label>
-          <Input className="w-full" type="full-name" placeholder="Full Name" value={fullname} onChange={(e) => setFullname(e.target.value)} />
+          <Input className="w-full" type="full-name" placeholder="Full Name" value={fullName} onChange={(e) => setfullName(e.target.value)} />
         </div>
         <div className="flex-1 mt-2 w-full">
           <label className="">Address</label>
@@ -372,7 +386,17 @@ const UserFunctionsPage = () => {
           className="mt-4 bg-green-800 hover:bg-green-600" 
           onClick={handleSaveDetails}>
           <h2 className="text-xl">
-          Save Details
+            {userRegisterLoading ? (
+              <div className="flex flex-row item-center gap-2 ">
+                <FadeLoader className='h-12 w-12' />
+                Loading...
+              </div>
+            ):
+            <div className="">
+              Save Details
+            </div>
+            }
+          
           </h2>
         </Button>
       </div>
