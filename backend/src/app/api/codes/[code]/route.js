@@ -29,4 +29,3 @@ export const DELETE = async (req, {params}) => {
     return new Response("Failed to delete code", { status: 500 });
   }
 };
-

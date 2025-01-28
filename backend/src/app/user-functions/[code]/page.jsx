@@ -24,6 +24,8 @@ import Link from 'next/link';
 import { generateCardNumber, generateLicenceNumber } from '@/lib/generateUserCode';
 import ConfirmDetailsAlert from '@/components/ConfirmDetailsAlert';
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+
 const UserFunctionsPage = () => {
   const params = useParams();
   const code = params.code;
@@ -46,18 +48,6 @@ const UserFunctionsPage = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [detailsConfirmed, setDetailsConfirmed] = useState(false);
 
-  console.log(
-    "ProfileImage: ", profileImage,
-    "SignatureImage: ", signatureImage,
-    "Fullname: ", fullname,
-    "Address: ", address,
-    "DOB: ", dob,
-    "LicenceNumber: ", licenceNumber,
-    "ClassType: ", classType,
-    "CardNumber: ", cardNumber,
-    "Type: ", type,
-    "ExpiryDate: ", expiryDate
-  )
   const typeOptions = [
     {"key":"(O)", "value": "Open"},
     {"key":"(P)", "value": "P-Red"},
@@ -181,7 +171,7 @@ const UserFunctionsPage = () => {
   };  
 
   const handleSaveDetails = async() => {
-    if (!profileImage || !signatureImage || !fullname || !address || !dob || !licenceNumber || !classType || !cardNumber || !type || !expiryDate) {
+    if (!profileImage || !fullname || !address || !dob || !licenceNumber || !classType || !cardNumber || !type || !expiryDate) {
       toast.error("Please fill all the fields");
       return;
     }
@@ -222,17 +212,19 @@ const UserFunctionsPage = () => {
       cardNumber,
       type,
       expiryDate,
-      codeId: userCode._id
+      uniqueCode: userCode._id
     }
+    console.log("Data: ", data)
     // TO DO Call the save API IP Adrress
     try {
-      const response = await axios.post('/api/users', data)
-        toast.success("Details saved successfully")
+      const response = await axios.post(`${BACKEND_URL}/api/users`, data)
+      console.log("Response: ", response.data)
+      toast.success("Details saved successfully")
+      setShowDialog(true)
     } catch (error) {
       console.log("Error: ", error)
-      toast.error("Error saving details")
+      toast.error("Error saving details. You may need to try again.")
     }
-    setShowDialog(true)
   }
 
   if (!isUser) {
@@ -267,7 +259,11 @@ const UserFunctionsPage = () => {
 
   return (
     <div className='min-h-screen w-full flex-col flex items-center justify-center my-16'>
-      <ConfirmDetailsAlert isOpen={showDialog} confirmAction={() => setDetailsConfirmed(true)} onClose={() => setShowDialog(false)} />
+      <ConfirmDetailsAlert 
+        isOpen={showDialog} 
+        confirmAction={() => setDetailsConfirmed(true)} 
+        onClose={() => setShowDialog(false)} 
+      />
       <h1 className="text-4xl mb-4">Enter Your Details</h1>
       <div className=" md: w-[60%] items-center">
         <div className="items-center flex gap-4 justify-center">
@@ -307,7 +303,7 @@ const UserFunctionsPage = () => {
         </div>
         <div className="flex-1 mt-2 w-full">
           <label className="">Date of Birth</label>
-          <Input className="w-full" type="date" placeholder="Date of Birth" value={dob} onChange={(e) => setDob(e.target.value)} />
+          <Input className="w-full bg-gray-500" type="date" placeholder="Date of Birth" value={dob} onChange={(e) => setDob(e.target.value)} />
         </div>
         <div className="flex-1 mt-2 w-full">
           <div className="">
@@ -367,7 +363,7 @@ const UserFunctionsPage = () => {
           </div>
         <div className="flex-1 mt-2 w-full">
           <label className="">Expiry Date</label>
-          <Input className="w-full" type="date" placeholder="Expiry Date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
+          <Input className="w-full bg-gray-500" type="date" placeholder="Expiry Date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
         </div>
       </div>
 
