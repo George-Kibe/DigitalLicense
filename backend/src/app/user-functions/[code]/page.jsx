@@ -175,7 +175,7 @@ const UserFunctionsPage = () => {
       toast.success("Image uploaded successfully");
     } catch (error) {
       console.error("Error uploading image:", error);
-      toast.error("Error uploading your image. The file size may be too large.");
+      toast.error("Error uploading your image: ", error.message);
     } finally {
       setIsUploading(false);
     }
@@ -202,7 +202,7 @@ const UserFunctionsPage = () => {
       setShowDialog(false)
     } catch (error) {
       console.log("Error: ", error)
-      toast.error("Error: ", error)
+      toast.error("Error: ", error.message)
     } finally{
       setUserRegisterLoading(false)
     }

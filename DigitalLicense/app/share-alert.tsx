@@ -2,13 +2,18 @@ import { images } from "@/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { View, Text, Image, StyleSheet, Linking, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, Text, Image, StyleSheet, Linking, TouchableOpacity, SafeAreaView, Platform } from "react-native";
 
 const ServiceUnavailable = () => {
   return (
     <View style={styles.container}>
       {/* Placeholder for the image. Replace the source with your reference. */}
-      <SafeAreaView style={styles.topView}>
+      <SafeAreaView 
+        style={[
+          styles.topView, 
+          Platform.OS === "android" && {marginTop: 20}
+          ]}
+      >
         <TouchableOpacity onPress={() => router.back()} style={styles.backView}>
           <Ionicons name="chevron-back-outline" size={24} color="black" />
           <Text style={styles.backText}>Back</Text>
