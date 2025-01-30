@@ -197,12 +197,12 @@ const UserFunctionsPage = () => {
       uniqueCode: userCode.codeText
     }
     try {
-      const response = await apiClient.post(`${BACKEND_URL}/api/users`, data)
+      const response = await apiClient.post(`/api/users`, data)
       toast.success("Details saved successfully")
       setShowDialog(false)
     } catch (error) {
       console.log("Error: ", error)
-      toast.error("Error saving details. You may need to try again.")
+      toast.error("Error: ", error)
     } finally{
       setUserRegisterLoading(false)
     }

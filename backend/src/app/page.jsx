@@ -71,7 +71,9 @@ function HomeScreen() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button className='bg-gray-500' onClick={handleCancel}>Cancel</Button>
-          <Button className="bg-emerald-700" onClick={handleProceed}>Proceed</Button>
+          <Button className="bg-emerald-700" onClick={handleProceed}>
+            {loading ? 'Loading...' : 'Proceed'}
+          </Button>
         </CardFooter>
       </Card>
     </div>
