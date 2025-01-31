@@ -3,7 +3,6 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Fontisto from '@expo/vector-icons/Fontisto';
@@ -37,16 +36,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="medications/add"
+        name="loans/add"
         options={{
-          title: 'Add',
+          title: 'Add Record',
           tabBarIcon: ({ color }) => <MaterialIcons name="add-circle-outline" size={28} color={color} />,
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
-          title: 'History',
+          title: 'Reports',
           tabBarIcon: ({ color }) => <Fontisto name="history" size={24} color={color} />,
         }}
       />

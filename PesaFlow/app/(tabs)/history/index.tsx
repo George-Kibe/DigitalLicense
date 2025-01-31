@@ -17,7 +17,6 @@ import {
   getMedications,
   DoseHistory,
   Medication,
-  clearAllData,
 } from "@/utils/storage";
 
 type EnrichedDoseHistory = DoseHistory & { medication?: Medication };
@@ -26,7 +25,7 @@ export default function HistoryScreen() {
   const router = useRouter();
   const [history, setHistory] = useState<EnrichedDoseHistory[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<
-    "all" | "taken" | "missed"
+    "all" | "weekly" | "monthly" | "yearly"
   >("all");
 
   const loadHistory = useCallback(async () => {
@@ -71,39 +70,10 @@ export default function HistoryScreen() {
 
   const filteredHistory = history.filter((dose) => {
     if (selectedFilter === "all") return true;
-    if (selectedFilter === "taken") return dose.taken;
-    if (selectedFilter === "missed") return !dose.taken;
     return true;
   });
 
   const groupedHistory = groupHistoryByDate();
-
-  const handleClearAllData = () => {
-    Alert.alert(
-      "Clear All Data",
-      "Are you sure you want to clear all medication data? This action cannot be undone.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Clear All",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await clearAllData();
-              await loadHistory();
-              Alert.alert("Success", "All data has been cleared successfully");
-            } catch (error) {
-              console.error("Error clearing data:", error);
-              Alert.alert("Error", "Failed to clear data. Please try again.");
-            }
-          },
-        },
-      ]
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -122,7 +92,7 @@ export default function HistoryScreen() {
           >
             <Ionicons name="chevron-back" size={28} color="#1a8e2d" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>History Log</Text>
+          <Text style={styles.headerTitle}>Loans History</Text>
         </View>
 
         <View style={styles.filtersContainer}>
@@ -150,33 +120,49 @@ export default function HistoryScreen() {
             <TouchableOpacity
               style={[
                 styles.filterButton,
-                selectedFilter === "taken" && styles.filterButtonActive,
+                selectedFilter === "weekly" && styles.filterButtonActive,
               ]}
-              onPress={() => setSelectedFilter("taken")}
+              onPress={() => setSelectedFilter("weekly")}
             >
               <Text
                 style={[
                   styles.filterText,
-                  selectedFilter === "taken" && styles.filterTextActive,
+                  selectedFilter === "weekly" && styles.filterTextActive,
                 ]}
               >
-                Taken
+                Weekly
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.filterButton,
-                selectedFilter === "missed" && styles.filterButtonActive,
+                selectedFilter === "monthly" && styles.filterButtonActive,
               ]}
-              onPress={() => setSelectedFilter("missed")}
+              onPress={() => setSelectedFilter("monthly")}
             >
               <Text
                 style={[
                   styles.filterText,
-                  selectedFilter === "missed" && styles.filterTextActive,
+                  selectedFilter === "monthly" && styles.filterTextActive,
                 ]}
               >
-                Missed
+                Monthly
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.filterButton,
+                selectedFilter === "yearly" && styles.filterButtonActive,
+              ]}
+              onPress={() => setSelectedFilter("yearly")}
+            >
+              <Text
+                style={[
+                  styles.filterText,
+                  selectedFilter === "yearly" && styles.filterTextActive,
+                ]}
+              >
+                Yearly
               </Text>
             </TouchableOpacity>
           </ScrollView>
@@ -259,11 +245,10 @@ export default function HistoryScreen() {
 
           <View style={styles.clearDataContainer}>
             <TouchableOpacity
-              style={styles.clearDataButton}
-              onPress={handleClearAllData}
+              style={styles.resetButton}
             >
               <Ionicons name="trash-outline" size={20} color="#FF5252" />
-              <Text style={styles.clearDataText}>Clear All Data</Text>
+              <Text style={styles.clearDataText}>Clear All Filters</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -418,7 +403,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 40,
   },
-  clearDataButton: {
+  resetButton: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#FFEBEE",

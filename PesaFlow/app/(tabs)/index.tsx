@@ -10,6 +10,7 @@ import {
   Modal,
   Alert,
   AppState,
+  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
@@ -27,6 +28,7 @@ import {
   registerForPushNotificationsAsync,
   scheduleMedicationReminder,
 } from "@/utils/notifications";
+import { people } from "@/data/people";
 
 const { width } = Dimensions.get("window");
 
@@ -36,15 +38,15 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const QUICK_ACTIONS = [
   {
     icon: "add-circle-outline" as const,
-    label: "Add\nMedication",
-    route: "/medications/add" as const,
+    label: "Add Client",
+    route: "/new-client" as const,
     color: "#2E7D32",
     gradient: ["#4CAF50", "#2E7D32"] as [string, string],
   },
   {
-    icon: "time-outline" as const,
-    label: "History\nLog",
-    route: "/history" as const,
+    icon: "add-circle" as const,
+    label: "New\nDisbursement",
+    route: "/new-disbursement" as const,
     color: "#C2185B",
     gradient: ["#E91E63", "#C2185B"] as [string, string],
   },
@@ -62,8 +64,8 @@ function CircularProgress({
   completedDoses,
 }: CircularProgressProps) {
   const animatedValue = useRef(new Animated.Value(0)).current;
-  const size = width * 0.55;
-  const strokeWidth = 15;
+  const size = width * 0.3;
+  const strokeWidth = 10;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
@@ -87,7 +89,7 @@ function CircularProgress({
           {Math.round(progress * 100)}%
         </Text>
         <Text style={styles.progressDetails}>
-          {completedDoses} of {totalDoses} doses
+          {completedDoses} of {totalDoses} Loans {"\n"}complete
         </Text>
       </View>
       <Svg width={size} height={size} style={styles.progressRing}>
@@ -213,22 +215,6 @@ export default function HomeScreen() {
     }, [loadMedications])
   );
 
-  const handleTakeDose = async (medication: Medication) => {
-    try {
-      await recordDose(medication.id, true, new Date().toISOString());
-      await loadMedications(); // Reload data after recording dose
-    } catch (error) {
-      console.error("Error recording dose:", error);
-      Alert.alert("Error", "Failed to record dose. Please try again.");
-    }
-  };
-
-  const isDoseTaken = (medicationId: string) => {
-    return doseHistory.some(
-      (dose) => dose.medicationId === medicationId && dose.taken
-    );
-  };
-
   const progress =
     todaysMedications.length > 0
       ? completedDoses / (todaysMedications.length * 2)
@@ -240,7 +226,7 @@ export default function HomeScreen() {
         <View style={styles.headerContent}>
           <View style={styles.headerTop}>
             <View style={styles.flex1}>
-              <Text style={styles.greeting}>Daily Progress</Text>
+              <Text style={styles.greeting}>Loans Summary</Text>
             </View>
             <TouchableOpacity
               style={styles.notificationButton}
@@ -290,78 +276,30 @@ export default function HomeScreen() {
 
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Today's Schedule</Text>
+            <Text style={styles.sectionTitle}>All Clients</Text>
             <Link href="/calendar" asChild>
               <TouchableOpacity>
-                <Text style={styles.seeAllButton}>See All</Text>
+                <Text style={styles.seeAllButton}>Add New</Text>
               </TouchableOpacity>
             </Link>
           </View>
-          {todaysMedications.length === 0 ? (
-            <View style={styles.emptyState}>
-              <Ionicons name="medical-outline" size={48} color="#ccc" />
-              <Text style={styles.emptyStateText}>
-                No medications scheduled for today
-              </Text>
-              <Link href="/medications/add" asChild>
-                <TouchableOpacity style={styles.addMedicationButton}>
-                  <Text style={styles.addMedicationButtonText}>
-                    Add Medication
-                  </Text>
-                </TouchableOpacity>
-              </Link>
-            </View>
-          ) : (
-            todaysMedications.map((medication) => {
-              const taken = isDoseTaken(medication.id);
-              return (
-                <View key={medication.id} style={styles.doseCard}>
-                  <View
-                    style={[
-                      styles.doseBadge,
-                      { backgroundColor: `${medication.color}15` },
-                    ]}
-                  >
-                    <Ionicons
-                      name="medical"
-                      size={24}
-                      color={medication.color}
-                    />
-                  </View>
-                  <View style={styles.doseInfo}>
-                    <View>
-                      <Text style={styles.medicineName}>{medication.name}</Text>
-                      <Text style={styles.dosageInfo}>{medication.dosage}</Text>
-                    </View>
-                    <View style={styles.doseTime}>
-                      <Ionicons name="time-outline" size={16} color="#666" />
-                      <Text style={styles.timeText}>{medication.times[0]}</Text>
-                    </View>
-                  </View>
-                  {taken ? (
-                    <View style={[styles.takenBadge]}>
-                      <Ionicons
-                        name="checkmark-circle"
-                        size={20}
-                        color="#4CAF50"
-                      />
-                      <Text style={styles.takenText}>Taken</Text>
-                    </View>
-                  ) : (
-                    <TouchableOpacity
-                      style={[
-                        styles.takeDoseButton,
-                        { backgroundColor: medication.color },
-                      ]}
-                      onPress={() => handleTakeDose(medication)}
-                    >
-                      <Text style={styles.takeDoseText}>Take</Text>
-                    </TouchableOpacity>
-                  )}
+          <FlatList
+            data={people}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.clientItem}
+                onPress={() => router.push(`/client/${item.id}`)}
+              >
+                <View style={styles.clientIcon}>
+                  <Ionicons name="person" size={24} color="#333" />
                 </View>
-              );
-            })
-          )}
+                <View style={styles.clientInfo}>
+                  <Text style={styles.clientName}>{item.name}</Text>
+                  <Text style={styles.clientId}>{item.id}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
         </View>
       </View>
 
@@ -599,6 +537,7 @@ const styles = StyleSheet.create({
     borderColor: "#146922",
     paddingHorizontal: 4,
   },
+
   notificationCount: {
     color: "white",
     fontSize: 11,
@@ -608,6 +547,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "rgba(255, 255, 255, 0.8)",
     marginTop: 4,
+    textAlign:'center'
   },
   modalOverlay: {
     flex: 1,
@@ -705,6 +645,63 @@ const styles = StyleSheet.create({
     color: "#4CAF50",
     fontWeight: "600",
     fontSize: 14,
+    marginLeft: 4,
+  },
+  clientItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  clientIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 15,
+    backgroundColor: "#E8F5E9",
+  },
+  clientInfo: {
+    flex: 1,
+  },
+  clientName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 4,
+  },
+  clientId: {
+    fontSize: 14,
+    color: "#666",
+  },
+  clientStatus: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 4,
+  },
+  clientStatusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    backgroundColor: "#E8F5E9",
+  },
+  clientStatusText: {
+    color: "#4CAF50",
+    fontWeight: "600",
+    fontSize: 14,
+    marginLeft: 4,
+  },
+  clientStatusIcon: {
     marginLeft: 4,
   },
 });
