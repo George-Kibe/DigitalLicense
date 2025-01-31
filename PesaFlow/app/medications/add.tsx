@@ -17,11 +17,11 @@ import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
-import { addMedication } from "../../utils/storage";
+import { addMedication } from "@/utils/storage";
 import {
   scheduleMedicationReminder,
   scheduleRefillReminder,
-} from "../../utils/notifications";
+} from "@/utils/notifications";
 
 const { width } = Dimensions.get("window");
 

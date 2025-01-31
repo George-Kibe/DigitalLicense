@@ -16,12 +16,11 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { LinearGradient } from "expo-linear-gradient";
-import { BlurView } from "expo-blur";
-import { addMedication } from "../../utils/storage";
-import {
-  scheduleMedicationReminder,
-  scheduleRefillReminder,
-} from "../../utils/notifications";
+// import { addMedication } from "@/utils/storage";
+// import {
+//   scheduleMedicationReminder,
+//   scheduleRefillReminder,
+// } from "@/utils/notifications";
 
 const { width } = Dimensions.get("window");
 
@@ -144,15 +143,15 @@ export default function AddMedicationScreen() {
         color: randomColor,
       };
 
-      await addMedication(medicationData);
+      // await addMedication(medicationData);
 
       // Schedule reminders if enabled
-      if (medicationData.reminderEnabled) {
-        await scheduleMedicationReminder(medicationData);
-      }
-      if (medicationData.refillReminder) {
-        await scheduleRefillReminder(medicationData);
-      }
+      // if (medicationData.reminderEnabled) {
+      //   await scheduleMedicationReminder(medicationData);
+      // }
+      // if (medicationData.refillReminder) {
+      //   await scheduleRefillReminder(medicationData);
+      // }
 
       Alert.alert(
         "Success",

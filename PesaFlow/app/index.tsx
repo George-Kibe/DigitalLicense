@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Animated } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 
@@ -41,8 +41,8 @@ export default function SplashScreen() {
           },
         ]}
       >
-        <Ionicons name="medical" size={100} color="white" />
-        <Text style={styles.appName}>MedRemind</Text>
+        <FontAwesome name="money" size={100} color="white" />
+        <Text style={styles.appName}>PesaFlow</Text>
       </Animated.View>
     </View>
   );

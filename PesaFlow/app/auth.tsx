@@ -10,6 +10,7 @@ import {
 import { useRouter } from "expo-router";
 import * as LocalAuthentication from "expo-local-authentication";
 import { Ionicons } from "@expo/vector-icons";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
@@ -45,14 +46,14 @@ export default function AuthScreen() {
         promptMessage:
           hasHardware && hasBiometrics
             ? "Use Face ID or Touch ID"
-            : "Enter your PIN to access MedRemind",
+            : "Enter your PIN to access PesaFlow",
         fallbackLabel: "Use PIN",
         cancelLabel: "Cancel",
         disableDeviceFallback: false,
       });
 
       if (auth.success) {
-        router.replace("/home");
+        router.replace("/(tabs)");
       } else {
         setError("Authentication failed. Please try again.");
       }
@@ -68,18 +69,18 @@ export default function AuthScreen() {
     <LinearGradient colors={["#4CAF50", "#2E7D32"]} style={styles.container}>
       <View style={styles.content}>
         <View style={styles.iconContainer}>
-          <Ionicons name="medical" size={80} color="white" />
+          <FontAwesome5 name="money-bill" size={60} color="white" />
         </View>
 
-        <Text style={styles.title}>MedRemind</Text>
-        <Text style={styles.subtitle}>Your Personal Medication Assistant</Text>
+        <Text style={styles.title}>PesaFlow</Text>
+        <Text style={styles.subtitle}>Your Small Loans Management Assistant</Text>
 
         <View style={styles.card}>
           <Text style={styles.welcomeText}>Welcome Back!</Text>
           <Text style={styles.instructionText}>
             {hasBiometrics
-              ? "Use Face ID/Touch ID or PIN to access your medications"
-              : "Enter your PIN to access your medications"}
+              ? "Use Face ID/Touch ID or PIN to access your Loans summary and reports"
+              : "Enter your PIN to access your Loans Data"}
           </Text>
 
           <TouchableOpacity

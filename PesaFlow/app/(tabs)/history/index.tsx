@@ -18,7 +18,7 @@ import {
   DoseHistory,
   Medication,
   clearAllData,
-} from "../../utils/storage";
+} from "@/utils/storage";
 
 type EnrichedDoseHistory = DoseHistory & { medication?: Medication };
 
