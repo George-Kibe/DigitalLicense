@@ -46,30 +46,30 @@ const PinScreen = () => {
     setLoading(false)
   }
 
-  if(showCodeBox) {
-    return (
-      <SafeAreaView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          style={styles.container}
-        >
-          <View style={styles.topView}>
-            <Text style={styles.topText}>Enter your Unique Code</Text>
-            <TextInput 
-              style={styles.codeInput}
-              value={userCode}
-              onChangeText={setUserCode}
-            />
-          </View>
-          <TouchableOpacity onPress={verifyUserCode} style={styles.button}>
-            <Text style={styles.buttonText}>
-              {loading ? "Verifying..." : "Verify Code"}
-            </Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    );
-  }
+  // if(showCodeBox) {
+  //   return (
+  //     <SafeAreaView>
+  //       <KeyboardAvoidingView
+  //         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  //         style={styles.container}
+  //       >
+  //         <View style={styles.topView}>
+  //           <Text style={styles.topText}>Enter your Unique Code</Text>
+  //           <TextInput 
+  //             style={styles.codeInput}
+  //             value={userCode}
+  //             onChangeText={setUserCode}
+  //           />
+  //         </View>
+  //         <TouchableOpacity onPress={verifyUserCode} style={styles.button}>
+  //           <Text style={styles.buttonText}>
+  //             {loading ? "Verifying..." : "Verify Code"}
+  //           </Text>
+  //         </TouchableOpacity>
+  //       </KeyboardAvoidingView>
+  //     </SafeAreaView>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={styles.container}>

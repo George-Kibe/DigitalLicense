@@ -18,8 +18,11 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET"
       ],
+      "allowBackup": false,
+      "usesCleartextTraffic": true,
       "package": "com.digitallicense.application"
     },
     "web": {
