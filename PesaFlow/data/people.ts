@@ -3,61 +3,61 @@ export const people = [
       "id": "1",
       "name": "Alice Johnson",
       "email": "alice.johnson@example.com",
-      "phone": "+1 555-123-4567"
+      "phone": "+25471-123-456"
     },
     {
       "id": "2",
       "name": "Bob Smith",
       "email": "bob.smith@example.com",
-      "phone": "+1 555-234-5678"
+      "phone": "+25471-234-567"
     },
     {
       "id": "3",
       "name": "Charlie Brown",
       "email": "charlie.brown@example.com",
-      "phone": "+1 555-345-6789"
+      "phone": "+25471-345-678"
     },
     {
       "id": "4",
       "name": "Diana Williams",
       "email": "diana.williams@example.com",
-      "phone": "+1 555-456-7890"
+      "phone": "+25471-456-789"
     },
     {
       "id": "5",
       "name": "Ethan Davis",
       "email": "ethan.davis@example.com",
-      "phone": "+1 555-567-8901"
+      "phone": "+25471-567-890"
     },
     {
       "id": "6",
       "name": "Fiona Martinez",
       "email": "fiona.martinez@example.com",
-      "phone": "+1 555-678-9012"
+      "phone": "+25471-678-901"
     },
     {
       "id": "7",
       "name": "George Wilson",
       "email": "george.wilson@example.com",
-      "phone": "+1 555-789-0123"
+      "phone": "+25471-789-012"
     },
     {
       "id": "8",
       "name": "Hannah Clark",
       "email": "hannah.clark@example.com",
-      "phone": "+1 555-890-1234"
+      "phone": "+25471-890-123"
     },
     {
       "id": "9",
       "name": "Isaac Turner",
       "email": "isaac.turner@example.com",
-      "phone": "+1 555-901-2345"
+      "phone": "+25471-901-234"
     },
     {
       "id": "10",
       "name": "Julia Adams",
       "email": "julia.adams@example.com",
-      "phone": "+1 555-012-3456"
+      "phone": "+25471-012-345"
     }
   ]
   

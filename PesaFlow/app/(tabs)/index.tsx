@@ -294,8 +294,8 @@ export default function HomeScreen() {
                   <Ionicons name="person" size={24} color="#333" />
                 </View>
                 <View style={styles.clientInfo}>
-                  <Text style={styles.clientName}>{item.name}</Text>
-                  <Text style={styles.clientId}>{item.id}</Text>
+                  <Text style={styles.clientName}>{item.name}-{item.phone}</Text>
+                  <Text style={styles.clientId}>{item.email}</Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -651,8 +651,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",
-    padding: 16,
-    borderRadius: 16,
+    padding: 4,
+    borderRadius: 8,
     marginBottom: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

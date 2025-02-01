@@ -5,24 +5,22 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "DigitalLicense",
+    "scheme": "digitallicense",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.DigitalLicense.application"
+      "bundleIdentifier": "com.digitallicense.application"
     },
     "android": {
       "adaptiveIcon": {
-        "supportsTablet": true,
-        "bundleIdentifier": "com.DigitalLicense.application",
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.DigitalLicense.application"
+      "package": "com.digitallicense.application"
     },
     "web": {
       "bundler": "metro",
