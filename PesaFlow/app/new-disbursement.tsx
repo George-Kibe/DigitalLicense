@@ -154,7 +154,7 @@ export default function AddNewClientScreen() {
         >
           {/* Basic Information */}
           <View style={styles.section}>
-            <Text style={styles.label}>Client</Text>
+            <Text style={styles.label}>Select Client</Text>
             <Picker
               selectedValue={form.name}
               onValueChange={(itemValue, itemIndex) =>
@@ -162,7 +162,7 @@ export default function AddNewClientScreen() {
               }>
                 {
                   people.map((person) => (
-                    <Picker.Item label={person.name} value={person.name} key={person.name} />
+                    <Picker.Item label={person.name + " " + person.phone} value={person.name} key={person.name} />
                   ))
                 }
             </Picker>
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // paddingTop: Platform.OS === "ios" ? 50 : 30,
+    paddingTop: Platform.OS === "ios" ? 50 : 60,
   },
   header: {
     flexDirection: "row",
@@ -447,6 +447,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     width,
+    paddingTop: 10,
     justifyContent: "space-around",
     backgroundColor: "white",
     borderTopWidth: 1,

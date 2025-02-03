@@ -108,15 +108,15 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: Platform.OS === "ios" ? 140 : 120,
+    height: Platform.OS === "ios" ? 140 : 160,
   },
   content: {
     flex: 1,
-    paddingTop: Platform.OS === "ios" ? 50 : 30,
+    paddingTop: Platform.OS === "ios" ? 50 : 50,
   },
   header: {
     flexDirection: "row",
-    alignItems: "center",
+    alignSelf: "center",
     paddingHorizontal: 20,
     paddingBottom: 20,
     zIndex: 1,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "700",
     color: "white",
     marginLeft: 15,

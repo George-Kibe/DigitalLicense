@@ -21,6 +21,7 @@ import { people } from "@/data/people";
 import CalendarPicker from "react-native-calendar-picker";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import moment from "moment";
+import { loans } from "@/data/loans";
 
 interface LoanForm {
   name: string;
@@ -39,8 +40,8 @@ const { width } = Dimensions.get("window");
 export default function AddNewRollOverScreen() {
   const router = useRouter();
   const [totalAmountDue, setTotalAmountDue] = useState<Number>();
-  const [showDisCalendar, setShowDisCalendar] = useState(false);
   const [showDueCalendar, setShowDueCalendar] = useState(false);
+  const [loanAmount, setLoanAmount] = useState<Number>();
 
   const [form, setForm] = useState<LoanForm>({
     name: "",
@@ -53,6 +54,19 @@ export default function AddNewRollOverScreen() {
     status: "Pending",
     totalDue: 0,
   });
+  useEffect(() => {
+    if (!form.name || !form.interestRate){
+      return;
+    }
+    const newAmount = loans.find(loan => loan.name === form.name)?.amount;
+    if (newAmount){
+      const newTotal = newAmount + newAmount * form.interestRate / 100
+      console.log("New Total: ", newTotal)
+      setTotalAmountDue(newTotal)
+    }
+  
+  }, [form.name, form.interestRate])
+  
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -144,7 +158,7 @@ export default function AddNewRollOverScreen() {
           >
             <Ionicons name="chevron-back" size={24} color="#1a8e2d" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Add New Disbursement</Text>
+          <Text style={styles.headerTitle}>Add New RollOver</Text>
         </View>
 
         <ScrollView
@@ -154,38 +168,21 @@ export default function AddNewRollOverScreen() {
         >
           {/* Basic Information */}
           <View style={styles.section}>
-            <Text style={styles.label}>Client</Text>
+           <Text style={styles.label}>Client and Loan ID</Text>
             <Picker
               selectedValue={form.name}
               onValueChange={(itemValue, itemIndex) =>
                 setForm({ ...form, name: itemValue })
               }>
                 {
-                  people.map((person) => (
-                    <Picker.Item label={person.name} value={person.name} key={person.name} />
+                  loans.map((loan) => (
+                    <Picker.Item 
+                    label={loan.name + " "+ loan.amount + " " + loan.dueDate} value={loan.name} key={loan.name} />
                   ))
                 }
-            </Picker>
-            <Text style={styles.label}>Amount to be Disbursed</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.mainInput, errors.amount && styles.inputError]}
-                keyboardType="numeric"
-                placeholderTextColor="#999"
-                value={form.amount.toString()}
-                onChangeText={(text) => {
-                  setForm({ ...form, amount: Number(text) });
-                  if (errors.amount) {
-                    setErrors({ ...errors, amount: "" });
-                  }
-                }}
-              />
-              {errors.amount && (
-                <Text style={styles.errorText}>{errors.amount}</Text>
-              )}
-            </View>
+            </Picker>         
 
-            <Text style={styles.label}>Interest Rate</Text>
+            <Text style={styles.label}>Additional Interest Rate for Rollover(%)</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={[styles.mainInput, errors.email && styles.inputError]}
@@ -205,26 +202,9 @@ export default function AddNewRollOverScreen() {
             </View>
             
             <Text style={styles.label}>Total Amount Due: {totalAmountDue?.toFixed()}</Text>
-
           <View style={styles.dateView}>
             <Text style={styles.label}>
-              Date Disbursed: {moment(form.dateDisbursed).format("DD MMM YYYY") || ""} 
-            </Text>
-            <TouchableOpacity onPress={() => setShowDisCalendar(!showDisCalendar)}>
-              <AntDesign name="calendar" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-          {
-            showDisCalendar &&  
-            <CalendarPicker 
-              onDateChange={(date: Date) => {
-                setForm({ ...form, dateDisbursed: new Date(date) }) 
-                setShowDisCalendar(false)} }
-            /> 
-           }
-          <View style={styles.dateView}>
-            <Text style={styles.label}>
-              Date Disbursed: {moment(form.dueDate).format("DD MMM YYYY") || ""} 
+              New Due Date: {moment(form.dueDate).format("DD MMM YYYY") || ""} 
             </Text>
             <TouchableOpacity onPress={() => setShowDueCalendar(!showDueCalendar)}>
               <AntDesign name="calendar" size={24} color="black" />
@@ -241,7 +221,7 @@ export default function AddNewRollOverScreen() {
            }
           </View>
           <View style={styles.section}>
-            <Text style={styles.label}>Notes</Text>
+            <Text style={styles.label}>Reason for Rollover</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 multiline
@@ -285,7 +265,7 @@ export default function AddNewRollOverScreen() {
               end={{ x: 1, y: 0 }}
             >
               <Text style={styles.saveButtonText}>
-                {isSubmitting ? "Adding..." : "Add Disbursement"}
+                {isSubmitting ? "Adding..." : "Add RollOver"}
               </Text>
             </LinearGradient>
           </TouchableOpacity>          
@@ -309,7 +289,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // paddingTop: Platform.OS === "ios" ? 50 : 30,
+    paddingTop: Platform.OS === "ios" ? 50 : 60,
   },
   header: {
     flexDirection: "row",
@@ -356,7 +336,7 @@ const styles = StyleSheet.create({
   mainInput: {
     fontSize: 18,
     color: "#333",
-    padding: 15,
+    padding: 10,
   },
   optionsGrid: {
     flexDirection: "row",
@@ -428,6 +408,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     width,
+    paddingTop: 10,
     justifyContent: "space-around",
     backgroundColor: "white",
     borderTopWidth: 1,

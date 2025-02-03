@@ -37,9 +37,7 @@ const { width } = Dimensions.get("window");
 
 export default function AddNewRepaymentScreen() {
   const router = useRouter();
-  const [totalAmountDue, setTotalAmountDue] = useState<Number>();
   const [showDisCalendar, setShowDisCalendar] = useState(false);
-  const [showDueCalendar, setShowDueCalendar] = useState(false);
 
   const [form, setForm] = useState<LoanForm>({
     name: "",
@@ -67,13 +65,6 @@ export default function AddNewRepaymentScreen() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  useEffect(() => {
-    const newTotal = form.amount + (form.amount * form.interestRate / 100);
-    setTotalAmountDue(newTotal);
-  }, [form.interestRate, form.amount])
-  
-
 
 
   const handleSave = async () => {
@@ -245,7 +236,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // paddingTop: Platform.OS === "ios" ? 50 : 30,
+    paddingTop: Platform.OS === "ios" ? 50 : 60,
   },
   header: {
     flexDirection: "row",
