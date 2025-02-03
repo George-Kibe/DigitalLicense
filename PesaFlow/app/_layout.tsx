@@ -35,6 +35,9 @@ export default function RootLayout() {
         <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="new-client" options={{ headerShown: false }} />
         <Stack.Screen name="new-disbursement" options={{ headerShown: false }} />
+        <Stack.Screen name="new-expense" options={{ headerShown: false }} />
+        <Stack.Screen name="new-repayment" options={{ headerShown: false }} />
+        <Stack.Screen name="new-rollover" options={{ headerShown: false }} />
         <Stack.Screen name="clients/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>

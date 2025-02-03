@@ -36,7 +36,7 @@ interface LoanForm {
 
 const { width } = Dimensions.get("window");
 
-export default function AddNewClientScreen() {
+export default function AddNewRollOverScreen() {
   const router = useRouter();
   const [totalAmountDue, setTotalAmountDue] = useState<Number>();
   const [showDisCalendar, setShowDisCalendar] = useState(false);
@@ -166,7 +166,6 @@ export default function AddNewClientScreen() {
                   ))
                 }
             </Picker>
-
             <Text style={styles.label}>Amount to be Disbursed</Text>
             <View style={styles.inputContainer}>
               <TextInput
@@ -207,24 +206,6 @@ export default function AddNewClientScreen() {
             
             <Text style={styles.label}>Total Amount Due: {totalAmountDue?.toFixed()}</Text>
 
-            <Text style={styles.label}>Expenses</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.mainInput, errors.expenses && styles.inputError]}
-                keyboardType="numeric"
-                placeholderTextColor="#999"
-                value={form.expenses.toString()}
-                onChangeText={(text) => {
-                  setForm({ ...form, expenses: Number(text) });
-                  if (errors.expenses) {
-                    setErrors({ ...errors, expenses: "" });
-                  }
-                }}
-              />
-              {errors.expenses && (
-                <Text style={styles.errorText}>{errors.expenses}</Text>
-              )}
-            </View>
           <View style={styles.dateView}>
             <Text style={styles.label}>
               Date Disbursed: {moment(form.dateDisbursed).format("DD MMM YYYY") || ""} 
@@ -243,7 +224,7 @@ export default function AddNewClientScreen() {
            }
           <View style={styles.dateView}>
             <Text style={styles.label}>
-              Due Date: {moment(form.dueDate).format("DD MMM YYYY") || ""} 
+              Date Disbursed: {moment(form.dueDate).format("DD MMM YYYY") || ""} 
             </Text>
             <TouchableOpacity onPress={() => setShowDueCalendar(!showDueCalendar)}>
               <AntDesign name="calendar" size={24} color="black" />
@@ -254,7 +235,7 @@ export default function AddNewClientScreen() {
             showDueCalendar &&  
             <CalendarPicker 
               onDateChange={(date: Date) => {
-                setForm({ ...form, dueDate: new Date(date) }) 
+                setForm({ ...form, dateDisbursed: new Date(date) }) 
                 setShowDueCalendar(false)} }
             /> 
            }
@@ -375,7 +356,7 @@ const styles = StyleSheet.create({
   mainInput: {
     fontSize: 18,
     color: "#333",
-    padding: 8,
+    padding: 15,
   },
   optionsGrid: {
     flexDirection: "row",

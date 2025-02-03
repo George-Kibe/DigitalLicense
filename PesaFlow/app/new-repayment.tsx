@@ -17,17 +17,16 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import {Picker} from '@react-native-picker/picker';
-import { people } from "@/data/people";
+
 import CalendarPicker from "react-native-calendar-picker";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import moment from "moment";
+import { loans } from "@/data/loans";
 
 interface LoanForm {
   name: string;
   amount: number;
-  dateDisbursed: Date ;
-  notes: string;
-  dueDate: Date ;
+  datePaid: Date ;
   expenses: number;
   interestRate: number;
   status: "Pending" | "Approved" | "Rejected"; // Restrict to specific statuses
@@ -36,7 +35,7 @@ interface LoanForm {
 
 const { width } = Dimensions.get("window");
 
-export default function AddNewClientScreen() {
+export default function AddNewRepaymentScreen() {
   const router = useRouter();
   const [totalAmountDue, setTotalAmountDue] = useState<Number>();
   const [showDisCalendar, setShowDisCalendar] = useState(false);
@@ -45,9 +44,7 @@ export default function AddNewClientScreen() {
   const [form, setForm] = useState<LoanForm>({
     name: "",
     amount: 0,
-    dateDisbursed: new Date(),
-    notes: "",
-    dueDate: new Date(),
+    datePaid: new Date(),
     expenses: 0,
     interestRate: 0,
     status: "Pending",
@@ -60,18 +57,12 @@ export default function AddNewClientScreen() {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!form.name.trim()) {
-      newErrors.name = "Client name is required";
-    }
     if (!form.amount) {
       newErrors.amount = "Amount is required";
     }
-    if (!form.dateDisbursed) {
-      newErrors.dateDisbursed = "Date disbursed is required";
+    if (!form.datePaid) {
+      newErrors.datePaid = "Date Paid is required";
     }
-    if (!form.dueDate) {
-      newErrors.dueDate = "Due date is required";
-    } 
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -144,7 +135,7 @@ export default function AddNewClientScreen() {
           >
             <Ionicons name="chevron-back" size={24} color="#1a8e2d" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Add New Disbursement</Text>
+          <Text style={styles.headerTitle}>Add New Repayment</Text>
         </View>
 
         <ScrollView
@@ -154,20 +145,20 @@ export default function AddNewClientScreen() {
         >
           {/* Basic Information */}
           <View style={styles.section}>
-            <Text style={styles.label}>Client</Text>
+            <Text style={styles.label}>Client and Loan ID</Text>
             <Picker
               selectedValue={form.name}
               onValueChange={(itemValue, itemIndex) =>
                 setForm({ ...form, name: itemValue })
               }>
                 {
-                  people.map((person) => (
-                    <Picker.Item label={person.name} value={person.name} key={person.name} />
+                  loans.map((loan) => (
+                    <Picker.Item 
+                    label={loan.name + " "+ loan.amount + " " + loan.dueDate} value={loan.name} key={loan.name} />
                   ))
                 }
             </Picker>
-
-            <Text style={styles.label}>Amount to be Disbursed</Text>
+            <Text style={styles.label}>Amount Paid</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={[styles.mainInput, errors.amount && styles.inputError]}
@@ -185,49 +176,12 @@ export default function AddNewClientScreen() {
                 <Text style={styles.errorText}>{errors.amount}</Text>
               )}
             </View>
-
-            <Text style={styles.label}>Interest Rate</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.mainInput, errors.email && styles.inputError]}
-                keyboardType="numeric"
-                placeholderTextColor="#999"
-                value={form.interestRate.toString()}
-                onChangeText={(text) => {
-                  setForm({ ...form, interestRate: Number(text) });
-                  if (errors.interestRate) {
-                    setErrors({ ...errors, interestRate: "" });
-                  }
-                }}
-              />
-              {errors.interestRate && (
-                <Text style={styles.errorText}>{errors.interestRate}</Text>
-              )}
-            </View>
             
-            <Text style={styles.label}>Total Amount Due: {totalAmountDue?.toFixed()}</Text>
+            <Text style={styles.label}>Total Amount Due: Kshs. {loans.find((loan) => loan.name === form.name)?.amount}</Text>
 
-            <Text style={styles.label}>Expenses</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.mainInput, errors.expenses && styles.inputError]}
-                keyboardType="numeric"
-                placeholderTextColor="#999"
-                value={form.expenses.toString()}
-                onChangeText={(text) => {
-                  setForm({ ...form, expenses: Number(text) });
-                  if (errors.expenses) {
-                    setErrors({ ...errors, expenses: "" });
-                  }
-                }}
-              />
-              {errors.expenses && (
-                <Text style={styles.errorText}>{errors.expenses}</Text>
-              )}
-            </View>
           <View style={styles.dateView}>
             <Text style={styles.label}>
-              Date Disbursed: {moment(form.dateDisbursed).format("DD MMM YYYY") || ""} 
+              Date Paid: {moment(form.datePaid).format("DD MMM YYYY") || ""} 
             </Text>
             <TouchableOpacity onPress={() => setShowDisCalendar(!showDisCalendar)}>
               <AntDesign name="calendar" size={24} color="black" />
@@ -237,47 +191,10 @@ export default function AddNewClientScreen() {
             showDisCalendar &&  
             <CalendarPicker 
               onDateChange={(date: Date) => {
-                setForm({ ...form, dateDisbursed: new Date(date) }) 
+                setForm({ ...form, datePaid: new Date(date) }) 
                 setShowDisCalendar(false)} }
             /> 
            }
-          <View style={styles.dateView}>
-            <Text style={styles.label}>
-              Due Date: {moment(form.dueDate).format("DD MMM YYYY") || ""} 
-            </Text>
-            <TouchableOpacity onPress={() => setShowDueCalendar(!showDueCalendar)}>
-              <AntDesign name="calendar" size={24} color="black" />
-            </TouchableOpacity>
-          </View>           
-           
-           {
-            showDueCalendar &&  
-            <CalendarPicker 
-              onDateChange={(date: Date) => {
-                setForm({ ...form, dueDate: new Date(date) }) 
-                setShowDueCalendar(false)} }
-            /> 
-           }
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.label}>Notes</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                multiline
-                style={[styles.mainInput, errors.notes && styles.inputError]}
-                placeholderTextColor="#999"
-                value={form.notes}
-                onChangeText={(text) => {
-                  setForm({ ...form, notes: text });
-                  if (errors.notes) {
-                    setErrors({ ...errors, notes: "" });
-                  }
-                }}
-              />
-              {errors.notes && (
-                <Text style={styles.errorText}>{errors.notes}</Text>
-              )}
-            </View>
           </View>
         </ScrollView>
 
@@ -304,7 +221,7 @@ export default function AddNewClientScreen() {
               end={{ x: 1, y: 0 }}
             >
               <Text style={styles.saveButtonText}>
-                {isSubmitting ? "Adding..." : "Add Disbursement"}
+                {isSubmitting ? "Adding..." : "Add Payment"}
               </Text>
             </LinearGradient>
           </TouchableOpacity>          
@@ -375,7 +292,7 @@ const styles = StyleSheet.create({
   mainInput: {
     fontSize: 18,
     color: "#333",
-    padding: 8,
+    padding: 10,
   },
   optionsGrid: {
     flexDirection: "row",
@@ -447,6 +364,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     width,
+    paddingTop: 10,
     justifyContent: "space-around",
     backgroundColor: "white",
     borderTopWidth: 1,
