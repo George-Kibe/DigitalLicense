@@ -20,13 +20,14 @@ import {Picker} from '@react-native-picker/picker';
 import { people } from "@/data/people";
 import CalendarPicker from "react-native-calendar-picker";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import moment from "moment";
 
 interface LoanForm {
   name: string;
   amount: number;
-  dateDisbursed: Date | null;
-  description: string;
-  dueDate: string;
+  dateDisbursed: Date ;
+  notes: string;
+  dueDate: Date ;
   expenses: number;
   interestRate: number;
   status: "Pending" | "Approved" | "Rejected"; // Restrict to specific statuses
@@ -44,15 +45,14 @@ export default function AddNewClientScreen() {
   const [form, setForm] = useState<LoanForm>({
     name: "",
     amount: 0,
-    dateDisbursed: null,
-    description: "",
-    dueDate: "",
+    dateDisbursed: new Date(),
+    notes: "",
+    dueDate: new Date(),
     expenses: 0,
     interestRate: 0,
     status: "Pending",
     totalDue: 0,
   });
-  
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,6 +66,12 @@ export default function AddNewClientScreen() {
     if (!form.amount) {
       newErrors.amount = "Amount is required";
     }
+    if (!form.dateDisbursed) {
+      newErrors.dateDisbursed = "Date disbursed is required";
+    }
+    if (!form.dueDate) {
+      newErrors.dueDate = "Due date is required";
+    } 
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -200,11 +206,70 @@ export default function AddNewClientScreen() {
             
             <Text style={styles.label}>Total Amount Due: {totalAmountDue?.toFixed()}</Text>
 
-            <CalendarPicker onDateChange={(date: Date) => setForm({ ...form, dateDisbursed: date }) } /> 
+          <View style={styles.dateView}>
+            <Text style={styles.label}>
+              Date Disbursed: {moment(form.dateDisbursed).format("DD MMM YYYY") || ""} 
+            </Text>
+            <TouchableOpacity onPress={() => setShowDisCalendar(!showDisCalendar)}>
+              <AntDesign name="calendar" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+          {
+            showDisCalendar &&  
+            <CalendarPicker 
+              onDateChange={(date: Date) => {
+                setForm({ ...form, dateDisbursed: new Date(date) }) 
+                setShowDisCalendar(false)} }
+            /> 
+           }
+          <View style={styles.dateView}>
+            <Text style={styles.label}>
+              Date Disbursed: {moment(form.dueDate).format("DD MMM YYYY") || ""} 
+            </Text>
+            <TouchableOpacity onPress={() => setShowDueCalendar(!showDueCalendar)}>
+              <AntDesign name="calendar" size={24} color="black" />
+            </TouchableOpacity>
+          </View>           
+           
+           {
+            showDueCalendar &&  
+            <CalendarPicker 
+              onDateChange={(date: Date) => {
+                setForm({ ...form, dateDisbursed: new Date(date) }) 
+                setShowDueCalendar(false)} }
+            /> 
+           }
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.label}>Notes</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                multiline
+                style={[styles.mainInput, errors.notes && styles.inputError]}
+                placeholderTextColor="#999"
+                value={form.notes}
+                onChangeText={(text) => {
+                  setForm({ ...form, notes: text });
+                  if (errors.notes) {
+                    setErrors({ ...errors, notes: "" });
+                  }
+                }}
+              />
+              {errors.notes && (
+                <Text style={styles.errorText}>{errors.notes}</Text>
+              )}
+            </View>
           </View>
         </ScrollView>
 
         <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => router.back()}
+            disabled={isSubmitting}
+          >
+            <Text style={styles.cancelButtonText}>Cancel</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.saveButton,
@@ -220,18 +285,10 @@ export default function AddNewClientScreen() {
               end={{ x: 1, y: 0 }}
             >
               <Text style={styles.saveButtonText}>
-                {isSubmitting ? "Adding..." : "Add Client"}
+                {isSubmitting ? "Adding..." : "Add Disbursement"}
               </Text>
             </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.cancelButton}
-            onPress={() => router.back()}
-            disabled={isSubmitting}
-          >
-            <Text style={styles.cancelButtonText}>Cancel</Text>
-          </TouchableOpacity>
-          
+          </TouchableOpacity>          
         </View>
       </SafeAreaView>
     </View>
@@ -369,7 +426,9 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    padding: 20,
+    flexDirection: "row",
+    width,
+    justifyContent: "space-around",
     backgroundColor: "white",
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
@@ -377,10 +436,10 @@ const styles = StyleSheet.create({
   saveButton: {
     borderRadius: 16,
     overflow: "hidden",
-    marginBottom: 12,
   },
   saveButtonGradient: {
-    paddingVertical: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -390,7 +449,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   cancelButton: {
-    paddingVertical: 15,
+    paddingHorizontal: 20,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: "#e0e0e0",
@@ -462,4 +521,8 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 10,
   },
+  dateView: {
+    flexDirection: "row",
+    gap: 4,
+  }
 });

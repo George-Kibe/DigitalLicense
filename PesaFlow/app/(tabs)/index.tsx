@@ -152,7 +152,7 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>All Clients</Text>
-            <Link href="/calendar" asChild>
+            <Link href="/new-client" asChild>
               <TouchableOpacity>
                 <Text style={styles.seeAllButton}>Add New</Text>
               </TouchableOpacity>

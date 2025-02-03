@@ -7,21 +7,45 @@ import {
   ScrollView,
   Platform,
   Alert,
+  FlatList,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect } from "@react-navigation/native";
+import moment from "moment";
+
 import {
   getDoseHistory,
   getMedications,
   DoseHistory,
   Medication,
 } from "@/utils/storage";
+import { loans } from "@/data/loans";
+
+const LoanItem = ({ loan }: { loan: Loan }) => {
+  return (
+    <View style={styles.card}>
+      <View style={styles.row}>
+        <Text style={styles.name}>Client: {loan.name}</Text>
+        <Text style={[styles.status, styles[loan.status.toLowerCase()]]}>
+          {loan.status}
+        </Text>
+      </View>
+      <Text style={styles.text}>💰 Amount: Kshs. {loan.amount}</Text>
+      <Text style={styles.text}>📅 Disbursed: {moment(loan.dateDisbursed).format("DD-MMM-YYYY")}</Text>
+      <Text style={styles.text}>📆 Due Date: {moment(loan.dueDate).format("DD-MMM-YYYY")}</Text>
+      <Text style={styles.text}>📝 Notes: {loan.notes}</Text>
+      <Text style={styles.text}>💸 Total Due: Kshs. {loan.totalDue}</Text>
+      <Text style={styles.text}>✅ Paid: Kshs. {loan.totalPaid}</Text>
+      <Text style={styles.text}>📊 Net Interest: Kshs. {loan.netInterest}</Text>
+    </View>
+  );
+};
 
 type EnrichedDoseHistory = DoseHistory & { medication?: Medication };
 
-export default function HistoryScreen() {
+export default function LoansHistoryScreen() {
   const router = useRouter();
   const [history, setHistory] = useState<EnrichedDoseHistory[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<
@@ -168,90 +192,11 @@ export default function HistoryScreen() {
           </ScrollView>
         </View>
 
-        <ScrollView
-          style={styles.historyContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          {groupedHistory.map(([date, doses]) => (
-            <View key={date} style={styles.dateGroup}>
-              <Text style={styles.dateHeader}>
-                {new Date(date).toLocaleDateString("default", {
-                  weekday: "long",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </Text>
-              {doses.map((dose) => (
-                <View key={dose.id} style={styles.historyCard}>
-                  <View
-                    style={[
-                      styles.medicationColor,
-                      { backgroundColor: dose.medication?.color || "#ccc" },
-                    ]}
-                  />
-                  <View style={styles.medicationInfo}>
-                    <Text style={styles.medicationName}>
-                      {dose.medication?.name || "Unknown Medication"}
-                    </Text>
-                    <Text style={styles.medicationDosage}>
-                      {dose.medication?.dosage}
-                    </Text>
-                    <Text style={styles.timeText}>
-                      {new Date(dose.timestamp).toLocaleTimeString("default", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Text>
-                  </View>
-                  <View style={styles.statusContainer}>
-                    {dose.taken ? (
-                      <View
-                        style={[
-                          styles.statusBadge,
-                          { backgroundColor: "#E8F5E9" },
-                        ]}
-                      >
-                        <Ionicons
-                          name="checkmark-circle"
-                          size={16}
-                          color="#4CAF50"
-                        />
-                        <Text style={[styles.statusText, { color: "#4CAF50" }]}>
-                          Taken
-                        </Text>
-                      </View>
-                    ) : (
-                      <View
-                        style={[
-                          styles.statusBadge,
-                          { backgroundColor: "#FFEBEE" },
-                        ]}
-                      >
-                        <Ionicons
-                          name="close-circle"
-                          size={16}
-                          color="#F44336"
-                        />
-                        <Text style={[styles.statusText, { color: "#F44336" }]}>
-                          Missed
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                </View>
-              ))}
-            </View>
-          ))}
-
-          <View style={styles.clearDataContainer}>
-            <TouchableOpacity
-              style={styles.resetButton}
-            >
-              <Ionicons name="trash-outline" size={20} color="#FF5252" />
-              <Text style={styles.clearDataText}>Clear All Filters</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+        <FlatList
+        data={loans}
+        keyExtractor={(item) => item.name + item.dateDisbursed.toISOString()}
+        renderItem={({ item }) => <LoanItem loan={item} />}
+      />
       </View>
     </View>
   );
@@ -419,4 +364,47 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 8,
   },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#333",
+  },
+  card: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  text: {
+    fontSize: 14,
+    color: "#555",
+    marginTop: 5,
+  },
+  status: {
+    fontSize: 12,
+    padding: 5,
+    borderRadius: 5,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  paid: { backgroundColor: "green" },
+  pending: { backgroundColor: "orange" },
+  "rolled over": { backgroundColor: "red" },
 });
