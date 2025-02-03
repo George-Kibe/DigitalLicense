@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.PesaFlow.application"
+      "bundleIdentifier": "com.PesaFlow.application",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "bundleIdentifier": "com.PesaFlow.application",

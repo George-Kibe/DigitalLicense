@@ -87,7 +87,7 @@ export default function AddNewRepaymentScreen() {
 
       Alert.alert(
         "Success",
-        "Medication added successfully",
+        "Repayment added successfully",
         [
           {
             text: "OK",

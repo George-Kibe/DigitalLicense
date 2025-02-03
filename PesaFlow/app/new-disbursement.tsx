@@ -36,7 +36,7 @@ interface LoanForm {
 
 const { width } = Dimensions.get("window");
 
-export default function AddNewClientScreen() {
+export default function AddNewDisbursementScreen() {
   const router = useRouter();
   const [totalAmountDue, setTotalAmountDue] = useState<Number>();
   const [showDisCalendar, setShowDisCalendar] = useState(false);
@@ -72,6 +72,12 @@ export default function AddNewClientScreen() {
     if (!form.dueDate) {
       newErrors.dueDate = "Due date is required";
     } 
+    if (form.interestRate > 100){
+      newErrors.interestRate = "Interest rate should be less than 10";
+    }
+    if (form.interestRate < 0){
+      newErrors.interestRate = "Interest rate should be more than 0";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -105,7 +111,7 @@ export default function AddNewClientScreen() {
 
       Alert.alert(
         "Success",
-        "Medication added successfully",
+        "Loan Disbursed and Recorded successfully",
         [
           {
             text: "OK",
@@ -118,7 +124,7 @@ export default function AddNewClientScreen() {
       console.error("Save error:", error);
       Alert.alert(
         "Error",
-        "Failed to save medication. Please try again.",
+        "Failed to save loan disbursement. Please try again.",
         [{ text: "OK" }],
         { cancelable: false }
       );

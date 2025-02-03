@@ -55,8 +55,8 @@ export default function AddNewExpenseScreen() {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!form.amount) {
-      newErrors.amount = "Amount is required";
+    if (!form.expenses) {
+      newErrors.expenses = "Amount is required";
     }
     if (!form.datePaid) {
       newErrors.datePaid = "Date Paid is required";
@@ -86,7 +86,7 @@ export default function AddNewExpenseScreen() {
 
       Alert.alert(
         "Success",
-        "Medication added successfully",
+        "Expense Added to Loan successfully",
         [
           {
             text: "OK",
@@ -99,7 +99,7 @@ export default function AddNewExpenseScreen() {
       console.error("Save error:", error);
       Alert.alert(
         "Error",
-        "Failed to save medication. Please try again.",
+        "Failed to save Expense. Please try again.",
         [{ text: "OK" }],
         { cancelable: false }
       );

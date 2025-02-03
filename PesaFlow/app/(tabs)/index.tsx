@@ -108,76 +108,78 @@ export default function HomeScreen() {
   const progress = 3/8;
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <LinearGradient colors={["#1a8e2d", "#146922"]} style={styles.header}>
-        <View style={styles.headerContent}>
-          <CircularProgress
-            progress={progress}
-            totalDoses={8}
-            completedDoses={3}
-          />
-          <View style={styles.summaryView}>
-            <Text style={styles.whiteText}>1. All Loans Disbursed: Kshs. 550,000 (8)</Text>
-            <Text style={styles.whiteText}>2. All Clients:10</Text>
-            <Text style={styles.whiteText}>3. All Receipts: Kshs. 450,000</Text>
-            <Text style={styles.whiteText}>4. All Expenses: Kshs. 66,000</Text>
+    <FlatList
+      data={people}
+      ListHeaderComponent={() =>(
+        <View style={styles.container} showsVerticalScrollIndicator={false}>
+        <LinearGradient colors={["#1a8e2d", "#146922"]} style={styles.header}>
+          <View style={styles.headerContent}>
+            <CircularProgress
+              progress={progress}
+              totalDoses={8}
+              completedDoses={3}
+            />
+            <View style={styles.summaryView}>
+              <Text style={styles.whiteText}>1. All Loans Disbursed: Kshs. 550,000 (8)</Text>
+              <Text style={styles.whiteText}>2. All Clients:10</Text>
+              <Text style={styles.whiteText}>3. All Receipts: Kshs. 450,000</Text>
+              <Text style={styles.whiteText}>4. All Expenses: Kshs. 66,000</Text>
+            </View>
           </View>
-        </View>
-      </LinearGradient>
-
-      <View style={styles.content}>
-        <View style={styles.quickActionsContainer}>
-          <Text style={styles.sectionTitle}>Quick Actions</Text>
-          <View style={styles.quickActionsGrid}>
-            {QUICK_ACTIONS.map((action) => (
-              <Link href={action.route} key={action.label} asChild>
-                <TouchableOpacity style={styles.actionButton}>
-                  <LinearGradient
-                    colors={action.gradient}
-                    style={styles.actionGradient}
-                  >
-                    <View style={styles.actionContent}>
-                      <View style={styles.actionIcon}>
-                        <Ionicons name={action.icon} size={28} color="white" />
+        </LinearGradient>
+  
+        <View style={styles.content}>
+          <View style={styles.quickActionsContainer}>
+            <Text style={styles.sectionTitle}>Quick Actions</Text>
+            <View style={styles.quickActionsGrid}>
+              {QUICK_ACTIONS.map((action) => (
+                <Link href={action.route} key={action.label} asChild>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <LinearGradient
+                      colors={action.gradient}
+                      style={styles.actionGradient}
+                    >
+                      <View style={styles.actionContent}>
+                        <View style={styles.actionIcon}>
+                          <Ionicons name={action.icon} size={28} color="white" />
+                        </View>
+                        <Text style={styles.actionLabel}>{action.label}</Text>
                       </View>
-                      <Text style={styles.actionLabel}>{action.label}</Text>
-                    </View>
-                  </LinearGradient>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </Link>
+              ))}
+            </View>
+          </View>
+  
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>All Clients</Text>
+              <Link href="/new-client" asChild>
+                <TouchableOpacity>
+                  <Text style={styles.seeAllButton}>Add New</Text>
                 </TouchableOpacity>
               </Link>
-            ))}
+            </View>
           </View>
-        </View>
-
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>All Clients</Text>
-            <Link href="/new-client" asChild>
-              <TouchableOpacity>
-                <Text style={styles.seeAllButton}>Add New</Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
-          <FlatList
-            data={people}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.clientItem}
-                onPress={() => router.push(`/clients/${item.id}`)}
-              >
-                <View style={styles.clientIcon}>
-                  <Ionicons name="person" size={24} color="#333" />
-                </View>
-                <View style={styles.clientInfo}>
-                  <Text style={styles.clientName}>{item.name}-{item.phone}</Text>
-                  <Text style={styles.clientId}>{item.email}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
         </View>
       </View>
-    </ScrollView>
+      )}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.clientItem}
+          onPress={() => router.push(`/clients/${item.id}`)}
+        >
+          <View style={styles.clientIcon}>
+            <Ionicons name="person" size={24} color="#333" />
+          </View>
+          <View style={styles.clientInfo}>
+            <Text style={styles.clientName}>{item.name}-{item.phone}</Text>
+            <Text style={styles.clientId}>{item.email}</Text>
+          </View>
+        </TouchableOpacity>
+      )}
+    />
   );
 }
 

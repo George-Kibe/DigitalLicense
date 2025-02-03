@@ -42,9 +42,7 @@ export default function AddNewClientScreen() {
     }
     if (!form.contact.trim()) {
       newErrors.contact = "Client contact is required";
-    } else if (!/^\d{10}$/.test(form.contact)) {
-      newErrors.contact = "Invalid contact number";
-    }
+    } 
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -70,7 +68,7 @@ export default function AddNewClientScreen() {
 
       Alert.alert(
         "Success",
-        "Medication added successfully",
+        "Client added successfully",
         [
           {
             text: "OK",
@@ -83,7 +81,7 @@ export default function AddNewClientScreen() {
       console.error("Save error:", error);
       Alert.alert(
         "Error",
-        "Failed to save medication. Please try again.",
+        "Failed to save new client. Please try again.",
         [{ text: "OK" }],
         { cancelable: false }
       );
@@ -163,16 +161,16 @@ export default function AddNewClientScreen() {
                 style={[styles.mainInput, errors.contact && styles.inputError]}
                 placeholder="+2547...."
                 placeholderTextColor="#999"
-                value={form.email}
+                value={form.contact}
                 onChangeText={(text) => {
-                  setForm({ ...form, email: text });
-                  if (errors.email) {
-                    setErrors({ ...errors, email: "" });
+                  setForm({ ...form, contact: text });
+                  if (errors.contact) {
+                    setErrors({ ...errors, contact: "" });
                   }
                 }}
               />
-              {errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
+              {errors.contact && (
+                <Text style={styles.errorText}>{errors.contact}</Text>
               )}
             </View>
 

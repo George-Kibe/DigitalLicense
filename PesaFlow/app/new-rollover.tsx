@@ -74,14 +74,8 @@ export default function AddNewRollOverScreen() {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!form.name.trim()) {
-      newErrors.name = "Client name is required";
-    }
-    if (!form.amount) {
+    if (!form.interestRate) {
       newErrors.amount = "Amount is required";
-    }
-    if (!form.dateDisbursed) {
-      newErrors.dateDisbursed = "Date disbursed is required";
     }
     if (!form.dueDate) {
       newErrors.dueDate = "Due date is required";
@@ -119,7 +113,7 @@ export default function AddNewRollOverScreen() {
 
       Alert.alert(
         "Success",
-        "Medication added successfully",
+        "Loan Rolled over successfully",
         [
           {
             text: "OK",
@@ -132,7 +126,7 @@ export default function AddNewRollOverScreen() {
       console.error("Save error:", error);
       Alert.alert(
         "Error",
-        "Failed to save medication. Please try again.",
+        "Failed Roll over this loan. Please try again.",
         [{ text: "OK" }],
         { cancelable: false }
       );
