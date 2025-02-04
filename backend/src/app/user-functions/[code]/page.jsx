@@ -28,15 +28,6 @@ import ConfirmDetailsAlert from '@/components/ConfirmDetailsAlert';
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 const UserFunctionsPage = () => {
-  const httpsAgent = new https.Agent({
-    rejectUnauthorized: false, // Ignore self-signed certificate errors
-  });
-  
-  const apiClient = axios.create({
-    baseURL: "https://54.153.152.154",
-    httpsAgent,
-  });
-
   const params = useParams();
   const code = params.code;
   const [loading, setLoading] = useState(false);
@@ -197,7 +188,7 @@ const UserFunctionsPage = () => {
       uniqueCode: userCode.codeText
     }
     try {
-      const response = await apiClient.post(`/api/users`, data)
+      const response = await axios.post(`${BACKEND_URL}/dl-users`, data)
       toast.success("Details saved successfully")
       setShowDialog(false)
     } catch (error) {
