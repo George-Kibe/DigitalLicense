@@ -9,7 +9,7 @@ import { RootState } from '@/store';
 import axios from "axios";
 import userSlice from '@/store/userSlice';
 
-const BACKEND_URL ="http://54.153.152.154:3000"
+const BACKEND_URL ="https://myicebreaker.com.au"
 const CELL_COUNT = 6;
 
 const PinScreen = () => {
@@ -18,7 +18,6 @@ const PinScreen = () => {
   const [loading, setLoading] = useState(false)
   const [userCode, setUserCode] = useState('');
   const dispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.currentUser.user) as User | null;
   const showCodeBox = useSelector((state: RootState) => state.currentUser.showCodeBox);
 
   // console.log("Show Code Box: ", showCodeBox)
@@ -33,9 +32,9 @@ const PinScreen = () => {
   const verifyUserCode = async() => {
     console.log("User Code: ", userCode)
     setLoading(true);
-    const code = "678e035a7041a36efb35f59f"
+    const code = "126D6C1XRE"
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/users/${userCode}`);
+      const response = await axios.get(`${BACKEND_URL}/dl-users/${userCode}`);
       console.log("Response: ", response.data)
        dispatch(userSlice.actions.addCurrentUser({
         user: response.data
@@ -46,30 +45,30 @@ const PinScreen = () => {
     setLoading(false)
   }
 
-  // if(showCodeBox) {
-  //   return (
-  //     <SafeAreaView>
-  //       <KeyboardAvoidingView
-  //         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-  //         style={styles.container}
-  //       >
-  //         <View style={styles.topView}>
-  //           <Text style={styles.topText}>Enter your Unique Code</Text>
-  //           <TextInput 
-  //             style={styles.codeInput}
-  //             value={userCode}
-  //             onChangeText={setUserCode}
-  //           />
-  //         </View>
-  //         <TouchableOpacity onPress={verifyUserCode} style={styles.button}>
-  //           <Text style={styles.buttonText}>
-  //             {loading ? "Verifying..." : "Verify Code"}
-  //           </Text>
-  //         </TouchableOpacity>
-  //       </KeyboardAvoidingView>
-  //     </SafeAreaView>
-  //   );
-  // }
+  if(showCodeBox) {
+    return (
+      <SafeAreaView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.container}
+        >
+          <View style={styles.topView}>
+            <Text style={styles.topText}>Enter your Unique Code</Text>
+            <TextInput 
+              style={styles.codeInput}
+              value={userCode}
+              onChangeText={setUserCode}
+            />
+          </View>
+          <TouchableOpacity onPress={verifyUserCode} style={styles.button}>
+            <Text style={styles.buttonText}>
+              {loading ? "Verifying..." : "Verify Code"}
+            </Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>

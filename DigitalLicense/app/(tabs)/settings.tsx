@@ -100,7 +100,7 @@ const ProfileEditScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Profile Image */}
         <SafeAreaView>
-        <TouchableOpacity onPress={handleImageUpload} style={styles.imageContainer}>
+        {/* <TouchableOpacity onPress={handleImageUpload} style={styles.imageContainer}>
           {profileImage ? (
             <Image source={{ uri: profileImage }} style={styles.image} />
           ) : (
@@ -108,41 +108,41 @@ const ProfileEditScreen = () => {
               <Text style={styles.placeholderText}>Upload Image</Text>
             </View>
           )}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         </SafeAreaView>
 
         {/* Name */}
-        <Text style={styles.label}>Full Name</Text>
+        {/* <Text style={styles.label}>Full Name</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your name"
           value={name}
           onChangeText={setName}
-        /> 
+        />  */}
         {/* Date of Birth */}
-        <Text style={styles.label}>Date of Birth</Text>
-        <CalendarPicker onDateChange={setDob} />
+        {/* <Text style={styles.label}>Date of Birth</Text>
+        <CalendarPicker onDateChange={setDob} /> */}
 
         {/* Licence Number */}
-        <Text style={styles.label}>Licence Number</Text>
+        {/* <Text style={styles.label}>Licence Number</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your Licence Number"
           value={licenceNumber}
           onChangeText={setLicenceNumber}
-        /> 
+        />  */}
 
         {/* Card Number */}
-        <Text style={styles.label}>Card Number</Text>
+        {/* <Text style={styles.label}>Card Number</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your Card Number"
           value={cardNumber}
           onChangeText={setCardNumber}
-        />
+        /> */}
 
         {/* Class Dropdown */}
-        <Text style={styles.label}>Class</Text>
+        {/* <Text style={styles.label}>Class</Text>
         <Picker
           selectedValue={classType}
           onValueChange={(itemValue, itemIndex) =>
@@ -157,7 +157,7 @@ const ProfileEditScreen = () => {
                 />
               ))
             }
-        </Picker>
+        </Picker> */}
          {/* Type */}
          {/* <Text style={styles.label}>Type</Text>
           <Picker    selectedValue={type} onValueChange={(itemValue, itemIndex) => setType(itemValue)}>
@@ -185,7 +185,7 @@ const ProfileEditScreen = () => {
         {/* <Text style={styles.label}>Expiry</Text>
         <CalendarPicker onDateChange={setExpiryDate} />  */}
         <SafeAreaView>
-          <Text style={styles.label}>Sign</Text>
+          <Text style={styles.label}>Add or Change  Sign</Text>
           <SignPad
             signatureImage={currentUser?.signatureImage || ""}
             setSignatureImage={setSignatureImage}

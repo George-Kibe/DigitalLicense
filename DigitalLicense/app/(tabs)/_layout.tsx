@@ -8,6 +8,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -38,7 +39,7 @@ export default function TabLayout() {
         name="scan-qr"
         options={{
           title: 'Scan QR',
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="qrcode-scan" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome5 name="qrcode" size={24} color={color} />,
         }}
       />
       <Tabs.Screen

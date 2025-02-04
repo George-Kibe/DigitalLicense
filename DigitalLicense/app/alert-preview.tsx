@@ -53,9 +53,13 @@ const ShareOptionsScreen = () => {
   };
   return (
     <View style={styles.container}>
+      
+      <View style={[styles.topView, styles.splitView]}>
+      <View style={[styles.triangle, styles.bottomRight]} />
       <SafeAreaView
         style={Platform.OS === 'android'? {paddingTop: 50} : {}}
       >
+         
       <LinearGradient 
         start = {{x:0, y: 0}}
         end = {{x:1, y: 0}}
@@ -69,6 +73,7 @@ const ShareOptionsScreen = () => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+       </View>
 
       <View style={styles.bottomView}>
         <Text style={styles.heading}>What would you like to share?</Text>
@@ -95,6 +100,15 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     backgroundColor: "#FBCD7A'",
+  },
+  topView: {
+    width,
+  },
+  splitView: {
+    width: width, // Adjust width to your preference
+    height: 130, // Adjust height to your preference
+    position: "relative",
+    overflow: "hidden",
   },
   topViews: {
     flexDirection: "row",
@@ -165,6 +179,14 @@ const styles = StyleSheet.create({
     borderRightWidth: width, // Matches the container width
     borderTopColor: "#F2A553",
     borderRightColor: "transparent",
+  },
+  bottomRight: {
+    top: 0,
+    right: 0,
+    borderBottomWidth: 130, // Matches the container height
+    borderLeftWidth: width, // Matches the container width
+    borderBottomColor: "#FBCD7A",
+    borderLeftColor: "transparent",
   },
 });
 
