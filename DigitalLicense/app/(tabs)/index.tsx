@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Image, StyleSheet, Platform, ScrollView, View, Dimensions, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Platform, ScrollView, View, Dimensions, Text, ActivityIndicator, TouchableOpacity, SafeAreaView } from 'react-native';
 const { height, width } = Dimensions.get("screen");
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -32,6 +32,13 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topView}>
+      <View style={styles.topQueenView}>
+        <Image style={styles.qLogo} source={images.QLDWatermark} />
+        <View style={styles.queenTextView}>
+          <Text style={styles.qtext}>Queensland</Text>
+          <Text style={styles.qtext}>Government</Text>
+        </View>
+      </View>
       </View>
       <View style={styles.bottomView}>
         {
@@ -44,20 +51,12 @@ export default function HomeScreen() {
             </View>
           ): (
             <View style={styles.mainBottomView}>
-              <View style={styles.topQueenView}>
-                <Image style={styles.qLogo} source={images.QLDWatermark} />
-                <View style={styles.queenTextView}>
-                  <Text style={styles.qtext}>Queensland</Text>
-                  <Text style={styles.qtext}>Government</Text>
-                </View>
-              </View>
-
               <View style={styles.userDetails}>
-                <Image style={styles.passport} source={{uri: currentUser?.passportImage}}/>
-                <Text style={styles.nameText}>{currentUser?.fullName}</Text>
+                {/* <Image style={styles.passport} source={{uri: currentUser?.passportImage}}/> */}
+                <Text style={styles.nameText}>Hi {currentUser?.fullName}</Text>
               </View>
               <View style={styles.credentialsView}>
-                <Text>Credentials</Text>
+                <Text style={styles.grayText}>Credentials</Text>
                 {
                   updating && (
                     <View style={styles.updatingView}>
@@ -68,20 +67,16 @@ export default function HomeScreen() {
                 }
               </View>         
 
-              <View>
-                <TouchableOpacity onPress={() => router.push("/license-details")} style={styles.optionButton}>
-                  {/* <Image /> */}
+              <TouchableOpacity 
+                onPress={() => router.push("/license-details")} 
+                style={styles.optionButton}
+              >
+                <View style={styles.carIconView}>
                   <FontAwesome5 name="car-side" size={24} color="black" />
-                  <Text>Driver Licence</Text>
-                  <Feather style={styles.rightIcon} name="chevron-right" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.optionButton}>
-                  {/* <Image /> */}
-                  <FontAwesome5 name="car-side" size={24} color="black" />
-                  <Text>Marine Licence</Text>
-                  <Feather style={styles.rightIcon} name="chevron-right" size={24} color="black" />
-                </TouchableOpacity>
-              </View>
+                </View>
+                <Text style={styles.text}>Driver Licence</Text>
+                <Feather style={styles.rightIcon} name="chevron-right" size={24} color="black" />
+              </TouchableOpacity>
             </View>
           )
         }
@@ -93,7 +88,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: "whitesmoke"
+    backgroundColor: "#FFFFFF"
   },
   topView: {
     backgroundColor: "#7F082E",
@@ -108,11 +103,21 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     marginTop: 100,
   },
+  text: {
+    color: "black",
+    fontSize: Platform.OS === "ios"? 20: 24,
+    fontWeight: "bold",
+  },
+  grayText: {
+    color: "#59585E",
+    fontSize: Platform.OS === "ios"? 20: 24,
+    fontWeight: "bold",
+  },
   bottomView: {
     borderRadius: 20,
     marginTop: height * 0.15,
     position: "absolute",
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#E6E5EB",
     height: height * 0.85,
     width,
     alignItems: "center",
@@ -121,24 +126,22 @@ const styles = StyleSheet.create({
     width: width* 0.9,
   },
   qLogo: {
-    height: 40,
-    width: 40,
-    tintColor: "white"
+    height: 60,
+    width: 60,
+    tintColor: "white",
+    resizeMode: 'contain'
   },
   qtext: {
     color: "white",
-    fontSize: 12,
+    fontSize: Platform.OS === "ios"? 14: 20,
     fontWeight: "bold",
   },
   topQueenView: {
-    position: "absolute",
-    top: -50,
+    marginTop: 60,
+    paddingLeft: 20,
     gap: 10,
-    right: 0,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
-    zIndex: 10,
   },
   queenTextView: {
     flexDirection: "column",
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
     marginTop: -40,
   },
   nameText: {
-    fontSize: 20,
+    fontSize: Platform.OS === "ios"? 24: 28,
     fontWeight: "bold",
     color: "black",
     flexWrap: 'wrap',
@@ -176,11 +179,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     marginTop: 20,
-    padding: 10,
     borderRadius: 10,
     backgroundColor: "#FFFFFF"
   },
   rightIcon: {
     marginLeft: "auto"
+  },
+  carIconView: {
+    backgroundColor: "#F3AC5E",
+    height: "100%",
+    padding: 16,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   }
 });

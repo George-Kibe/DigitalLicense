@@ -42,6 +42,7 @@ export default function RootLayout() {
             <Stack.Screen name="pin-screen" options={{ headerShown: false }} />
             <Stack.Screen name="license-details" options={{ headerShown: false }} />
             <Stack.Screen name="share-alert" options={{ headerShown: false }} />
+            <Stack.Screen name="alert-preview" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />

@@ -259,7 +259,7 @@ const LicenseDetails = () => {
 
         </ScrollView>
       <SafeAreaView style={styles.bottomView}>
-        <TouchableOpacity onPress={() => router.push('/share-alert')} style={styles.shareButton}>
+        <TouchableOpacity onPress={() => router.push('/alert-preview')} style={styles.shareButton}>
           <Text style={styles.shareDLText}>
             SHARE DRIVER LICENCE
           </Text>
