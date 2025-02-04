@@ -1,26 +1,22 @@
 {
   "expo": {
-    "name": "PesaFlow",
-    "slug": "PesaFlow",
+    "name": "PesaFlowX",
+    "slug": "PesaFlowX",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "pesaflow",
+    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.pesaflow.application",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pesaflow.application"
+      "package": "com.georgekibe.PesaFlowX"
     },
     "web": {
       "bundler": "metro",
@@ -47,7 +43,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "61553e58-7171-4c3d-a26b-f5682a4ec906"
+        "projectId": "801a2ceb-b869-4466-86c3-57dedbb02e51"
       }
     },
     "owner": "georgekibe"

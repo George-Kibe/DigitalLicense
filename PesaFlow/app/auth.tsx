@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { router } from 'expo-router';
 import * as LocalAuthentication from "expo-local-authentication";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -16,7 +16,6 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get("window");
 
 export default function AuthScreen() {
-  const router = useRouter();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasBiometrics, setHasBiometrics] = useState(false);
