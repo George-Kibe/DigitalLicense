@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import { View, Text, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from "react-native";
 
 export default function UserProfileScreen() {
   const { id } = useLocalSearchParams();
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f4f4f4",
-    padding: 20,
+    paddingTop: Platform.OS === "ios" ? 20 : 50,
   },
   backButton: {
     alignItems: "center",

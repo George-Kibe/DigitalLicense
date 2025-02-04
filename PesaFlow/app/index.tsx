@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
@@ -23,11 +23,11 @@ export default function SplashScreen() {
       }),
     ]).start();
 
-    const timer = setTimeout(() => {
-      router.replace("/auth");
-    }, 2000);
+    // const timer = setTimeout(() => {
+    //   router.replace("/auth");
+    // }, 2000);
 
-    return () => clearTimeout(timer);
+    // return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -43,6 +43,12 @@ export default function SplashScreen() {
       >
         <FontAwesome name="money" size={100} color="white" />
         <Text style={styles.appName}>PesaFlow</Text>
+
+        <TouchableOpacity onPress={() => router.replace("/(tabs)")} style={styles.button}>
+          <Text style={styles.buttonText}>
+            <FontAwesome name="arrow-right" size={20} color="#4CAF50" /> Get Started
+          </Text>
+        </TouchableOpacity>
       </Animated.View>
     </View>
   );
@@ -63,6 +69,21 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginTop: 20,
+    letterSpacing: 1,
+  },
+  button: {
+    backgroundColor: "whitesmoke",
+    paddingVertical: 16,
+    paddingHorizontal: 50,
+    borderRadius: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 50,
+  },
+  buttonText: {
+    color: "#4CAF50",
+    fontSize: 20,
+    fontWeight: "bold",
     letterSpacing: 1,
   },
 });
