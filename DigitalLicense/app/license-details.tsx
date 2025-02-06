@@ -395,11 +395,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bouncingImage: {
-    width: 180,
-    height: 180,
+    width: height * 0.2,
+    height: height * 0.2,
     resizeMode: "contain",
     position: "absolute",
-    opacity: 0.2,
+    opacity: 0.12,
     alignSelf: 'center',
     top: height * 0.32,
     zIndex: 2
