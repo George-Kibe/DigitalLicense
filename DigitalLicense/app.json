@@ -51,17 +51,13 @@
         }
       ]
     ],
-    "experiments": {
-      "typedRoutes": true
-    },
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "8682131d-8ae6-4eb1-bb06-b2c1f0e1294e"
+        "projectId": "e085e564-4557-49a1-8c6e-26bdfe6028cd"
       }
-    },
-    "owner": "georgekibe"
+    }
   }
 }
