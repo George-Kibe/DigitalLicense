@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { MainProvider } from '@/context/ApplicationContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -28,19 +29,21 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen name="new-client" options={{ headerShown: false }} />
-        <Stack.Screen name="new-disbursement" options={{ headerShown: false }} />
-        <Stack.Screen name="new-expense" options={{ headerShown: false }} />
-        <Stack.Screen name="new-repayment" options={{ headerShown: false }} />
-        <Stack.Screen name="new-rollover" options={{ headerShown: false }} />
-        <Stack.Screen name="clients/[id]" options={{ headerShown: false }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <MainProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="new-client" options={{ headerShown: false }} />
+          <Stack.Screen name="new-disbursement" options={{ headerShown: false }} />
+          <Stack.Screen name="new-expense" options={{ headerShown: false }} />
+          <Stack.Screen name="new-repayment" options={{ headerShown: false }} />
+          <Stack.Screen name="new-rollover" options={{ headerShown: false }} />
+          <Stack.Screen name="clients/[id]" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </MainProvider>
   );
 }

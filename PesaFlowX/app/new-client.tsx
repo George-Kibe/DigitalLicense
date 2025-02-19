@@ -16,16 +16,17 @@ import {
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useLoanContext } from "@/context/ApplicationContext";
 const { width } = Dimensions.get("window");
 
 export default function AddNewClientScreen() {
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
-    email: "",
     contact: "",
   });
 
+  const { loans, people, addLoan, addPerson } = useLoanContext();
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -35,14 +36,6 @@ export default function AddNewClientScreen() {
     if (!form.name.trim()) {
       newErrors.name = "Client name is required";
     }
-    if (!form.email.trim()) {
-      newErrors.email = "Client email is required";
-    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      newErrors.email = "Invalid email address";
-    }
-    if (!form.contact.trim()) {
-      newErrors.contact = "Client contact is required";
-    } 
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -60,12 +53,7 @@ export default function AddNewClientScreen() {
 
       // Generate a random color
       const colors = ["#4CAF50", "#2196F3", "#FF9800", "#E91E63", "#9C27B0"];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-      const clientData = {
-        ...form,
-      };
-
+      addPerson({ name: form.name, phone: form.contact })
       Alert.alert(
         "Success",
         "Client added successfully",
@@ -133,25 +121,6 @@ export default function AddNewClientScreen() {
               />
               {errors.name && (
                 <Text style={styles.errorText}>{errors.name}</Text>
-              )}
-            </View>
-
-            <Text style={styles.label}>Email</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[styles.mainInput, errors.email && styles.inputError]}
-                placeholder="abc@gmail.com)"
-                placeholderTextColor="#999"
-                value={form.email}
-                onChangeText={(text) => {
-                  setForm({ ...form, email: text });
-                  if (errors.email) {
-                    setErrors({ ...errors, email: "" });
-                  }
-                }}
-              />
-              {errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
               )}
             </View>
 

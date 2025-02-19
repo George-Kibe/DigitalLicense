@@ -17,10 +17,10 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import {Picker} from '@react-native-picker/picker';
-import { people } from "@/data/people";
 import CalendarPicker from "react-native-calendar-picker";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import moment from "moment";
+import { useLoanContext } from "@/context/ApplicationContext";
 
 interface LoanForm {
   name: string;
@@ -38,6 +38,7 @@ const { width } = Dimensions.get("window");
 
 export default function AddNewDisbursementScreen() {
   const router = useRouter();
+  const { loans, people, addLoan, addPerson } = useLoanContext();
   const [totalAmountDue, setTotalAmountDue] = useState<Number>();
   const [showDisCalendar, setShowDisCalendar] = useState(false);
   const [showDueCalendar, setShowDueCalendar] = useState(false);
@@ -108,7 +109,18 @@ export default function AddNewDisbursementScreen() {
       const clientData = {
         ...form,
       };
-
+      addLoan({
+        name: form.name,
+        amount: form.amount,
+        dateDisbursed: form.dateDisbursed,
+        notes: form.notes,
+        dueDate: form.dueDate,
+        expenses: form.expenses,
+        status: "Unpaid",
+        totalDue: form.totalDue,
+        totalPaid: 0,
+        netInterest: 0,
+        });
       Alert.alert(
         "Success",
         "Loan Disbursed and Recorded successfully",

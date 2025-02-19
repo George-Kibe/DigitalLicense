@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Dimensions,
   Animated,
@@ -13,7 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Circle } from "react-native-svg";
-import { people } from "@/data/people";
+import { people as data } from "@/data/people";
+import { useLoanContext } from "@/context/ApplicationContext";
 
 const { width } = Dimensions.get("window");
 
@@ -104,12 +104,14 @@ function CircularProgress({
 }
 
 export default function HomeScreen() {
+  const { loans, people, addLoan, addPerson } = useLoanContext();
   const router = useRouter();
   const progress = 3/8;
+  const allPeople = [...people, ...data];
 
   return (
     <FlatList
-      data={people}
+      data={allPeople}
       ListHeaderComponent={() =>(
         <View style={styles.container} showsVerticalScrollIndicator={false}>
         <LinearGradient colors={["#1a8e2d", "#146922"]} style={styles.header}>
@@ -174,8 +176,8 @@ export default function HomeScreen() {
             <Ionicons name="person" size={24} color="#333" />
           </View>
           <View style={styles.clientInfo}>
-            <Text style={styles.clientName}>{item.name}-{item.phone}</Text>
-            <Text style={styles.clientId}>{item.email}</Text>
+            <Text style={styles.clientName}>{item.name}</Text>
+            <Text style={styles.clientId}>{item.phone}</Text>
           </View>
         </TouchableOpacity>
       )}
