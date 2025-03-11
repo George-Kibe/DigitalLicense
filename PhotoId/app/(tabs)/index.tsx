@@ -33,13 +33,13 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topView}>
-      <View style={styles.topQueenView}>
-        <Image style={styles.qLogo} source={images.QLDWatermark} />
-        <View style={styles.queenTextView}>
-          <Text style={styles.qtext}>Queensland</Text>
-          <Text style={styles.qtext}>Government</Text>
+        <View style={styles.topQueenView}>
+          <Image style={styles.qLogo} source={images.QLDWatermark} />
+          <View style={styles.queenTextView}>
+            <Text style={styles.qtext}>Queensland</Text>
+            <Text style={styles.qtext}>Government</Text>
+          </View>
         </View>
-      </View>
       </View>
       <View style={styles.bottomView}>
         {
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   topQueenView: {
-    marginTop: 60,
+    marginTop: Platform.OS === "ios"? 60: 30,
     paddingLeft: 20,
-    gap: 10,
+    //gap: 10,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     flexWrap: 'wrap',
-    width: 300,
+    width: 180,
     textTransform: "uppercase"
   },
   credentialsView: {

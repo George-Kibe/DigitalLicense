@@ -151,8 +151,8 @@ const ProfileEditScreen = () => {
         />
 
         {/* Expiry: Calendar */}
-        {/* <Text style={styles.label}>Expiry</Text>
-        <CalendarPicker onDateChange={setExpiryDate} />  */}
+        <Text style={styles.label}>Expiry</Text>
+        <CalendarPicker onDateChange={setExpiryDate} /> 
         <SafeAreaView>
           <Text style={styles.label}>Add or Change  Sign</Text>
           <SignPad
