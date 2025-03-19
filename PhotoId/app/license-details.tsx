@@ -357,13 +357,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bouncingImage: {
-    width: height * 0.2,
-    height: height * 0.2,
+    width: height * 0.25,
+    height: height * 0.25,
     resizeMode: "contain",
     position: "absolute",
-    opacity: 0.12,
+    opacity: 0.10,
     alignSelf: 'center',
-    top: height * 0.32,
+    top: height * 0.5,
     zIndex: 2
   },
   text: {

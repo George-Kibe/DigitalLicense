@@ -22,6 +22,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import userSlice from '@/store/userSlice';
 import { router } from 'expo-router';
+import SignPadOne from '@/components/SignPadOne';
 
 const ProfileEditScreen = () => {
   const dispatch = useDispatch();
@@ -154,12 +155,15 @@ const ProfileEditScreen = () => {
         <Text style={styles.label}>Expiry</Text>
         <CalendarPicker onDateChange={setExpiryDate} /> 
         <SafeAreaView>
-          <Text style={styles.label}>Add or Change  Sign</Text>
+          {/* <Text style={styles.label}>Add or Change  Sign</Text>
           <SignPad
             signatureImage={currentUser?.signatureImage || ""}
             setSignatureImage={setSignatureImage}
-          />
-
+          /> */}
+          {/* <SignPadOne
+            text="Add or Change  Sign"
+            onOK={(signature) => setSignatureImage(signature)}
+           /> */}
           {/* Save Button */}
           <View style={styles.bottomButtons}>
             <TouchableOpacity style={styles.button} onPress={handleSave}>
@@ -179,7 +183,7 @@ const ProfileEditScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+
     marginBottom: 100
   },
   scrollContent: {
