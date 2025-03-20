@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   topQueenView: {
-    marginTop: Platform.OS === "ios"? 60: 50,
+    marginTop: height * 0.07,
+    marginRight: 20,
     alignSelf: 'flex-end',
     flexDirection: "row",
     alignItems: "center",

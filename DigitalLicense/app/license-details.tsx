@@ -10,6 +10,7 @@ import moment from "moment";
 import {LinearGradient} from 'expo-linear-gradient';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { signature } from '@/data/sign';
 
 const { height, width } = Dimensions.get("screen");
 
@@ -41,7 +42,7 @@ const LicenseDetails = () => {
       <LinearGradient 
         start = {{x:0, y: 0}}
         end = {{x:1, y: 0}}
-        colors={['#F1AF5B', '#FBCD7A',]}
+        colors={['#F1AF5B', '#F9D080',]}
         style={[styles.triangle, styles.topLeft]}
       />
         <View style={styles.topViews} >
@@ -74,7 +75,7 @@ const LicenseDetails = () => {
           <LinearGradient 
             start = {{x:0, y: 0}}
             end = {{x:1, y: 0}}
-            colors={['#F8CB7A', '#F8CB7A',]} 
+            colors={['#F9D080', '#F9D080',]} 
             style={styles.licenseTextView}
           >
             <Text style={styles.licenseText}>Driver Licence</Text>
@@ -199,7 +200,7 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.addressDetailView}>
               <Text style={styles.blackTextUpper}>
-                {currentUser?.address} dfbv jhbj fjnej njncv ejnjejnj erjvnj
+                {currentUser?.address}
               </Text>
             </View>
           </View>
@@ -211,7 +212,7 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.ageDetailView}>
               <Image
-                source={{ uri: currentUser?.signatureImage }}
+                source={{ uri: currentUser?.signatureImage || signature }}
                 style={styles.signature}
                 resizeMode="contain"
               />
@@ -237,7 +238,7 @@ const LicenseDetails = () => {
               AU
             </Text>
           </View>
-          <View style={styles.line} />
+          {/* <View style={styles.line} /> */}
 
           <View style={styles.singleDetailView}>
             <View style={styles.leftDetailView}>
@@ -245,10 +246,7 @@ const LicenseDetails = () => {
             </View>
             <View>
             <Text style={styles.blackText}>
-              Queensland Government,
-            </Text>
-            <Text style={styles.blackText}>
-              Department of Transport
+              Queensland Government, Department of Transport and main Roads
             </Text>
             </View>
           </View>
@@ -407,16 +405,17 @@ const styles = StyleSheet.create({
     fontWeight: "500"
   },
   blackText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#000",
-    fontWeight: "500"
+    fontWeight: "500",
+    maxWidth: 180,
   },
   blackTextUpper: {
     fontSize: 16,
     color: "#000",
     fontWeight: "500",
     textTransform: 'uppercase',
-    width: 180
+    maxWidth: 180
   },
   darkText: {
     fontSize: 16,
@@ -524,7 +523,7 @@ const styles = StyleSheet.create({
     right: 0,
     borderBottomWidth: 130, // Matches the container height
     borderLeftWidth: width, // Matches the container width
-    borderBottomColor: "#FBCD7A",
+    borderBottomColor: "#F9D080",
     borderLeftColor: "transparent",
   },
 })
