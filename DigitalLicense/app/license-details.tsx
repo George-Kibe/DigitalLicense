@@ -41,7 +41,7 @@ const LicenseDetails = () => {
       <LinearGradient 
         start = {{x:0, y: 0}}
         end = {{x:1, y: 0}}
-        colors={['#F2A553', '#FBCD7A',]}
+        colors={['#F1AF5B', '#FBCD7A',]}
         style={[styles.triangle, styles.topLeft]}
       />
         <View style={styles.topViews} >
@@ -74,7 +74,7 @@ const LicenseDetails = () => {
           <LinearGradient 
             start = {{x:0, y: 0}}
             end = {{x:1, y: 0}}
-            colors={['#F2A553', '#FBCD7A',]} 
+            colors={['#F8CB7A', '#F8CB7A',]} 
             style={styles.licenseTextView}
           >
             <Text style={styles.licenseText}>Driver Licence</Text>
@@ -199,10 +199,7 @@ const LicenseDetails = () => {
             </View>
             <View style={styles.addressDetailView}>
               <Text style={styles.blackTextUpper}>
-                {currentUser?.address}
-              </Text>
-              <Text style={styles.blackTextUpper}>
-                QLD 4171 AU
+                {currentUser?.address} dfbv jhbj fjnej njncv ejnjejnj erjvnj
               </Text>
             </View>
           </View>
@@ -353,7 +350,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
     flexWrap: 'wrap',
-    width: 250,
+    width: 160,
     fontWeight: "500",
     textTransform: 'uppercase'
   },
@@ -377,7 +374,7 @@ const styles = StyleSheet.create({
   licenseTextView: {
     paddingHorizontal: 20,
     paddingBottom: 40,
-    backgroundColor:'#F2A553',
+    backgroundColor:'#F1AF5B',
     width
   },
   licenseText: {
@@ -419,7 +416,7 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "500",
     textTransform: 'uppercase',
-    width: 250
+    width: 180
   },
   darkText: {
     fontSize: 16,
@@ -445,7 +442,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   leftDetailView: {
     flexDirection: "row",
@@ -492,7 +489,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   shareButton: {
-    backgroundColor: "#F2A553",
+    backgroundColor: "#F1AF5B",
     padding: 10,
     borderRadius: 10,
     width: width * 0.8,
@@ -519,7 +516,7 @@ const styles = StyleSheet.create({
   topLeft: {
     borderTopWidth: 130, // Matches the container height
     borderRightWidth: width, // Matches the container width
-    borderTopColor: "#F2A553",
+    borderTopColor: "#F1AF5B",
     borderRightColor: "transparent",
   },
   bottomRight: {

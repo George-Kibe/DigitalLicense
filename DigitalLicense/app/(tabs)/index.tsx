@@ -8,12 +8,13 @@ import { images } from '@/constants/images';
 import { router } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { FontAwesome6 } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const currentUser = useSelector((state: RootState) => state.currentUser.user) as User | null;
   const [showActivity, setShowActivity] = useState(true);
   const [updating, setUpdating] = useState(true);
-  console.log("Current User: ", currentUser)
+  // console.log("Current User: ", currentUser)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,13 +33,13 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topView}>
-      <View style={styles.topQueenView}>
-        <Image style={styles.qLogo} source={images.QLDWatermark} />
-        <View style={styles.queenTextView}>
-          <Text style={styles.qtext}>Queensland</Text>
-          <Text style={styles.qtext}>Government</Text>
+        <View style={styles.topQueenView}>
+          <Image style={styles.qLogo} source={images.QLDWatermark} />
+          <View style={styles.queenTextView}>
+            <Text style={styles.qtext}>Queensland</Text>
+            <Text style={styles.qtext}>Government</Text>
+          </View>
         </View>
-      </View>
       </View>
       <View style={styles.bottomView}>
         {
@@ -52,8 +53,8 @@ export default function HomeScreen() {
           ): (
             <View style={styles.mainBottomView}>
               <View style={styles.userDetails}>
-                {/* <Image style={styles.passport} source={{uri: currentUser?.passportImage}}/> */}
-                <Text style={styles.nameText}>Hi {currentUser?.fullName}</Text>
+                <Image style={styles.passport} source={{uri: currentUser?.passportImage}}/>
+                <Text style={styles.nameText}>{currentUser?.fullName}</Text>
               </View>
               <View style={styles.credentialsView}>
                 <Text style={styles.grayText}>Credentials</Text>
@@ -72,9 +73,9 @@ export default function HomeScreen() {
                 style={styles.optionButton}
               >
                 <View style={styles.carIconView}>
-                  <FontAwesome5 name="car-side" size={24} color="black" />
+                  <FontAwesome6 name="car-side" size={24} color="black" />
                 </View>
-                <Text style={styles.text}>Driver Licence</Text>
+                <Text style={styles.text}>Digital Licence</Text>
                 <Feather style={styles.rightIcon} name="chevron-right" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF"
   },
   topView: {
-    backgroundColor: "#7F082E",
+    backgroundColor:  "#9C1D51",
     height: height,
     width
   },
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "black",
-    fontSize: Platform.OS === "ios"? 20: 24,
+    fontSize: Platform.OS === "ios"? 16: 18,
     fontWeight: "bold",
   },
   grayText: {
@@ -133,13 +134,12 @@ const styles = StyleSheet.create({
   },
   qtext: {
     color: "white",
-    fontSize: Platform.OS === "ios"? 14: 20,
+    fontSize: Platform.OS === "ios"? 14: 16,
     fontWeight: "bold",
   },
   topQueenView: {
-    marginTop: 60,
-    paddingLeft: 20,
-    gap: 10,
+    marginTop: Platform.OS === "ios"? 60: 50,
+    alignSelf: 'flex-end',
     flexDirection: "row",
     alignItems: "center",
   },
@@ -156,14 +156,15 @@ const styles = StyleSheet.create({
     height: 120,
     width: 100,
     borderRadius: 4,
-    marginTop: -40,
+    marginTop: -30,
   },
   nameText: {
-    fontSize: Platform.OS === "ios"? 24: 28,
+    fontSize: Platform.OS === "ios"? 14: 20,
     fontWeight: "bold",
     color: "black",
     flexWrap: 'wrap',
-    width: 300
+    width: 180,
+    textTransform: "uppercase"
   },
   credentialsView: {
     flexDirection: "column",
@@ -173,12 +174,14 @@ const styles = StyleSheet.create({
   updatingView: {
     flexDirection: "row",
     gap: 10,
+    padding: 8,
   },
   optionButton: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
     marginTop: 20,
+    padding: 8,
     borderRadius: 10,
     backgroundColor: "#FFFFFF"
   },
@@ -186,10 +189,10 @@ const styles = StyleSheet.create({
     marginLeft: "auto"
   },
   carIconView: {
-    backgroundColor: "#F3AC5E",
+    // backgroundColor: "#903772",
+    backgroundColor: "#FBCD7A",
     height: "100%",
-    padding: 16,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+    padding: 12,
+    borderRadius: 50,
   }
 });
