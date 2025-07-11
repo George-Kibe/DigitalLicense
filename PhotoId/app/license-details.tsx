@@ -81,7 +81,7 @@ const LicenseDetails = () => {
                 </Text>
               </View>
               <View>
-                <Text style={styles.dobText}>Licence No.</Text>
+                <Text style={styles.dobText}>Reference No.</Text>
                 <Text style={styles.detailText}>{currentUser?.licenceNumber}</Text>
               </View>
             </View>
